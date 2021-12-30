@@ -1,6 +1,15 @@
 package driver
 
-var DB *gorm.DB {
+import (
+	biData "invoice-api/features/billissuer/data"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+)
+
+var DB *gorm.DB
+
+func InitDB() {
 	// For Linux
 	dsn := "root:admin@tcp(127.0.0.1)/invoicein?parseTime=true"
 	// For Windows
@@ -15,5 +24,5 @@ var DB *gorm.DB {
 	}
 
 	DB = db
-	DB.AutoMigrate(&bidata.BillIssuer{})
+	DB.AutoMigrate(&biData.BillIssuer{})
 }

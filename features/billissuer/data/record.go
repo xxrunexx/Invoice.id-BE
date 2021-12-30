@@ -1,6 +1,10 @@
 package data
 
-import "gorm.io/gorm"
+import (
+	"invoice-api/features/billissuer"
+
+	"gorm.io/gorm"
+)
 
 type BillIssuer struct {
 	gorm.Model
@@ -12,19 +16,19 @@ type BillIssuer struct {
 func toBillIssuerRecord(billissuer billissuer.BillIssuerCore) BillIssuer {
 	return BillIssuer{
 		Model: gorm.Model{
-			ID: billissuer.ID
+			ID: billissuer.ID,
 		},
 		Username: billissuer.Username,
 		Password: billissuer.Password,
-		Email: billissuer.Email
+		Email:    billissuer.Email,
 	}
 }
 
 func toBillIssuerCore(bi BillIssuer) billissuer.BillIssuerCore {
-	return billissuer.BillIssuerCore {
-		ID: bi.ID,
+	return billissuer.BillIssuerCore{
+		ID:       bi.ID,
 		Username: bi.Username,
 		Password: bi.Password,
-		Email: bi.Email
+		Email:    bi.Email,
 	}
 }
