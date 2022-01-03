@@ -32,7 +32,7 @@ func (biHandler *BillIssuerHandler) CreateBillIssuerHandler(e echo.Context) (err
 	}
 
 	return e.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Success",
+		"message": "Successful Operator",
 		"data":    newBillIssuer,
 	})
 }
