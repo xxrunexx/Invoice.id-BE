@@ -32,3 +32,13 @@ func toBillIssuerCore(bi BillIssuer) billissuer.BillIssuerCore {
 		Email:    bi.Email,
 	}
 }
+
+// Get All / Array
+// func toBillIssuerCoreList(biList []BillIssuer) []billissuer.BillIssuerCore {
+// 	convBi := []billissuer.BillIssuerCore{}
+
+// 	for _, billissuer := range biList {
+// 		convBi = append(convBi, toBillIssuerCore(billissuer))
+// 	}
+// 	return convBi
+// }

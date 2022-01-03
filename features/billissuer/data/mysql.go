@@ -14,7 +14,7 @@ func NewMySqlBillIssuer(DB *gorm.DB) billissuer.Data {
 	return &BillIssuerData{DB}
 }
 
-func (biData *BillIssuerData) CreateAccount(billissuer billissuer.BillIssuerCore) error {
+func (biData *BillIssuerData) CreateBillIssuer(billissuer billissuer.BillIssuerCore) error {
 	convData := toBillIssuerRecord(billissuer)
 
 	if err := biData.DB.Create(&convData).Error; err != nil {

@@ -25,7 +25,7 @@ func (biHandler *BillIssuerHandler) CreateBillIssuerHandler(e echo.Context) (err
 		})
 	}
 
-	if err := biHandler.billissuerBusiness.CreateAccount(newBillIssuer.ToBillIssuerCore()); err != nil {
+	if err := biHandler.billissuerBusiness.CreateBillIssuer(newBillIssuer.ToBillIssuerCore()); err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),
 		})

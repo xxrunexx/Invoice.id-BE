@@ -21,7 +21,6 @@ func New() *echo.Echo {
 	e.Pre(middleware.RemoveTrailingSlash())
 
 	// Bill Issuer
-	e.POST("/billissuer/register", presenter.BillIssuerPresenter.CreateBillIssuerHandler)
-
+	e.POST("/billissuer/register", presenter.BillissuerPresentation.CreateBillIssuerHandler)
 	return e
 }
