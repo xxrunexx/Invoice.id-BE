@@ -3,6 +3,7 @@ package presentation
 import (
 	"invoice-api/features/billissuer"
 	"invoice-api/features/billissuer/presentation/request"
+	"invoice-api/helper"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -16,23 +17,16 @@ func NewHandlerBillIssuer(billissuerBusiness billissuer.Business) *BillIssuerHan
 	return &BillIssuerHandler{billissuerBusiness}
 }
 
-func (biHandler *BillIssuerHandler) CreateBillIssuerHandler(e echo.Context) (err error) {
+func (biHandler *BillIssuerHandler) CreateBillIssuerHandler(e echo.Context) error {
 	newBillIssuer := request.ReqBillIssuer{}
 
 	if err := e.Bind(&newBillIssuer); err != nil {
-		return e.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": err.Error(),
-		})
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 
 	if err := biHandler.billissuerBusiness.CreateBillIssuer(newBillIssuer.ToBillIssuerCore()); err != nil {
-		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": err.Error(),
-		})
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 
-	return e.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Successful Operator",
-		"data":    newBillIssuer,
-	})
+	return helper.SuccessResponse(e, nil)
 }
