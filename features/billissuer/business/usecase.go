@@ -4,10 +4,11 @@ import (
 	"errors"
 	"invoice-api/features/billissuer"
 	"invoice-api/helper"
+	"invoice-api/middleware"
 )
 
 type BillIssuerBusiness struct {
-	biData billissuer.Data
+	billissuerData billissuer.Data
 }
 
 func NewBusinessBillIssuer(biData billissuer.Data) billissuer.Business {
@@ -19,7 +20,7 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 		return errors.New("bad request")
 	}
 
-	_, err := biBusiness.biData.CreateBillIssuer(data)
+	_, err := biBusiness.billissuerData.CreateBillIssuer(data)
 	if err != nil {
 		return err
 	}
@@ -29,4 +30,17 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 	// }
 
 	return nil
+}
+
+func (biBussiness *BillIssuerBusiness) LoginBillIssuer(data billissuer.BillIssuerCore) (billissuer.BillIssuerCore, error) {
+	biData, err := biBussiness.billissuerData.LoginBillIssuer(data)
+
+	if err != nil {
+		return billissuer.BillIssuerCore{}, err
+	}
+	biData.Token, err = middleware.CreateToken(data.ID, data.Username)
+	if err != nil {
+		return billissuer.BillIssuerCore{}, err
+	}
+	return biData, nil
 }

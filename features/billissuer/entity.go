@@ -5,6 +5,7 @@ type BillIssuerCore struct {
 	Username string
 	Password string
 	Email    string
+	Token    string
 }
 
 // Untuk layer data
