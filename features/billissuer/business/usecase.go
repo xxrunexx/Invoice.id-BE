@@ -44,3 +44,12 @@ func (biBussiness *BillIssuerBusiness) LoginBillIssuer(data billissuer.BillIssue
 	}
 	return biData, nil
 }
+
+func (biBussiness *BillIssuerBusiness) GetBillIssuerById(id int) (billissuer.BillIssuerCore, error) {
+	biData, err := biBussiness.billissuerData.GetBillIssuerById(id)
+
+	if err != nil {
+		return billissuer.BillIssuerCore{}, err
+	}
+	return biData, nil
+}

@@ -12,6 +12,7 @@ type BillIssuerCore struct {
 type Data interface {
 	CreateBillIssuer(data BillIssuerCore) (id int, err error)
 	LoginBillIssuer(BillIssuerCore) (billissuer BillIssuerCore, err error)
+	GetBillIssuerById(id int) (billisser BillIssuerCore, err error)
 }
 
 // Untuk layer business
@@ -19,4 +20,5 @@ type Business interface {
 	// CreateBillIssuer(biData BillIssuerCore) (err error)
 	CreateBillIssuer(data BillIssuerCore) (err error)
 	LoginBillIssuer(BillIssuerCore) (billissuer BillIssuerCore, err error)
+	GetBillIssuerById(id int) (billissuer BillIssuerCore, err error)
 }
