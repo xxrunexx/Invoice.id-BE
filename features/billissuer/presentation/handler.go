@@ -6,6 +6,7 @@ import (
 	"invoice-api/features/billissuer/presentation/response"
 	"invoice-api/helper"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -45,5 +46,25 @@ func (biHandler *BillIssuerHandler) LoginBillIssuerHandler(e echo.Context) error
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "successful operator",
 		"data":    response.ToBillIssuerLoginResponse(data),
+	})
+}
+
+func (biHandler BillIssuerHandler) GetBillIssuerByIdHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	data, err := biHandler.billissuerBusiness.GetBillIssuerById(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "successful operator",
+		"data":    response.ToBillIssuerResponse(data),
 	})
 }

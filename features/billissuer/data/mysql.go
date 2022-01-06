@@ -40,3 +40,19 @@ func (biData *BillIssuerData) LoginBillIssuer(data billissuer.BillIssuerCore) (b
 
 	return toBillIssuerCore(billissuerData), nil
 }
+
+func (biData *BillIssuerData) GetBillIssuerById(id int) (billissuer.BillIssuerCore, error) {
+	var singleData BillIssuer
+
+	err := biData.DB.First(&singleData, id).Error
+
+	if singleData.Username == "" && singleData.ID == 0 {
+		return billissuer.BillIssuerCore{}, errors.New("user not found")
+	}
+
+	if err != nil {
+		return billissuer.BillIssuerCore{}, err
+	}
+
+	return toBillIssuerCore(singleData), nil
+}
