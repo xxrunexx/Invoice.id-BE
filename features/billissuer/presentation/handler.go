@@ -30,23 +30,19 @@ func (biHandler *BillIssuerHandler) CreateBillIssuerHandler(e echo.Context) erro
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 
-	return helper.SuccessResponse(e, nil)
+	return helper.SuccessResponse(e, newBillIssuer)
 }
 
 func (biHandler *BillIssuerHandler) LoginBillIssuerHandler(e echo.Context) error {
 	billissuerAuth := request.ReqBIllIssuerAuth{}
 	e.Bind(&billissuerAuth)
 
-	data, err := biHandler.billissuerBusiness.LoginBillIssuer(billissuerAuth.ToAccountCore())
+	data, err := biHandler.billissuerBusiness.LoginBillIssuer(billissuerAuth.ToBillIssuerCore())
 	if err != nil {
-		return e.JSON(http.StatusForbidden, map[string]interface{}{
-			"message": err.Error(),
-		})
+		return helper.ErrorResponse(e, http.StatusForbidden, "Mismatch Data", err)
 	}
-	return e.JSON(http.StatusOK, map[string]interface{}{
-		"message": "successful operator",
-		"data":    response.ToBillIssuerLoginResponse(data),
-	})
+
+	return helper.SuccessResponse(e, response.ToBillIssuerLoginResponse(data))
 }
 
 func (biHandler BillIssuerHandler) GetBillIssuerByIdHandler(e echo.Context) error {

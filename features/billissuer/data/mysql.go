@@ -56,3 +56,12 @@ func (biData *BillIssuerData) GetBillIssuerById(id int) (billissuer.BillIssuerCo
 
 	return toBillIssuerCore(singleData), nil
 }
+
+func (biData BillIssuerData) GetBillIssuerByEmail(email string) (bool, error) {
+	var singleId BillIssuer
+	err := biData.DB.Where("email = ?", email).Find(&singleId).Error
+	if err != nil || singleId.ID == 0 {
+		return false, err
+	}
+	return false, nil
+}

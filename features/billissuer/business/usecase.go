@@ -2,6 +2,7 @@ package business
 
 import (
 	"errors"
+	"fmt"
 	"invoice-api/features/billissuer"
 	"invoice-api/helper"
 	"invoice-api/middleware"
@@ -20,11 +21,20 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 		return errors.New("bad request")
 	}
 
-	_, err := biBusiness.billissuerData.CreateBillIssuer(data)
+	isExist, err := biBusiness.billissuerData.GetBillIssuerByEmail(data.Email)
 	if err != nil {
 		return err
 	}
+	if isExist {
+		setMessage := fmt.Sprintf("email %v already in use!", data.Email)
+		fmt.Println("Isi setMessage : ", setMessage)
+		return errors.New(setMessage)
+	}
 
+	_, err = biBusiness.billissuerData.CreateBillIssuer(data)
+	if err != nil {
+		return err
+	}
 	// if err := biBusiness.biData.CreateBillIssuer(data); err != nil {
 	// 	return err
 	// }
