@@ -13,7 +13,7 @@ type ReqBIllIssuerAuth struct {
 	Password string `json:"password"`
 }
 
-func (data *ReqBIllIssuerAuth) ToAccountCore() billissuer.BillIssuerCore {
+func (data *ReqBIllIssuerAuth) ToBillIssuerCore() billissuer.BillIssuerCore {
 	return billissuer.BillIssuerCore{
 		Username: data.Username,
 		Password: data.Password,
