@@ -4,7 +4,7 @@ type ClientCore struct {
 	ID      uint
 	NIK     int
 	Name    string
-	Phone   int
+	Phone   string
 	Address string
 	Email   string
 }

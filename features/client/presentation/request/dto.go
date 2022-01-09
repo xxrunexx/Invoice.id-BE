@@ -5,7 +5,7 @@ import "invoice-api/features/client"
 type ReqClient struct {
 	NIK     int    `json:"nik"`
 	Name    string `json:"name"`
-	Phone   int    `json:"phone"`
+	Phone   string `json:"phone"`
 	Address string `json:"address"`
 	Email   string `json:"email"`
 }

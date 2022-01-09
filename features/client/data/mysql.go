@@ -14,8 +14,8 @@ func NewMySqlClient(DB *gorm.DB) client.Data {
 	return &ClientData{DB}
 }
 
-func (clData *ClientData) CreateClient(client client.ClientCore) error {
-	convData := toClientRecord(client)
+func (clData *ClientData) CreateClient(data client.ClientCore) error {
+	convData := toClientRecord(data)
 
 	if err := clData.DB.Create(&convData).Error; err != nil {
 		return err

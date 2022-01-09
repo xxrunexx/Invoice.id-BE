@@ -2,6 +2,7 @@ package driver
 
 import (
 	biData "invoice-api/features/billissuer/data"
+	clData "invoice-api/features/client/data"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -24,5 +25,5 @@ func InitDB() {
 	}
 
 	DB = db
-	DB.AutoMigrate(&biData.BillIssuer{})
+	DB.AutoMigrate(&biData.BillIssuer{}, &clData.Client{})
 }

@@ -10,7 +10,7 @@ type Client struct {
 	gorm.Model
 	NIK     int
 	Name    string
-	Phone   int
+	Phone   string
 	Address string
 	Email   string
 }
