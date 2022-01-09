@@ -3,6 +3,7 @@ package presentation
 import (
 	"invoice-api/features/billissuer"
 	"invoice-api/features/billissuer/presentation/request"
+	"invoice-api/features/billissuer/presentation/response"
 	"invoice-api/helper"
 	"net/http"
 
@@ -29,4 +30,20 @@ func (biHandler *BillIssuerHandler) CreateBillIssuerHandler(e echo.Context) erro
 	}
 
 	return helper.SuccessResponse(e, nil)
+}
+
+func (biHandler *BillIssuerHandler) LoginBillIssuerHandler(e echo.Context) error {
+	billissuerAuth := request.ReqBIllIssuerAuth{}
+	e.Bind(&billissuerAuth)
+
+	data, err := biHandler.billissuerBusiness.LoginBillIssuer(billissuerAuth.ToAccountCore())
+	if err != nil {
+		return e.JSON(http.StatusForbidden, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "successful operator",
+		"data":    response.ToBillIssuerLoginResponse(data),
+	})
 }

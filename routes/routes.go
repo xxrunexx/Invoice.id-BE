@@ -22,5 +22,6 @@ func New() *echo.Echo {
 
 	// Bill Issuer
 	e.POST("/billissuer/register", presenter.BillissuerPresentation.CreateBillIssuerHandler)
+	e.POST("/billissuer/login", presenter.BillissuerPresentation.LoginBillIssuerHandler)
 	return e
 }
