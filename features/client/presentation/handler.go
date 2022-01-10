@@ -3,6 +3,7 @@ package handler
 import (
 	"invoice-api/features/client"
 	"invoice-api/features/client/presentation/request"
+	"invoice-api/features/client/presentation/response"
 	"invoice-api/helper"
 	"net/http"
 
@@ -28,4 +29,13 @@ func (clHandler *ClientHandler) CreateClientHandler(e echo.Context) error {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, newClient)
+}
+
+func (clHandler *ClientHandler) GetAllClientHandler(e echo.Context) error {
+	data, err := clHandler.clientBusiness.GetAllCient(client.ClientCore{})
+
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToClientResponseList(data))
 }

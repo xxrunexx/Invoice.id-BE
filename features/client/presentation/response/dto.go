@@ -19,3 +19,12 @@ func ToClientResponse(client client.ClientCore) RespClient {
 		Email:   client.Email,
 	}
 }
+
+func ToClientResponseList(clList []client.ClientCore) []RespClient {
+	convCl := []RespClient{}
+
+	for _, client := range clList {
+		convCl = append(convCl, ToClientResponse(client))
+	}
+	return convCl
+}
