@@ -12,9 +12,11 @@ type ClientCore struct {
 // Untuk layer business / service
 type Business interface {
 	CreateClient(data ClientCore) (err error)
+	GetAllCient(ClientCore) (clients []ClientCore, err error)
 }
 
 // Untuk layer data / repository
 type Data interface {
 	CreateClient(data ClientCore) (err error)
+	GetAllCient(ClientCore) (clients []ClientCore, err error)
 }

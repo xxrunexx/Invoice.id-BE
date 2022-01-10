@@ -15,13 +15,13 @@ func NewMySqlBillIssuer(DB *gorm.DB) billissuer.Data {
 	return &BillIssuerData{DB}
 }
 
-func (biData *BillIssuerData) CreateBillIssuer(data billissuer.BillIssuerCore) (int, error) {
+func (biData *BillIssuerData) CreateBillIssuer(data billissuer.BillIssuerCore) error {
 	convData := toBillIssuerRecord(data)
 
 	if err := biData.DB.Create(&convData).Error; err != nil {
-		return 0, err
+		return err
 	}
-	return int(convData.ID), nil
+	return nil
 }
 
 func (biData *BillIssuerData) LoginBillIssuer(data billissuer.BillIssuerCore) (billissuer.BillIssuerCore, error) {
@@ -58,10 +58,45 @@ func (biData *BillIssuerData) GetBillIssuerById(id int) (billissuer.BillIssuerCo
 }
 
 func (biData BillIssuerData) GetBillIssuerByEmail(email string) (bool, error) {
-	var singleId BillIssuer
-	err := biData.DB.Where("email = ?", email).Find(&singleId).Error
-	if err != nil || singleId.ID == 0 {
+	var singleData BillIssuer
+	err := biData.DB.Where("email = ?", email).Find(&singleData).Error
+	if err != nil || singleData.ID == 0 {
 		return false, err
 	}
 	return false, nil
+}
+
+func (biData BillIssuerData) UpdateBillIssuer(id int) (billissuer.BillIssuerCore, error) {
+	var singleData BillIssuer
+	// convData := toBillIssuerRecord(data)
+	// if err := biData.DB.Debug().Where("id = ?", id).Updates(&singleData).Error; err != nil {
+	// 	return err
+	// }
+	// err := biData.DB.First(&singleData, id).Error
+	// err := biData.DB.Debug().First(&singleData, id).Updates(&singleData).Error
+
+	// ==PENGGANTI==
+	// err := biData.DB.First(&singleData, id).Error
+
+	// // Eliminate null data
+	// if singleData.Username == "" && singleData.ID == 0 {
+	// 	return billissuer.BillIssuerCore{}, errors.New("user not found")
+	// }
+
+	// if err != nil {
+	// 	return billissuer.BillIssuerCore{}, err
+	// }
+	// ==TUTUP==
+
+	err := biData.DB.Debug().Where("id = ?", id).Updates(&singleData).Error
+
+	// Eliminate null data
+	if singleData.Username == "" && singleData.ID == 0 {
+		return billissuer.BillIssuerCore{}, errors.New("user not found")
+	}
+
+	if err != nil {
+		return billissuer.BillIssuerCore{}, err
+	}
+	return toBillIssuerCore(singleData), nil
 }
