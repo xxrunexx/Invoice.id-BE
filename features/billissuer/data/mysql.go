@@ -47,7 +47,7 @@ func (biData *BillIssuerData) GetBillIssuerById(id int) (billissuer.BillIssuerCo
 	err := biData.DB.First(&singleData, id).Error
 
 	if singleData.Username == "" && singleData.ID == 0 {
-		return billissuer.BillIssuerCore{}, errors.New("user not found")
+		return billissuer.BillIssuerCore{}, errors.New("data not found")
 	}
 
 	if err != nil {
