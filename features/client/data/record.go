@@ -27,3 +27,23 @@ func toClientRecord(client client.ClientCore) Client {
 		Email:   client.Email,
 	}
 }
+
+func toClientCore(cl Client) client.ClientCore {
+	return client.ClientCore{
+		ID:      cl.ID,
+		NIK:     cl.NIK,
+		Name:    cl.Name,
+		Phone:   cl.Phone,
+		Address: cl.Address,
+		Email:   cl.Email,
+	}
+}
+
+func toClientCoreList(clList []Client) []client.ClientCore {
+	convCl := []client.ClientCore{}
+
+	for _, client := range clList {
+		convCl = append(convCl, toClientCore(client))
+	}
+	return convCl
+}

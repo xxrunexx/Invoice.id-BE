@@ -35,7 +35,10 @@ func (biHandler *BillIssuerHandler) CreateBillIssuerHandler(e echo.Context) erro
 
 func (biHandler *BillIssuerHandler) LoginBillIssuerHandler(e echo.Context) error {
 	billissuerAuth := request.ReqBIllIssuerAuth{}
-	e.Bind(&billissuerAuth)
+
+	if err := e.Bind(&billissuerAuth); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
 
 	data, err := biHandler.billissuerBusiness.LoginBillIssuer(billissuerAuth.ToBillIssuerCore())
 	if err != nil {
@@ -63,4 +66,24 @@ func (biHandler BillIssuerHandler) GetBillIssuerByIdHandler(e echo.Context) erro
 		"message": "successful operator",
 		"data":    response.ToBillIssuerResponse(data),
 	})
+}
+
+func (biHandler BillIssuerHandler) UpdateBillIssuerHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	updateData := request.ReqBillIssuer{}
+
+	if err := e.Bind(&updateData); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	// claims := middleware.ExtractClaim(e)
+
+	if _, err := biHandler.billissuerBusiness.UpdateBillIssuer(id); err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+
+	return helper.SuccessResponse(e, nil)
 }

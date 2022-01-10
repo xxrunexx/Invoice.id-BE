@@ -64,20 +64,26 @@ func (biBussiness *BillIssuerBusiness) GetBillIssuerById(id int) (billissuer.Bil
 	return biData, nil
 }
 
-func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(data billissuer.BillIssuerCore) error {
-	if helper.IsEmpty(data.Username) || helper.IsEmpty(data.Password) || helper.IsEmpty(data.Email) {
-		return errors.New("bad request")
-	}
+func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(id int) (billissuer.BillIssuerCore, error) {
+	// biData, err := biBussiness.billissuerData.GetBillIssuerById(id)
 
-	_, err := biBussiness.billissuerData.GetBillIssuerById(int(data.ID))
+	// if err != nil {
+	// 	return billissuer.BillIssuerCore{}, err
+	// }
+
+	// if helper.IsEmpty(biData.Username) || helper.IsEmpty(biData.Password) || helper.IsEmpty(biData.Email) {
+	// 	return billissuer.BillIssuerCore{}, errors.New("bad request")
+	// }
+
+	// _, err := biBussiness.billissuerData.GetBillIssuerById(int(data.ID))
+	// if err != nil {
+	// 	return err
+	// }
+
+	biData, err := biBussiness.billissuerData.UpdateBillIssuer(id)
 	if err != nil {
-		return err
+		return billissuer.BillIssuerCore{}, err
 	}
 
-	err = biBussiness.billissuerData.UpdateBillIssuer(data)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return biData, nil
 }

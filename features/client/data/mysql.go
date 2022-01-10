@@ -22,3 +22,14 @@ func (clData *ClientData) CreateClient(data client.ClientCore) error {
 	}
 	return nil
 }
+
+func (clData *ClientData) GetAllCient(data client.ClientCore) ([]client.ClientCore, error) {
+	var clients []Client
+
+	err := clData.DB.Find(&clients).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return toClientCoreList(clients), nil
+}

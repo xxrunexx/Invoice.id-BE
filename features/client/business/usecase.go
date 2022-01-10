@@ -16,3 +16,12 @@ func (clBusiness *ClientBusiness) CreateClient(data client.ClientCore) error {
 	}
 	return nil
 }
+
+func (clBussiness *ClientBusiness) GetAllCient(data client.ClientCore) ([]client.ClientCore, error) {
+	clients, err := clBussiness.clienData.GetAllCient(data)
+
+	if err != nil {
+		return nil, err
+	}
+	return clients, nil
+}
