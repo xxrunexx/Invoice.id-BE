@@ -6,6 +6,7 @@ import (
 	"invoice-api/features/client/presentation/response"
 	"invoice-api/helper"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -38,4 +39,16 @@ func (clHandler *ClientHandler) GetAllClientHandler(e echo.Context) error {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, response.ToClientResponseList(data))
+}
+
+func (clHandler *ClientHandler) GetClientById(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+	data, err := clHandler.clientBusiness.GetClientById(id)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToClientResponse(data))
 }

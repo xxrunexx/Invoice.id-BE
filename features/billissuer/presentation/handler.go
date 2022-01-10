@@ -51,16 +51,12 @@ func (biHandler *BillIssuerHandler) LoginBillIssuerHandler(e echo.Context) error
 func (biHandler BillIssuerHandler) GetBillIssuerByIdHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
 	if err != nil {
-		return e.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": err.Error(),
-		})
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 
 	data, err := biHandler.billissuerBusiness.GetBillIssuerById(id)
 	if err != nil {
-		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": err.Error(),
-		})
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "successful operator",

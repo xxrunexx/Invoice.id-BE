@@ -25,3 +25,12 @@ func (clBussiness *ClientBusiness) GetAllCient(data client.ClientCore) ([]client
 	}
 	return clients, nil
 }
+
+func (clBussiness *ClientBusiness) GetClientById(id int) (client.ClientCore, error) {
+	clData, err := clBussiness.clienData.GetClientById(id)
+
+	if err != nil {
+		return client.ClientCore{}, err
+	}
+	return clData, nil
+}

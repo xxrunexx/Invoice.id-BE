@@ -29,5 +29,6 @@ func New() *echo.Echo {
 	// Client
 	e.POST("/client/add", presenter.ClientPresentation.CreateClientHandler)
 	e.GET("/client", presenter.ClientPresentation.GetAllClientHandler)
+	e.GET("/client/:id", presenter.ClientPresentation.GetClientById)
 	return e
 }
