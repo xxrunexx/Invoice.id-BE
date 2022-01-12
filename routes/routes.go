@@ -13,6 +13,7 @@ func New() *echo.Echo {
 
 	// Initiate Echo & JWT
 	e := echo.New()
+	e.Use(middleware.CORS())
 	jwt := e.Group("")
 	jwt.Use(middleware.JWT([]byte(config.JWT_KEY)))
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{

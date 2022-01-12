@@ -3,7 +3,7 @@ package invoice
 import "time"
 
 type InvoiceCore struct {
-	ID              int
+	ID              uint
 	ClientID        int
 	Total           int
 	BillIssuerID    int

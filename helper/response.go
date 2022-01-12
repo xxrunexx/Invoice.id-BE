@@ -16,12 +16,12 @@ type BaseReponse struct {
 }
 
 // Valid Response
-func SuccessResponse(c echo.Context, data interface{}) error {
+func SuccessResponse(e echo.Context, data interface{}) error {
 	response := BaseReponse{}
 	response.Meta.Status = http.StatusOK
 	response.Meta.Message = "successful operator"
 	response.Data = data
-	return c.JSON(http.StatusOK, response)
+	return e.JSON(http.StatusOK, response)
 }
 
 // Invalid Response

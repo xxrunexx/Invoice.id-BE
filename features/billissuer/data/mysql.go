@@ -2,6 +2,7 @@ package data
 
 import (
 	"errors"
+	"fmt"
 	"invoice-api/features/billissuer"
 
 	"gorm.io/gorm"
@@ -59,11 +60,12 @@ func (biData *BillIssuerData) GetBillIssuerById(id int) (billissuer.BillIssuerCo
 
 func (biData BillIssuerData) GetBillIssuerByEmail(email string) (bool, error) {
 	var singleData BillIssuer
+	fmt.Println("Isi email di data", email)
 	err := biData.DB.Where("email = ?", email).Find(&singleData).Error
 	if err != nil || singleData.ID == 0 {
 		return false, err
 	}
-	return false, nil
+	return true, nil
 }
 
 func (biData BillIssuerData) UpdateBillIssuer(id int) (billissuer.BillIssuerCore, error) {
