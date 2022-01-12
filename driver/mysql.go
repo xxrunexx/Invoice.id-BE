@@ -14,7 +14,7 @@ func InitDB() {
 	// For Linux
 	dsn := "root:admin@tcp(127.0.0.1)/invoicein?parseTime=true"
 	// For Windows
-	// dsn := "root:@tcp(127.0.0.1)/moviein?parseTime=true"
+	// dsn := "root:@tcp(127.0.0.1)/invoice?parseTime=true"
 	// For Amazon RDS
 	// dsn := "admin:40fied40@tcp(moviein.c4v71mtnu5pg.us-east-2.rds.amazonaws.com)/moviein?parseTime=true"
 
