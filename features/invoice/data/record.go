@@ -9,12 +9,12 @@ import (
 
 type Invoice struct {
 	gorm.Model
-	ClientID        int
+	ClientID        uint
 	Total           int
-	BillIssuerID    int
-	PaymentMethodID int
+	BillIssuerID    uint
+	PaymentMethodID uint
 	PaymentDue      time.Time
-	PaymentStatus   string
+	PaymentStatus   string `gorm:"default:draft"`
 }
 
 func toInvoiceRecord(invoice invoice.InvoiceCore) Invoice {
@@ -33,14 +33,16 @@ func toInvoiceRecord(invoice invoice.InvoiceCore) Invoice {
 	}
 }
 
-func toInvoiceCore(in Invoice) invoice.InvoiceCore {
-	return invoice.InvoiceCore{
-		ID:              in.ID,
-		ClientID:        in.ClientID,
-		Total:           in.Total,
-		BillIssuerID:    in.BillIssuerID,
-		PaymentMethodID: in.PaymentMethodID,
-		PaymentDue:      in.PaymentDue,
-		PaymentStatus:   in.PaymentStatus,
-	}
-}
+// func toInvoiceCore(in Invoice) invoice.InvoiceCore {
+// 	return invoice.InvoiceCore{
+// 		ID:              in.ID,
+// 		ClientID:        in.ClientID,
+// 		Total:           in.Total,
+// 		BillIssuerID:    in.BillIssuerID,
+// 		PaymentMethodID: in.PaymentMethodID,
+// 		PaymentDue:      in.PaymentDue,
+// 		PaymentStatus:   in.PaymentStatus,
+// 		CreatedAt:       in.CreatedAt,
+// 		UpdatedAt:       in.UpdatedAt,
+// 	}
+// }

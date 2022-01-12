@@ -6,10 +6,10 @@ import (
 )
 
 type ReqInvoice struct {
-	ClientID        int       `json:"client_id"`
+	ClientID        uint      `json:"client_id"`
 	Total           int       `json:"total"`
-	BillIssuerID    int       `json:"bill_issuer_id"`
-	PaymentMethodID int       `json:"payment_method_id"`
+	BillIssuerID    uint      `json:"bill_issuer_id"`
+	PaymentMethodID uint      `json:"payment_method_id"`
 	PaymentDue      time.Time `json:"payment_due"`
 }
 

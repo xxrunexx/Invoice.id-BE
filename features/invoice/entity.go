@@ -4,10 +4,10 @@ import "time"
 
 type InvoiceCore struct {
 	ID              uint
-	ClientID        int
+	ClientID        uint
 	Total           int
-	BillIssuerID    int
-	PaymentMethodID int
+	BillIssuerID    uint
+	PaymentMethodID uint
 	PaymentDue      time.Time
 	PaymentStatus   string
 	CreatedAt       time.Time
