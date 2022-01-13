@@ -27,6 +27,7 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 	}
 	if isExist {
 		setMessage := fmt.Sprintf("email %v already in use!", data.Email)
+		fmt.Println("Isi email di business", data.Email)
 		fmt.Println("Isi setMessage : ", setMessage)
 		return errors.New(setMessage)
 	}
