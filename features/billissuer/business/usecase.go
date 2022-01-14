@@ -36,10 +36,6 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 	if err != nil {
 		return err
 	}
-	// if err := biBusiness.biData.CreateBillIssuer(data); err != nil {
-	// 	return err
-	// }
-
 	return nil
 }
 

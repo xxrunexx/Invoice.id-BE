@@ -68,37 +68,13 @@ func (biData BillIssuerData) GetBillIssuerByEmail(email string) (bool, error) {
 	return true, nil
 }
 
-func (biData BillIssuerData) UpdateBillIssuer(id int) (billissuer.BillIssuerCore, error) {
+func (biData BillIssuerData) UpdateBillIssuer(data billissuer.BillIssuerCore) error {
 	var singleData BillIssuer
-	// convData := toBillIssuerRecord(data)
-	// if err := biData.DB.Debug().Where("id = ?", id).Updates(&singleData).Error; err != nil {
-	// 	return err
-	// }
-	// err := biData.DB.First(&singleData, id).Error
-	// err := biData.DB.Debug().First(&singleData, id).Updates(&singleData).Error
-
-	// ==PENGGANTI==
-	// err := biData.DB.First(&singleData, id).Error
-
-	// // Eliminate null data
-	// if singleData.Username == "" && singleData.ID == 0 {
-	// 	return billissuer.BillIssuerCore{}, errors.New("user not found")
-	// }
-
-	// if err != nil {
-	// 	return billissuer.BillIssuerCore{}, err
-	// }
-	// ==TUTUP==
-
-	err := biData.DB.Debug().Where("id = ?", id).Updates(&singleData).Error
-
-	// Eliminate null data
-	if singleData.Username == "" && singleData.ID == 0 {
-		return billissuer.BillIssuerCore{}, errors.New("user not found")
-	}
+	convData := toBillIssuerRecord(data)
+	err := biData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
 
 	if err != nil {
-		return billissuer.BillIssuerCore{}, err
+		return err
 	}
-	return toBillIssuerCore(singleData), nil
+	return nil
 }
