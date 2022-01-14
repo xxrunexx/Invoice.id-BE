@@ -22,3 +22,15 @@ func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) error {
 	}
 	return nil
 }
+
+func (inData *InvoiceData) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
+	var invoices []Invoice
+
+	err := inData.DB.Find(&invoices).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return toInvoiceCoreList(invoices), nil
+}

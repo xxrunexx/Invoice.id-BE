@@ -13,7 +13,7 @@ type Business interface {
 	CreateBillIssuer(data BillIssuerCore) (err error)
 	LoginBillIssuer(data BillIssuerCore) (billissuer BillIssuerCore, err error)
 	GetBillIssuerById(id int) (billissuer BillIssuerCore, err error)
-	UpdateBillIssuer(id int) (billissuer BillIssuerCore, err error)
+	UpdateBillIssuer(data BillIssuerCore) error
 }
 
 // Untuk layer data / repository
@@ -22,5 +22,5 @@ type Data interface {
 	LoginBillIssuer(data BillIssuerCore) (billissuer BillIssuerCore, err error)
 	GetBillIssuerById(id int) (billisser BillIssuerCore, err error)
 	GetBillIssuerByEmail(email string) (bool, error)
-	UpdateBillIssuer(id int) (billissuer BillIssuerCore, err error)
+	UpdateBillIssuer(data BillIssuerCore) error
 }

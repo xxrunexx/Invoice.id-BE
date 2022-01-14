@@ -76,5 +76,5 @@ func (biHandler BillIssuerHandler) UpdateBillIssuerHandler(e echo.Context) error
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 
-	return helper.SuccessResponse(e, nil)
+	return helper.SuccessResponse(e, updateData)
 }
