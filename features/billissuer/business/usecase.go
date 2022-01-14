@@ -27,6 +27,7 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 	}
 	if isExist {
 		setMessage := fmt.Sprintf("email %v already in use!", data.Email)
+		fmt.Println("Isi email di business", data.Email)
 		fmt.Println("Isi setMessage : ", setMessage)
 		return errors.New(setMessage)
 	}
@@ -60,21 +61,26 @@ func (biBussiness *BillIssuerBusiness) GetBillIssuerById(id int) (billissuer.Bil
 	return biData, nil
 }
 
-func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(data billissuer.BillIssuerCore) error {
-	if helper.IsEmpty(data.Username) || helper.IsEmpty(data.Password) || helper.IsEmpty(data.Email) {
-		return errors.New("invalid data")
-	}
+func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(id int) (billissuer.BillIssuerCore, error) {
+	// biData, err := biBussiness.billissuerData.GetBillIssuerById(id)
 
-	// data, err := biBussiness.billissuerData.GetBillIssuerById(int(data.ID))
+	// if err != nil {
+	// 	return billissuer.BillIssuerCore{}, err
+	// }
 
+	// if helper.IsEmpty(biData.Username) || helper.IsEmpty(biData.Password) || helper.IsEmpty(biData.Email) {
+	// 	return billissuer.BillIssuerCore{}, errors.New("bad request")
+	// }
+
+	// _, err := biBussiness.billissuerData.GetBillIssuerById(int(data.ID))
 	// if err != nil {
 	// 	return err
 	// }
 
-	err := biBussiness.billissuerData.UpdateBillIssuer(data)
+	biData, err := biBussiness.billissuerData.UpdateBillIssuer(id)
 	if err != nil {
-		return err
+		return billissuer.BillIssuerCore{}, err
 	}
 
-	return nil
+	return biData, nil
 }
