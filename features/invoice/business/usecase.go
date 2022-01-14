@@ -25,3 +25,12 @@ func (inBusiness *InvoiceBusiness) GetAllInvoice(data invoice.InvoiceCore) ([]in
 	}
 	return invoices, nil
 }
+
+func (inBusiness *InvoiceBusiness) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
+	inData, err := inBusiness.invoiceData.GetInvoiceById(id)
+
+	if err != nil {
+		return invoice.InvoiceCore{}, err
+	}
+	return inData, nil
+}

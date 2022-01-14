@@ -1,30 +1,34 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"fmt"
+
+	"github.com/spf13/viper"
+)
 
 type Config struct {
-	DBHost     string `mapstructure:"DB_HOST"`
-	DBPort     string `mapstructure:"DB_PORT"`
-	DBUser     string `mapstructure:"DB_USER"`
-	DBPass     string `mapstructure:"DB_PASS"`
-	DBName     string `mapstructure:"DB_NAME"`
-	JWTsecret  string `mapstructure:"JWT_SECRET"`
-	ServerPort string `mapstructure:"SERVER_PORT"`
-	ServerHost string `mapstructure:"SERVER_HOST"`
+	DBHost    string `yaml:"host"`
+	DBPort    string `yaml:"port"`
+	DBUser    string `yaml:"user"`
+	DBPass    string `yaml:"pass"`
+	DBName    string `yaml:"name"`
+	JWTsecret string `yaml:"secret"`
+	// ServerPort string `yaml:"SERVER_PORT"`
+	// ServerHost string `yaml:"SERVER_HOST"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath(path)
-	viper.SetConfigName("app")
-	viper.SetConfigType("env")
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
 
 	viper.AutomaticEnv()
 	err = viper.ReadInConfig()
 	if err != nil {
 		return Config{}, err
 	}
-
 	err = viper.Unmarshal(&config)
+	fmt.Println("Isi config", config)
 
 	return config, err
 }
