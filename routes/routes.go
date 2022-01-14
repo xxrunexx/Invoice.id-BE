@@ -35,5 +35,7 @@ func New() *echo.Echo {
 	// Invoice
 	e.POST("/invoice/add", presenter.InvoicePresentation.CreateInvoiceHandler)
 	e.GET("/invoice", presenter.InvoicePresentation.GetAllInvoiceHandler)
+	e.GET("/invoice/:id", presenter.InvoicePresentation.GetInvoiceByIdHandler)
+
 	return e
 }
