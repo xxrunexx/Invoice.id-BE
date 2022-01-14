@@ -35,10 +35,6 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 	if err != nil {
 		return err
 	}
-	// if err := biBusiness.biData.CreateBillIssuer(data); err != nil {
-	// 	return err
-	// }
-
 	return nil
 }
 
@@ -66,15 +62,16 @@ func (biBussiness *BillIssuerBusiness) GetBillIssuerById(id int) (billissuer.Bil
 
 func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(data billissuer.BillIssuerCore) error {
 	if helper.IsEmpty(data.Username) || helper.IsEmpty(data.Password) || helper.IsEmpty(data.Email) {
-		return errors.New("bad request")
+		return errors.New("invalid data")
 	}
 
-	_, err := biBussiness.billissuerData.GetBillIssuerById(int(data.ID))
-	if err != nil {
-		return err
-	}
+	// data, err := biBussiness.billissuerData.GetBillIssuerById(int(data.ID))
 
-	err = biBussiness.billissuerData.UpdateBillIssuer(data)
+	// if err != nil {
+	// 	return err
+	// }
+
+	err := biBussiness.billissuerData.UpdateBillIssuer(data)
 	if err != nil {
 		return err
 	}

@@ -64,3 +64,18 @@ func (biHandler BillIssuerHandler) GetBillIssuerByIdHandler(e echo.Context) erro
 		"data":    response.ToBillIssuerResponse(data),
 	})
 }
+
+func (biHandler BillIssuerHandler) UpdateBillIssuerHandler(e echo.Context) error {
+	updateData := request.ReqBillIssuerUpdate{}
+
+	if err := e.Bind(&updateData); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	// claims := middleware.ExtractClaim(e)
+	if err := biHandler.billissuerBusiness.UpdateBillIssuer(updateData.ToBillIssuerCore()); err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+
+	return helper.SuccessResponse(e, nil)
+}

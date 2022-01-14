@@ -67,11 +67,12 @@ func (biData BillIssuerData) GetBillIssuerByEmail(email string) (bool, error) {
 }
 
 func (biData BillIssuerData) UpdateBillIssuer(data billissuer.BillIssuerCore) error {
-	// var singleData BillIssuer
+	var singleData BillIssuer
 	convData := toBillIssuerRecord(data)
-	if err := biData.DB.Debug().Where("id = ?", data.ID).Updates(&convData).Error; err != nil {
+	err := biData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
+
+	if err != nil {
 		return err
 	}
-
 	return nil
 }

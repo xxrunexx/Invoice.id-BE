@@ -24,6 +24,7 @@ func New() *echo.Echo {
 	e.POST("/billissuer/register", presenter.BillissuerPresentation.CreateBillIssuerHandler)
 	e.POST("/billissuer/login", presenter.BillissuerPresentation.LoginBillIssuerHandler)
 	e.GET("/billissuer/:id", presenter.BillissuerPresentation.GetBillIssuerByIdHandler)
+	e.PUT("/billissuer", presenter.BillissuerPresentation.UpdateBillIssuerHandler)
 
 	// Client
 	e.POST("/client/add", presenter.ClientPresentation.CreateClientHandler)

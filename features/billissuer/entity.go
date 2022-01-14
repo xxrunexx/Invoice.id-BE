@@ -10,7 +10,6 @@ type BillIssuerCore struct {
 
 // Untuk layer business
 type Business interface {
-	// CreateBillIssuer(biData BillIssuerCore) (err error)
 	CreateBillIssuer(data BillIssuerCore) (err error)
 	LoginBillIssuer(data BillIssuerCore) (billissuer BillIssuerCore, err error)
 	GetBillIssuerById(id int) (billissuer BillIssuerCore, err error)
