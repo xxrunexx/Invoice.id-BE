@@ -33,16 +33,25 @@ func toInvoiceRecord(invoice invoice.InvoiceCore) Invoice {
 	}
 }
 
-// func toInvoiceCore(in Invoice) invoice.InvoiceCore {
-// 	return invoice.InvoiceCore{
-// 		ID:              in.ID,
-// 		ClientID:        in.ClientID,
-// 		Total:           in.Total,
-// 		BillIssuerID:    in.BillIssuerID,
-// 		PaymentMethodID: in.PaymentMethodID,
-// 		PaymentDue:      in.PaymentDue,
-// 		PaymentStatus:   in.PaymentStatus,
-// 		CreatedAt:       in.CreatedAt,
-// 		UpdatedAt:       in.UpdatedAt,
-// 	}
-// }
+func toInvoiceCore(in Invoice) invoice.InvoiceCore {
+	return invoice.InvoiceCore{
+		ID:              in.ID,
+		ClientID:        in.ClientID,
+		Total:           in.Total,
+		BillIssuerID:    in.BillIssuerID,
+		PaymentMethodID: in.PaymentMethodID,
+		PaymentDue:      in.PaymentDue,
+		PaymentStatus:   in.PaymentStatus,
+		CreatedAt:       in.CreatedAt,
+		UpdatedAt:       in.UpdatedAt,
+	}
+}
+
+func toInvoiceCoreList(inList []Invoice) []invoice.InvoiceCore {
+	convIn := []invoice.InvoiceCore{}
+
+	for _, invoice := range inList {
+		convIn = append(convIn, toInvoiceCore(invoice))
+	}
+	return convIn
+}

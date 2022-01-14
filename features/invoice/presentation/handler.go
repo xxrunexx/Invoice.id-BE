@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"invoice-api/features/invoice"
 	"invoice-api/features/invoice/presentation/request"
+	"invoice-api/features/invoice/presentation/response"
 	"invoice-api/helper"
 	"net/http"
 
@@ -31,4 +32,13 @@ func (inHandler *InvoiceHandler) CreateInvoiceHandler(e echo.Context) error {
 	}
 
 	return helper.SuccessResponse(e, newInvoice)
+}
+
+func (inHandler *InvoiceHandler) GetAllInvoiceHandler(e echo.Context) error {
+	data, err := inHandler.invoiceBusiness.GetAllInvoice(invoice.InvoiceCore{})
+
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
 }

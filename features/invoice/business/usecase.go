@@ -16,3 +16,12 @@ func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error
 	}
 	return nil
 }
+
+func (inBusiness *InvoiceBusiness) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
+	invoices, err := inBusiness.invoiceData.GetAllInvoice(data)
+
+	if err != nil {
+		return nil, err
+	}
+	return invoices, nil
+}
