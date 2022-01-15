@@ -17,7 +17,7 @@ func NewHandlerPaymentMethod(paymentmethodBusiness paymentmethod.Business) *Paym
 	return &PaymentMethodHandler{paymentmethodBusiness}
 }
 
-func (pmHandler *PaymentMethodHandler) CreatePaymentMethod(e echo.Context) error {
+func (pmHandler *PaymentMethodHandler) CreatePaymentMethodHandler(e echo.Context) error {
 	newPaymentMethod := request.ReqPaymentMethod{}
 
 	if err := e.Bind(&newPaymentMethod); err != nil {
