@@ -3,19 +3,25 @@ package routes
 import (
 	"invoice-api/config"
 	"invoice-api/factory"
+	"log"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func New() *echo.Echo {
+	config, err := config.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config", err)
+	}
+
 	presenter := factory.Init()
 
 	// Initiate Echo & JWT
 	e := echo.New()
 	e.Use(middleware.CORS())
 	jwt := e.Group("")
-	jwt.Use(middleware.JWT([]byte(config.JWT_KEY)))
+	jwt.Use(middleware.JWT([]byte(config.JWTsecret)))
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
@@ -36,6 +42,6 @@ func New() *echo.Echo {
 	e.POST("/invoice/add", presenter.InvoicePresentation.CreateInvoiceHandler)
 	e.GET("/invoice", presenter.InvoicePresentation.GetAllInvoiceHandler)
 	e.GET("/invoice/:id", presenter.InvoicePresentation.GetInvoiceByIdHandler)
-
+  e.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
 	return e
 }

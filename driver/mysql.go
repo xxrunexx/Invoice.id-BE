@@ -1,9 +1,12 @@
 package driver
 
 import (
+	"fmt"
+	"invoice-api/config"
 	biData "invoice-api/features/billissuer/data"
 	clData "invoice-api/features/client/data"
 	inData "invoice-api/features/invoice/data"
+	"log"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -12,22 +15,22 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
-	// config, err := config.LoadConfig(".")
-	// if err != nil {
-	// 	log.Fatal("cannot load config", err)
-	// }
-	// fmt.Println("Config : ", config)
+	config, err := config.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config", err)
+	}
+	fmt.Println("Config : ", config)
 
-	// dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
-	// 	config.DBUser,
-	// 	config.DBPass,
-	// 	config.DBHost,
-	// 	config.DBPort,
-	// 	config.DBName,
-	// )
+	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
+		config.DBUser,
+		config.DBPass,
+		config.DBHost,
+		config.DBPort,
+		config.DBName,
+	)
 
 	// For Linux
-	dsn := "root:admin@tcp(127.0.0.1)/invoicein?parseTime=true"
+	// dsn := "root:admin@tcp(127.0.0.1)/invoicein?parseTime=true"
 	// For Windows
 	// dsn := "root:@tcp(127.0.0.1)/invoice?parseTime=true"
 	// For Amazon RDS
@@ -38,7 +41,7 @@ func InitDB() {
 	// 	panic(err.Error())
 	// }
 
-	var err error
+	// var err error
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err.Error())

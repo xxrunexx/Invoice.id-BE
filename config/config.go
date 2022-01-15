@@ -7,14 +7,15 @@ import (
 )
 
 type Config struct {
-	DBHost    string `yaml:"host"`
-	DBPort    string `yaml:"port"`
-	DBUser    string `yaml:"user"`
-	DBPass    string `yaml:"pass"`
-	DBName    string `yaml:"name"`
-	JWTsecret string `yaml:"secret"`
-	// ServerPort string `yaml:"SERVER_PORT"`
-	// ServerHost string `yaml:"SERVER_HOST"`
+	DBHost    string `mapstructure:"DB_HOST"`
+	DBPort    string `mapstructure:"DB_PORT"`
+	DBUser    string `mapstructure:"DB_USER"`
+	DBPass    string `mapstructure:"DB_PASS"`
+	DBName    string `mapstructure:"DB_NAME"`
+	JWTsecret string `mapstructure:"JWT_SECRET"`
+	// Save for later
+	// ServerPort string `mapstructure:"SERVER_PORT"`
+	// ServerHost string `mapstructure:"SERVER_HOST"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
