@@ -31,4 +31,12 @@ func (inBusiness *InvoiceBusiness) DeleteInvoice(id int) error {
 		return err
 	}
 	return nil
+
+func (inBusiness *InvoiceBusiness) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
+	inData, err := inBusiness.invoiceData.GetInvoiceById(id)
+
+	if err != nil {
+		return invoice.InvoiceCore{}, err
+	}
+	return inData, nil
 }
