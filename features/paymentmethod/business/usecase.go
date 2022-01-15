@@ -15,7 +15,7 @@ func NewBusinessPaymentMethod(pmData paymentmethod.Data) paymentmethod.Business 
 }
 
 func (pmBusiness *PaymentMethodBusiness) CreatePaymentMethod(data paymentmethod.PaymentMethodCore) error {
-	if !helper.IsEmpty(data.Name) {
+	if helper.IsEmpty(data.Name) {
 		return errors.New("bad request")
 	}
 

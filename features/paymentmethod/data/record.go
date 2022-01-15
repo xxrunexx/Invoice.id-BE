@@ -9,7 +9,7 @@ import (
 type PaymentMethod struct {
 	gorm.Model
 	Name     string
-	IsActive bool `gorm:"default:true"`
+	IsActive bool
 }
 
 func toPaymentMethodRecord(paymentmethod paymentmethod.PaymentMethodCore) PaymentMethod {
