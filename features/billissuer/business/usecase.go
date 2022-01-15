@@ -17,7 +17,7 @@ func NewBusinessBillIssuer(biData billissuer.Data) billissuer.Business {
 }
 
 func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssuerCore) error {
-	if !helper.ValidateEmail(data.Email) || !helper.ValidatePassword(data.Password) || len(data.Username) == 0 {
+	if !helper.ValidateEmail(data.Email) || !helper.ValidatePassword(data.Password) || helper.IsEmpty(data.Username) {
 		return errors.New("bad request")
 	}
 

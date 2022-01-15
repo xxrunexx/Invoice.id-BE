@@ -44,6 +44,7 @@ func (inData *InvoiceData) DeleteInvoice(id int) error {
 		return err
 	}
 	return nil
+}
 
 func (inData *InvoiceData) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 	var singleData Invoice
