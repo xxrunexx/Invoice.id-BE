@@ -7,6 +7,7 @@ import (
 	"invoice-api/features/invoice/presentation/response"
 	"invoice-api/helper"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -41,4 +42,19 @@ func (inHandler *InvoiceHandler) GetAllInvoiceHandler(e echo.Context) error {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
+}
+
+func (inHandler *InvoiceHandler) DeleteInvoiceHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.QueryParam("id"))
+	// fmt.Println("Isi id : ", id)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+	err = inHandler.invoiceBusiness.DeleteInvoice(id)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, map[string]interface{}{
+		"message": "data deleted",
+	})
 }
