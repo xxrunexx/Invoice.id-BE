@@ -47,7 +47,7 @@ func Init() presenter {
 
 	// Bill Issuer Detail
 	billissuerdetailData := biddata.NewMySqlBillIssuerDetail(driver.DB)
-	billissuerdetailBusiness := bidbus.NewBusinessBillIssuerDetail(billissuerdetailData)
+	billissuerdetailBusiness := bidbus.NewBusinessBillIssuerDetail(billissuerdetailData, billissuerData)
 
 	return presenter{
 		BillissuerPresentation:       *bipres.NewHandlerBillIssuer(billissuerBusiness),

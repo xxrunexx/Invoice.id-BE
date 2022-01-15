@@ -2,16 +2,21 @@ package business
 
 import (
 	"errors"
+	"invoice-api/features/billissuer"
 	"invoice-api/features/billissuerdetail"
 	"invoice-api/helper"
 )
 
 type BillIssuerDetailBusiness struct {
 	billissuerdetailData billissuerdetail.Data
+	billissuerData       billissuer.Data
 }
 
-func NewBusinessBillIssuerDetail(bidData billissuerdetail.Data) billissuerdetail.Business {
-	return &BillIssuerDetailBusiness{bidData}
+func NewBusinessBillIssuerDetail(bidData billissuerdetail.Data, biData billissuer.Data) billissuerdetail.Business {
+	return &BillIssuerDetailBusiness{
+		billissuerdetailData: bidData,
+		billissuerData:       biData,
+	}
 }
 
 func (bidBusiness *BillIssuerDetailBusiness) CreateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) error {
@@ -19,7 +24,12 @@ func (bidBusiness *BillIssuerDetailBusiness) CreateBillIssuerDetail(data billiss
 		return errors.New("bad request")
 	}
 
-	err := bidBusiness.billissuerdetailData.CreateBillIssuerDetail(data)
+	_, err := bidBusiness.billissuerData.GetBillIssuerById(int(data.BillIssuerID))
+	if err != nil {
+		return errors.New("user not found")
+	}
+
+	err = bidBusiness.billissuerdetailData.CreateBillIssuerDetail(data)
 	if err != nil {
 		return err
 	}
