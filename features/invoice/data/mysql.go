@@ -34,3 +34,13 @@ func (inData *InvoiceData) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.In
 
 	return toInvoiceCoreList(invoices), nil
 }
+
+func (inData *InvoiceData) DeleteInvoice(id int) error {
+	var singleInvoice Invoice
+
+	err := inData.DB.Where("id = ?", id).Delete(&singleInvoice).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
