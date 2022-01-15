@@ -41,6 +41,6 @@ func New() *echo.Echo {
 	// Invoice
 	e.POST("/invoice/add", presenter.InvoicePresentation.CreateInvoiceHandler)
 	e.GET("/invoice", presenter.InvoicePresentation.GetAllInvoiceHandler)
-	e.DELETE("/invoice/delete/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
+	e.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
 	return e
 }

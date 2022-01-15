@@ -45,8 +45,8 @@ func (inHandler *InvoiceHandler) GetAllInvoiceHandler(e echo.Context) error {
 }
 
 func (inHandler *InvoiceHandler) DeleteInvoiceHandler(e echo.Context) error {
-	id, err := strconv.Atoi(e.QueryParam("id"))
-	// fmt.Println("Isi id : ", id)
+	id, err := strconv.Atoi(e.Param("id"))
+	fmt.Println("Isi id : ", id)
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
@@ -55,6 +55,6 @@ func (inHandler *InvoiceHandler) DeleteInvoiceHandler(e echo.Context) error {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, map[string]interface{}{
-		"message": "data deleted",
+		"message": "data successfully deleted",
 	})
 }
