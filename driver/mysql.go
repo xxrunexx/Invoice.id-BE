@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"invoice-api/config"
 	biData "invoice-api/features/billissuer/data"
+	bidData "invoice-api/features/billissuerdetail/data"
 	clData "invoice-api/features/client/data"
 	inData "invoice-api/features/invoice/data"
 	"log"
@@ -36,11 +37,6 @@ func InitDB() {
 	// For Amazon RDS
 	// dsn := "admin:40fied40@tcp(moviein.c4v71mtnu5pg.us-east-2.rds.amazonaws.com)/moviein?parseTime=true"
 
-	// DB, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	// if err != nil {
-	// 	panic(err.Error())
-	// }
-
 	// var err error
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -49,5 +45,5 @@ func InitDB() {
 
 	DB = db
 
-	DB.AutoMigrate(&biData.BillIssuer{}, &clData.Client{}, &inData.Invoice{})
+	DB.AutoMigrate(&biData.BillIssuer{}, &clData.Client{}, &inData.Invoice{}, &bidData.BillIssuerDetail{})
 }
