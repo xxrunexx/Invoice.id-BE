@@ -57,3 +57,7 @@ func (inBusiness *InvoiceBusiness) GetInvoiceByStatus(status string) ([]invoice.
 	}
 	return invoices, nil
 }
+
+func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error {
+	if helper.IsEmpty(data.Total) || helper.IsEmpty(data)
+}
