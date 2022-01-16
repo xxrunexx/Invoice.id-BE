@@ -52,3 +52,15 @@ func (clHandler *ClientHandler) GetClientById(e echo.Context) error {
 	}
 	return helper.SuccessResponse(e, response.ToClientResponse(data))
 }
+
+func (clHandler *ClientHandler) UpdateClient(e echo.Context) error {
+	updateData := request.ReqClient{}
+
+	if err := e.Bind(&updateData); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+	if err := clHandler.clientBusiness.UpdateClient(updateData.ToClientCore()); err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, updateData)
+}

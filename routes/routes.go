@@ -37,6 +37,7 @@ func New() *echo.Echo {
 	e.POST("/client/add", presenter.ClientPresentation.CreateClientHandler)
 	e.GET("/client", presenter.ClientPresentation.GetAllClientHandler)
 	e.GET("/client/:id", presenter.ClientPresentation.GetClientById)
+	e.PUT("/client", presenter.ClientPresentation.UpdateClient)
 
 	// Invoice
 	e.POST("/invoice/add", presenter.InvoicePresentation.CreateInvoiceHandler)
