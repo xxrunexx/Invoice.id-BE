@@ -59,10 +59,6 @@ func (biHandler BillIssuerHandler) GetBillIssuerByIdHandler(e echo.Context) erro
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, response.ToBillIssuerResponse(data))
-	// return e.JSON(http.StatusOK, map[string]interface{}{
-	// 	"message": "successful operator",
-	// 	"data":    response.ToBillIssuerResponse(data),
-	// })
 }
 
 func (biHandler BillIssuerHandler) UpdateBillIssuerHandler(e echo.Context) error {

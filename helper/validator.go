@@ -20,6 +20,13 @@ func ValidatePassword(password string) bool {
 	return true
 }
 
+func ValidateStatus(status string) bool {
+	if (status == "draft") || (status == "paid") || (status == "unpaid") || (status == "processed") {
+		return true
+	}
+	return false
+}
+
 // Check Empty Form
 func IsEmpty(str string) bool {
 	// Trimming Whitespace

@@ -65,7 +65,7 @@ func (inData *InvoiceData) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 func (inData *InvoiceData) GetInvoiceByStatus(status string) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
 
-	err := inData.DB.Where("status = ?", status).Find(&invoices).Error
+	err := inData.DB.Where("payment_status = ?", status).Find(&invoices).Error
 	if err != nil {
 		return nil, err
 	}
