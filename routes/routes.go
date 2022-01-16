@@ -47,5 +47,8 @@ func New() *echo.Echo {
 	// Bill Issuer Detail
 	e.POST("/billissuerdetail/add", presenter.BillissuerdetailPresentation.CreateBillIssuerDetailHandler)
 	e.GET("/billissuerdetail/:id", presenter.BillissuerdetailPresentation.GetBillIssuerDetailById)
+
+	// Payment Method
+	e.POST("/paymentmethod/add", presenter.PaymentmethodPresentation.CreatePaymentMethodHandler)
 	return e
 }
