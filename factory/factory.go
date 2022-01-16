@@ -22,7 +22,11 @@ import (
 	bidbus "invoice-api/features/billissuerdetail/business"
 	biddata "invoice-api/features/billissuerdetail/data"
 	bidpres "invoice-api/features/billissuerdetail/presentation"
-	// Reserved for other domains
+
+	// PaymentMethod Domain
+	pmbus "invoice-api/features/paymentmethod/business"
+	pmdata "invoice-api/features/paymentmethod/data"
+	pmpres "invoice-api/features/paymentmethod/presentation"
 )
 
 type presenter struct {
@@ -30,6 +34,7 @@ type presenter struct {
 	ClientPresentation           clpres.ClientHandler
 	InvoicePresentation          inpres.InvoiceHandler
 	BillissuerdetailPresentation bidpres.BillIssuerDetailHandler
+	PaymentmethodPresentation    pmpres.PaymentMethodHandler
 }
 
 func Init() presenter {
@@ -49,10 +54,15 @@ func Init() presenter {
 	billissuerdetailData := biddata.NewMySqlBillIssuerDetail(driver.DB)
 	billissuerdetailBusiness := bidbus.NewBusinessBillIssuerDetail(billissuerdetailData, billissuerData)
 
+	// Payment Method
+	paymentmethodData := pmdata.NewMySqlPaymentMethod(driver.DB)
+	paymentmethodBusiness := pmbus.NewBusinessPaymentMethod(paymentmethodData)
+
 	return presenter{
 		BillissuerPresentation:       *bipres.NewHandlerBillIssuer(billissuerBusiness),
 		ClientPresentation:           *clpres.NewHandlerClient(clientBusiness),
 		InvoicePresentation:          *inpres.NewHandlerInvoice(invoiceBusiness),
 		BillissuerdetailPresentation: *bidpres.NewHandlerBillIssuerDetail(billissuerdetailBusiness),
+		PaymentmethodPresentation:    *pmpres.NewHandlerPaymentMethod(paymentmethodBusiness),
 	}
 }
