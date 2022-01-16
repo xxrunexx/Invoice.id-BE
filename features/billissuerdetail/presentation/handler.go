@@ -3,8 +3,10 @@ package presentation
 import (
 	"invoice-api/features/billissuerdetail"
 	"invoice-api/features/billissuerdetail/presentation/request"
+	"invoice-api/features/billissuerdetail/presentation/response"
 	"invoice-api/helper"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -29,4 +31,17 @@ func (bidHandler *BillIssuerDetailHandler) CreateBillIssuerDetailHandler(e echo.
 	}
 
 	return helper.SuccessResponse(e, newBillIssuerDetail)
+}
+
+func (bidHandler *BillIssuerDetailHandler) GetBillIssuerDetailById(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	data, err := bidHandler.billissuerdetailbusiness.GetBillIssuerDetailById(id)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToBillIssuerDetailResponse(data))
 }

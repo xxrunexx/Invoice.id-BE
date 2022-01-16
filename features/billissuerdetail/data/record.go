@@ -16,18 +16,30 @@ type BillIssuerDetail struct {
 	PaymentTerms   int
 }
 
-func toBillIssuerDetailRecord(billissuerdetail billissuerdetail.BillIssuerDetailCore) BillIssuerDetail {
+func toBillIssuerDetailRecord(bid billissuerdetail.BillIssuerDetailCore) BillIssuerDetail {
 	return BillIssuerDetail{
 		Model: gorm.Model{
-			ID:        billissuerdetail.ID,
-			CreatedAt: billissuerdetail.CreatedAt,
-			UpdatedAt: billissuerdetail.UpdatedAt,
+			ID:        bid.ID,
+			CreatedAt: bid.CreatedAt,
+			UpdatedAt: bid.UpdatedAt,
 		},
-		BillIssuerID:   billissuerdetail.BillIssuerID,
-		CompanyName:    billissuerdetail.CompanyName,
-		CompanyAddress: billissuerdetail.CompanyAddress,
-		CompanyPhone:   billissuerdetail.CompanyPhone,
-		CompanySite:    billissuerdetail.CompanySite,
-		PaymentTerms:   billissuerdetail.PaymentTerms,
+		BillIssuerID:   bid.BillIssuerID,
+		CompanyName:    bid.CompanyName,
+		CompanyAddress: bid.CompanyAddress,
+		CompanyPhone:   bid.CompanyPhone,
+		CompanySite:    bid.CompanySite,
+		PaymentTerms:   bid.PaymentTerms,
+	}
+}
+
+func toBillIssuerDetailCore(bid BillIssuerDetail) billissuerdetail.BillIssuerDetailCore {
+	return billissuerdetail.BillIssuerDetailCore{
+		ID:             bid.ID,
+		BillIssuerID:   bid.BillIssuerID,
+		CompanyName:    bid.CompanyName,
+		CompanyAddress: bid.CompanyAddress,
+		CompanyPhone:   bid.CompanyPhone,
+		CompanySite:    bid.CompanySite,
+		PaymentTerms:   bid.PaymentTerms,
 	}
 }
