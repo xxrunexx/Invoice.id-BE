@@ -48,3 +48,14 @@ func (clData *ClientData) GetClientById(id int) (client.ClientCore, error) {
 	}
 	return toClientCore(singleData), nil
 }
+
+func (clData *ClientData) UpdateClient(data client.ClientCore) error {
+	var singleData Client
+	convData := toClientRecord(data)
+	err := clData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
