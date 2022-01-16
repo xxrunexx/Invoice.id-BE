@@ -10,6 +10,7 @@ type InvoiceCore struct {
 	PaymentMethodID uint
 	PaymentDue      time.Time
 	PaymentStatus   string
+	PaymentTerms    int
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 }

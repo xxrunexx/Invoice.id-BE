@@ -11,6 +11,7 @@ type ReqInvoice struct {
 	BillIssuerID    uint      `json:"bill_issuer_id"`
 	PaymentMethodID uint      `json:"payment_method_id"`
 	PaymentDue      time.Time `json:"payment_due"`
+	PaymentTerms    int       `json:"payment_terms"`
 }
 
 func (reqdata *ReqInvoice) ToInvoiceCore() invoice.InvoiceCore {
@@ -20,5 +21,6 @@ func (reqdata *ReqInvoice) ToInvoiceCore() invoice.InvoiceCore {
 		BillIssuerID:    reqdata.BillIssuerID,
 		PaymentMethodID: reqdata.PaymentMethodID,
 		PaymentDue:      reqdata.PaymentDue,
+		PaymentTerms:    reqdata.PaymentTerms,
 	}
 }

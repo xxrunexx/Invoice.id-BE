@@ -13,6 +13,7 @@ type RespInvoice struct {
 	PaymentMethodID uint      `json:"payment_method_id"`
 	PaymentDue      time.Time `json:"payment_due"`
 	PaymentStatus   string    `json:"payment_status"`
+	PaymentTerms    int       `json:"payment_terms"`
 	CreatedAt       time.Time `json:"created_at"`
 	UpdatedAt       time.Time `json:"updated_at"`
 }
@@ -26,6 +27,7 @@ func ToInvoiceResponse(invoice invoice.InvoiceCore) RespInvoice {
 		PaymentMethodID: invoice.PaymentMethodID,
 		PaymentDue:      invoice.PaymentDue,
 		PaymentStatus:   invoice.PaymentStatus,
+		PaymentTerms:    invoice.PaymentTerms,
 		CreatedAt:       invoice.CreatedAt,
 		UpdatedAt:       invoice.UpdatedAt,
 	}

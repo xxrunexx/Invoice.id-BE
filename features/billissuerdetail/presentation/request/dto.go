@@ -8,7 +8,6 @@ type ReqBillIssuerDetail struct {
 	CompanyAddress string `json:"company_address"`
 	CompanyPhone   string `json:"company_phone"`
 	CompanySite    string `json:"company_site"`
-	PaymentTerms   int    `json:"payment_terms"`
 }
 
 func (data *ReqBillIssuerDetail) ToBillIssuerDetailCore() billissuerdetail.BillIssuerDetailCore {
@@ -18,6 +17,5 @@ func (data *ReqBillIssuerDetail) ToBillIssuerDetailCore() billissuerdetail.BillI
 		CompanyAddress: data.CompanyAddress,
 		CompanyPhone:   data.CompanyPhone,
 		CompanySite:    data.CompanySite,
-		PaymentTerms:   data.PaymentTerms,
 	}
 }
