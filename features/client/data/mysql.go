@@ -59,3 +59,12 @@ func (clData *ClientData) UpdateClient(data client.ClientCore) error {
 	}
 	return nil
 }
+
+func (clData *ClientData) GetClientByNik(nik int) (bool, error) {
+	var singleData Client
+	err := clData.DB.Where("nik = ?", nik).Find(&singleData).Error
+	if err != nil || singleData.NIK == 0 {
+		return false, err
+	}
+	return true, nil
+}

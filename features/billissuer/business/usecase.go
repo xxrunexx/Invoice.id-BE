@@ -27,8 +27,6 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 	}
 	if isExist {
 		setMessage := fmt.Sprintf("email %v already in use!", data.Email)
-		fmt.Println("Isi email di business", data.Email)
-		fmt.Println("Isi setMessage : ", setMessage)
 		return errors.New(setMessage)
 	}
 
@@ -66,7 +64,16 @@ func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(data billissuer.BillIssu
 		return errors.New("invalid data")
 	}
 
-	err := biBussiness.billissuerData.UpdateBillIssuer(data)
+	isExist, err := biBussiness.billissuerData.GetBillIssuerByEmail(data.Email)
+	if err != nil {
+		return err
+	}
+	if isExist {
+		setMessage := fmt.Sprintf("email %v already in use!", data.Email)
+		return errors.New(setMessage)
+	}
+
+	err = biBussiness.billissuerData.UpdateBillIssuer(data)
 	if err != nil {
 		return err
 	}

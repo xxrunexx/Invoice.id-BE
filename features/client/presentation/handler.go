@@ -54,7 +54,7 @@ func (clHandler *ClientHandler) GetClientById(e echo.Context) error {
 }
 
 func (clHandler *ClientHandler) UpdateClient(e echo.Context) error {
-	updateData := request.ReqClient{}
+	updateData := request.ReqClientUpdate{}
 
 	if err := e.Bind(&updateData); err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)

@@ -2,6 +2,7 @@ package business
 
 import (
 	"errors"
+	"fmt"
 	"invoice-api/features/client"
 	"invoice-api/helper"
 )
@@ -15,6 +16,19 @@ func NewBusinessClient(clData client.Data) client.Business {
 }
 
 func (clBusiness *ClientBusiness) CreateClient(data client.ClientCore) error {
+	if data.NIK == 0 || helper.IsEmpty(data.Phone) || helper.IsEmpty(data.Address) || helper.IsEmpty(data.Email) {
+		return errors.New("invalid data")
+	}
+
+	isExist, err := clBusiness.clienData.GetClientByNik(data.NIK)
+	if err != nil {
+		return err
+	}
+	if isExist {
+		setMessage := fmt.Sprintf("nik %v already in use!", data.NIK)
+		return errors.New(setMessage)
+	}
+
 	if err := clBusiness.clienData.CreateClient(data); err != nil {
 		return err
 	}
@@ -44,7 +58,16 @@ func (clBusiness *ClientBusiness) UpdateClient(data client.ClientCore) error {
 		return errors.New("invalid data")
 	}
 
-	err := clBusiness.clienData.UpdateClient(data)
+	isExist, err := clBusiness.clienData.GetClientByNik(data.NIK)
+	if err != nil {
+		return err
+	}
+	if isExist {
+		setMessage := fmt.Sprintf("nik %v already in use!", data.NIK)
+		return errors.New(setMessage)
+	}
+
+	err = clBusiness.clienData.UpdateClient(data)
 	if err != nil {
 		return err
 	}

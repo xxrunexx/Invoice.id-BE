@@ -23,4 +23,5 @@ type Data interface {
 	GetAllCient(ClientCore) (clients []ClientCore, err error)
 	GetClientById(id int) (client ClientCore, err error)
 	UpdateClient(data ClientCore) error
+	GetClientByNik(nik int) (bool, error)
 }
