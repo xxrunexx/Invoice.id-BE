@@ -1,6 +1,10 @@
 package business
 
-import "invoice-api/features/invoice"
+import (
+	"errors"
+	"invoice-api/features/invoice"
+	"invoice-api/helper"
+)
 
 type InvoiceBusiness struct {
 	invoiceData invoice.Data
@@ -40,4 +44,16 @@ func (inBusiness *InvoiceBusiness) GetInvoiceById(id int) (invoice.InvoiceCore, 
 		return invoice.InvoiceCore{}, err
 	}
 	return inData, nil
+}
+
+func (inBusiness *InvoiceBusiness) GetInvoiceByStatus(status string) ([]invoice.InvoiceCore, error) {
+	if helper.IsEmpty(status) || !helper.ValidateStatus(status) {
+		return []invoice.InvoiceCore{}, errors.New("bad request")
+	}
+	invoices, err := inBusiness.invoiceData.GetInvoiceByStatus(status)
+
+	if err != nil {
+		return nil, err
+	}
+	return invoices, nil
 }

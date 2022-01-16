@@ -42,6 +42,7 @@ func New() *echo.Echo {
 	e.POST("/invoice/add", presenter.InvoicePresentation.CreateInvoiceHandler)
 	e.GET("/invoice", presenter.InvoicePresentation.GetAllInvoiceHandler)
 	e.GET("/invoice/:id", presenter.InvoicePresentation.GetInvoiceByIdHandler)
+	e.GET("/invoice/status/:status", presenter.InvoicePresentation.GetInvoiceByStatus)
 	e.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
 
 	// Bill Issuer Detail

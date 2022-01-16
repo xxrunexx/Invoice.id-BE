@@ -61,3 +61,14 @@ func (inData *InvoiceData) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 
 	return toInvoiceCore(singleData), nil
 }
+
+func (inData *InvoiceData) GetInvoiceByStatus(status string) ([]invoice.InvoiceCore, error) {
+	var invoices []Invoice
+
+	err := inData.DB.Where("payment_status = ?", status).Find(&invoices).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return toInvoiceCoreList(invoices), nil
+}
