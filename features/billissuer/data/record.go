@@ -13,14 +13,14 @@ type BillIssuer struct {
 	Email    string
 }
 
-func toBillIssuerRecord(billissuer billissuer.BillIssuerCore) BillIssuer {
+func toBillIssuerRecord(bi billissuer.BillIssuerCore) BillIssuer {
 	return BillIssuer{
 		Model: gorm.Model{
-			ID: billissuer.ID,
+			ID: bi.ID,
 		},
-		Username: billissuer.Username,
-		Password: billissuer.Password,
-		Email:    billissuer.Email,
+		Username: bi.Username,
+		Password: bi.Password,
+		Email:    bi.Email,
 	}
 }
 

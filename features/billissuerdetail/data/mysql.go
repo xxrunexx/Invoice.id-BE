@@ -1,6 +1,7 @@
 package data
 
 import (
+	"errors"
 	"invoice-api/features/billissuerdetail"
 
 	"gorm.io/gorm"
@@ -21,4 +22,19 @@ func (bidData *BillIssuerDetailData) CreateBillIssuerDetail(data billissuerdetai
 		return err
 	}
 	return nil
+}
+
+func (bidData *BillIssuerDetailData) GetBillIssuerDetailById(id int) (billissuerdetail.BillIssuerDetailCore, error) {
+	var singleData BillIssuerDetail
+
+	err := bidData.DB.First(&singleData, id).Error
+
+	if singleData.BillIssuerID == 0 {
+		return billissuerdetail.BillIssuerDetailCore{}, errors.New("data not found")
+	}
+
+	if err != nil {
+		return billissuerdetail.BillIssuerDetailCore{}, err
+	}
+	return toBillIssuerDetailCore(singleData), nil
 }

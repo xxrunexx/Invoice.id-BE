@@ -15,19 +15,19 @@ type RespBillIssuerLogin struct {
 	Token    string `json:"token"`
 }
 
-func ToBillIssuerResponse(billissuer billissuer.BillIssuerCore) RespBillIssuer {
+func ToBillIssuerResponse(bi billissuer.BillIssuerCore) RespBillIssuer {
 	return RespBillIssuer{
-		Id:       billissuer.ID,
-		Username: billissuer.Username,
-		Password: billissuer.Password,
-		Email:    billissuer.Email,
+		Id:       bi.ID,
+		Username: bi.Username,
+		Password: bi.Password,
+		Email:    bi.Email,
 	}
 }
 
-func ToBillIssuerLoginResponse(billissuer billissuer.BillIssuerCore) RespBillIssuerLogin {
+func ToBillIssuerLoginResponse(bi billissuer.BillIssuerCore) RespBillIssuerLogin {
 	return RespBillIssuerLogin{
-		Id:       billissuer.ID,
-		Username: billissuer.Username,
-		Token:    billissuer.Token,
+		Id:       bi.ID,
+		Username: bi.Username,
+		Token:    bi.Token,
 	}
 }
