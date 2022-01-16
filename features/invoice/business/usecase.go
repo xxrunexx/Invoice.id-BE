@@ -43,7 +43,7 @@ func (inBusiness *InvoiceBusiness) GetInvoiceById(id int) (invoice.InvoiceCore, 
 }
 
 func (inBusiness *InvoiceBusiness) GetInvoiceByStatus(status string) ([]invoice.InvoiceCore, error) {
-	invoices, err := inBusiness.GetInvoiceByStatus(status)
+	invoices, err := inBusiness.invoiceData.GetInvoiceByStatus(status)
 
 	if err != nil {
 		return nil, err
