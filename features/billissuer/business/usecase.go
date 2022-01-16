@@ -66,12 +66,6 @@ func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(data billissuer.BillIssu
 		return errors.New("invalid data")
 	}
 
-	// data, err := biBussiness.billissuerData.GetBillIssuerById(int(data.ID))
-
-	// if err != nil {
-	// 	return err
-	// }
-
 	err := biBussiness.billissuerData.UpdateBillIssuer(data)
 	if err != nil {
 		return err

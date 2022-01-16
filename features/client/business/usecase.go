@@ -1,6 +1,10 @@
 package business
 
-import "invoice-api/features/client"
+import (
+	"errors"
+	"invoice-api/features/client"
+	"invoice-api/helper"
+)
 
 type ClientBusiness struct {
 	clienData client.Data
@@ -33,4 +37,16 @@ func (clBussiness *ClientBusiness) GetClientById(id int) (client.ClientCore, err
 		return client.ClientCore{}, err
 	}
 	return clData, nil
+}
+
+func (clBusiness *ClientBusiness) UpdateClient(data client.ClientCore) error {
+	if data.NIK == 0 || helper.IsEmpty(data.Phone) || helper.IsEmpty(data.Address) || helper.IsEmpty(data.Email) {
+		return errors.New("invalid data")
+	}
+
+	err := clBusiness.clienData.UpdateClient(data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
