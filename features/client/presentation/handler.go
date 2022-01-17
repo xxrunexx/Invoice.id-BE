@@ -33,7 +33,7 @@ func (clHandler *ClientHandler) CreateClientHandler(e echo.Context) error {
 }
 
 func (clHandler *ClientHandler) GetAllClientHandler(e echo.Context) error {
-	data, err := clHandler.clientBusiness.GetAllCient(client.ClientCore{})
+	data, err := clHandler.clientBusiness.GetAllClient(client.ClientCore{})
 
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
