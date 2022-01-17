@@ -10,9 +10,9 @@ type RespBillIssuer struct {
 }
 
 type RespBillIssuerLogin struct {
-	Id       uint   `json:"id"`
-	Username string `json:"username"`
-	Token    string `json:"token"`
+	Id    uint   `json:"id"`
+	Email string `json:"email"`
+	Token string `json:"token"`
 }
 
 func ToBillIssuerResponse(bi billissuer.BillIssuerCore) RespBillIssuer {
@@ -26,8 +26,8 @@ func ToBillIssuerResponse(bi billissuer.BillIssuerCore) RespBillIssuer {
 
 func ToBillIssuerLoginResponse(bi billissuer.BillIssuerCore) RespBillIssuerLogin {
 	return RespBillIssuerLogin{
-		Id:       bi.ID,
-		Username: bi.Username,
-		Token:    bi.Token,
+		Id:    bi.ID,
+		Email: bi.Email,
+		Token: bi.Token,
 	}
 }

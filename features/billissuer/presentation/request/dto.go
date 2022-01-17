@@ -16,13 +16,13 @@ type ReqBillIssuerUpdate struct {
 }
 
 type ReqBIllIssuerAuth struct {
-	Username string `json:"username"`
+	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
 func (data *ReqBIllIssuerAuth) ToBillIssuerCore() billissuer.BillIssuerCore {
 	return billissuer.BillIssuerCore{
-		Username: data.Username,
+		Email:    data.Email,
 		Password: data.Password,
 	}
 }
