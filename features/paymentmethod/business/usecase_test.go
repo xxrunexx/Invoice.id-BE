@@ -3,6 +3,7 @@ package business
 import (
 	"invoice-api/features/paymentmethod"
 	"invoice-api/features/paymentmethod/mocks"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -22,6 +23,7 @@ func TestMain(m *testing.M) {
 		Name:     "BRI",
 		IsActive: true,
 	}
+	os.Exit(m.Run())
 }
 
 func TestCreatePaymentMethod(t *testing.T) {
@@ -31,6 +33,11 @@ func TestCreatePaymentMethod(t *testing.T) {
 		assert.NotNil(t, err)
 	})
 
+	t.Run("create payment method - success", func(t *testing.T) {
+		mockData.On("CreatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(nil).Once()
+		err := paymentmethodBusiness.CreatePaymentMethod(paymentmethodData)
+		assert.Nil(t, err)
+	})
 	// t.Run("error create payment method", func(t *testing.T) {
 	// 	mockData.On("CreatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(errors.New("error")).Once()
 	// 	err := paymentmethodBusiness.CreatePaymentMethod(paymentmethod.PaymentMethodCore{})
