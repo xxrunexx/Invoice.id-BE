@@ -82,3 +82,9 @@ func (inHandler *InvoiceHandler) GetInvoiceByStatus(e echo.Context) error {
 	}
 	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
 }
+
+// func (inHandler *InvoiceHandler) UpdateInvoiceHandler(e echo.Context) error {
+// 	updateData := request.ReqInvoiceUpdate{
+
+// 	}
+// }

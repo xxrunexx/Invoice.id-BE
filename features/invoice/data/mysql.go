@@ -72,3 +72,14 @@ func (inData *InvoiceData) GetInvoiceByStatus(status string) ([]invoice.InvoiceC
 
 	return toInvoiceCoreList(invoices), nil
 }
+
+func (inData *InvoiceData) UpdateInvoice(data invoice.InvoiceCore) error {
+	var singleData Invoice
+	convData := toInvoiceRecord(data)
+	err := inData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
+
+	if err != nil {
+		return err
+	}
+	return nil
+}

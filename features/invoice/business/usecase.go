@@ -58,6 +58,14 @@ func (inBusiness *InvoiceBusiness) GetInvoiceByStatus(status string) ([]invoice.
 	return invoices, nil
 }
 
-// func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error {
-// 	if helper.IsEmpty(data.Total) || helper.IsEmpty(data)
-// }
+func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error {
+	if helper.IsEmpty(data.PaymentStatus) {
+		return errors.New("invalid data")
+	}
+
+	err := inBusiness.invoiceData.UpdateInvoice(data)
+	if err != nil {
+		return err
+	}
+	return nil
+}

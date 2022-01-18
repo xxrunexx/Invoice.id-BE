@@ -9,13 +9,13 @@ import (
 
 type BillIssuerDetailBusiness struct {
 	billissuerdetailData billissuerdetail.Data
-	billissuerData       billissuer.Data
+	billissuerBusiness   billissuer.Business
 }
 
-func NewBusinessBillIssuerDetail(bidData billissuerdetail.Data, biData billissuer.Data) billissuerdetail.Business {
+func NewBusinessBillIssuerDetail(bidData billissuerdetail.Data, biBus billissuer.Business) billissuerdetail.Business {
 	return &BillIssuerDetailBusiness{
 		billissuerdetailData: bidData,
-		billissuerData:       biData,
+		billissuerBusiness:   biBus,
 	}
 }
 
@@ -24,7 +24,8 @@ func (bidBusiness *BillIssuerDetailBusiness) CreateBillIssuerDetail(data billiss
 		return errors.New("bad request")
 	}
 
-	_, err := bidBusiness.billissuerData.GetBillIssuerById(int(data.BillIssuerID))
+	_, err := bidBusiness.billissuerBusiness.GetBillIssuerById(int(data.BillIssuerID))
+	// _, err := bidBusiness.billissuerData.GetBillIssuerById(int(data.BillIssuerID))
 	if err != nil {
 		return errors.New("user not found")
 	}
