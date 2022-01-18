@@ -33,12 +33,11 @@ func toBillIssuerCore(bi BillIssuer) billissuer.BillIssuerCore {
 	}
 }
 
-// Get All / Array
-// func toBillIssuerCoreList(biList []BillIssuer) []billissuer.BillIssuerCore {
-// 	convBi := []billissuer.BillIssuerCore{}
+func toBillIssuerCoreList(biList []BillIssuer) []billissuer.BillIssuerCore {
+	convBi := []billissuer.BillIssuerCore{}
 
-// 	for _, billissuer := range biList {
-// 		convBi = append(convBi, toBillIssuerCore(billissuer))
-// 	}
-// 	return convBi
-// }
+	for _, billissuer := range biList {
+		convBi = append(convBi, toBillIssuerCore(billissuer))
+	}
+	return convBi
+}
