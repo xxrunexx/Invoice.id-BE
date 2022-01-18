@@ -98,5 +98,46 @@ func TestGetInvoiceByStatus(t *testing.T) {
 }
 
 func TestGetAllInvoice(t *testing.T) {
+	t.Run("validate get invoices", func(t *testing.T) {
+		mockData.On("GetAllInvoice", mock.AnythingOfType("invoice.InvoiceCore")).Return(invoiceDatas, nil).Once()
+		resp, err := invoiceBusiness.GetAllInvoice(invoice.InvoiceCore{})
+		assert.Nil(t, err)
+		assert.Equal(t, len(resp), 1)
+	})
 
+	t.Run("error get invoices", func(t *testing.T) {
+		mockData.On("GetAllInvoice", mock.AnythingOfType("invoice.InvoiceCore")).Return(nil, errors.New("error"))
+		resp, err := invoiceBusiness.GetAllInvoice(invoice.InvoiceCore{})
+		assert.NotNil(t, err)
+		assert.Nil(t, resp)
+	})
+}
+
+func TestUpdateInvoice(t *testing.T) {
+	t.Run("Update invoice - error insert data", func(t *testing.T) {
+		mockData.On("UpdateInvoice", mock.AnythingOfType("invoice.InvoiceCore")).Return(errors.New("error")).Once()
+		err := invoiceBusiness.UpdateInvoice(invoiceData)
+		assert.NotNil(t, err)
+	})
+
+	t.Run("Update invoice error - invalid payment status", func(t *testing.T) {
+		err := invoiceBusiness.UpdateInvoice(invoice.InvoiceCore{
+			PaymentStatus: "",
+		})
+		assert.NotNil(t, err)
+		assert.Equal(t, err.Error(), "invalid data")
+	})
+}
+func TestDeleteInvoice(t *testing.T) {
+	t.Run("Delete invoice - error insert data", func(t *testing.T) {
+		mockData.On("DeleteInvoice", mock.AnythingOfType("int")).Return(errors.New("error")).Once()
+		err := invoiceBusiness.DeleteInvoice(1)
+		assert.NotNil(t, err)
+	})
+
+	// t.Run("Delete invoice error - invalid id", func(t *testing.T) {
+	// 	err := invoiceBusiness.DeleteInvoice(in)
+	// 	assert.NotNil(t, err)
+	// 	assert.Equal(t, err.Error(), "invalid data")
+	// })
 }

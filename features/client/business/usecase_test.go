@@ -105,7 +105,7 @@ func TestGetAllClient(t *testing.T) {
 }
 
 func Test(t *testing.T) {
-	t.Run("validate update client", func(t *testing.T) {
+	t.Run("Update client - success", func(t *testing.T) {
 		mockData.On("GetClientByNik", mock.AnythingOfType("int")).Return(false, nil).Once()
 		mockData.On("UpdateClient", mock.AnythingOfType("client.ClientCore")).Return(nil).Once()
 		err := clientBusiness.UpdateClient(client.ClientCore{})
