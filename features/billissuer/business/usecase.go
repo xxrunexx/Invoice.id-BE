@@ -43,7 +43,7 @@ func (biBussiness *BillIssuerBusiness) LoginBillIssuer(data billissuer.BillIssue
 	if err != nil {
 		return billissuer.BillIssuerCore{}, err
 	}
-	biData.Token, err = middleware.CreateToken(biData.ID, biData.Email)
+	biData.Token, err = middleware.CreateToken(biData.ID, biData.Name, biData.Email)
 	if err != nil {
 		return billissuer.BillIssuerCore{}, err
 	}

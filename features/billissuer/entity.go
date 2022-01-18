@@ -14,6 +14,7 @@ type Business interface {
 	LoginBillIssuer(data BillIssuerCore) (billissuer BillIssuerCore, err error)
 	GetBillIssuerById(id int) (billissuer BillIssuerCore, err error)
 	UpdateBillIssuer(data BillIssuerCore) error
+	// GetAllBillIssuer()
 }
 
 // Untuk layer data / repository
