@@ -80,3 +80,12 @@ func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(data billissuer.BillIssu
 
 	return nil
 }
+
+func (biBussiness *BillIssuerBusiness) GetAllBillIssuer(data billissuer.BillIssuerCore) ([]billissuer.BillIssuerCore, error) {
+	billissuers, err := biBussiness.billissuerData.GetAllBillIssuer(data)
+
+	if err != nil {
+		return nil, err
+	}
+	return billissuers, nil
+}

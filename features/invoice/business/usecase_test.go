@@ -134,10 +134,4 @@ func TestDeleteInvoice(t *testing.T) {
 		err := invoiceBusiness.DeleteInvoice(1)
 		assert.NotNil(t, err)
 	})
-
-	// t.Run("Delete invoice error - invalid id", func(t *testing.T) {
-	// 	err := invoiceBusiness.DeleteInvoice(in)
-	// 	assert.NotNil(t, err)
-	// 	assert.Equal(t, err.Error(), "invalid data")
-	// })
 }
