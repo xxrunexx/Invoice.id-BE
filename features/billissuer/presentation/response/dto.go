@@ -33,3 +33,12 @@ func ToBillIssuerLoginResponse(bi billissuer.BillIssuerCore) RespBillIssuerLogin
 		Token: bi.Token,
 	}
 }
+
+func ToBillIssuerResponseList(biList []billissuer.BillIssuerCore) []RespBillIssuer {
+	convBi := []RespBillIssuer{}
+
+	for _, billissuer := range biList {
+		convBi = append(convBi, ToBillIssuerResponse(billissuer))
+	}
+	return convBi
+}
