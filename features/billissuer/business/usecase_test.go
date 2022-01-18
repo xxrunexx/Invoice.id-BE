@@ -29,6 +29,12 @@ func TestMain(m *testing.M) {
 			Password: "admonadmonadmon",
 			Email:    "rasyiajaja@gmail.com",
 		},
+		{
+			ID:       2,
+			Name:     "Dyah Ayu",
+			Password: "newpassword",
+			Email:    "dyah.ayu@gmail.com",
+		},
 	}
 
 	billissuerData = billissuer.BillIssuerCore{
@@ -82,33 +88,33 @@ func TestCreateBillIssuer(t *testing.T) {
 
 }
 
-func TestLoginBillIssuer(t *testing.T) {
-	t.Run("login bill issuer success", func(t *testing.T) {
-		mockData.On("LoginBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(billissuerData, nil).Once()
-		resp, err := billissuerBusiness.LoginBillIssuer(billissuerlogin)
-		assert.Equal(t, billissuerData.Email, resp.Email)
-		assert.Nil(t, err)
-	})
+// func TestLoginBillIssuer(t *testing.T) {
+// 	t.Run("login bill issuer success", func(t *testing.T) {
+// 		mockData.On("LoginBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(billissuerData, nil).Once()
+// 		resp, err := billissuerBusiness.LoginBillIssuer(billissuerlogin)
+// 		assert.Equal(t, billissuerData.Email, resp.Email)
+// 		assert.Nil(t, err)
+// 	})
 
-	// t.Run("error login bill issuer", func(t *testing.T) {
-	// 	mockData.On("LoginBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(billissuer.BillIssuerCore{}, errors.New("error")).Once()
-	// 	resp, err := billissuerBusiness.LoginBillIssuer(billissuer.BillIssuerCore{
-	// 		Email:    "fakeemail",
-	// 		Password: "capstonealterra",
-	// 	})
-	// 	assert.NotNil(t, err)
-	// 	assert.Equal(t, err.Error(), "invalid data")
-	// 	assert.Empty(t, resp.Email)
-	// })
+// t.Run("error login bill issuer", func(t *testing.T) {
+// 	mockData.On("LoginBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(billissuer.BillIssuerCore{}, errors.New("error")).Once()
+// 	resp, err := billissuerBusiness.LoginBillIssuer(billissuer.BillIssuerCore{
+// 		Email:    "fakeemail",
+// 		Password: "capstonealterra",
+// 	})
+// 	assert.NotNil(t, err)
+// 	assert.Equal(t, err.Error(), "invalid data")
+// 	assert.Empty(t, resp.Email)
+// })
 
-	// t.Run("Login error check bill issuer", func(t *testing.T) {
-	// 	mockData.On("LoginBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(billissuer.BillIssuerCore{}, errors.New("error check data")).Once()
-	// 	resp, err := billissuerBusiness.LoginBillIssuer(billissuerlogin)
-	// 	assert.Equal(t, "invalid data", err.Error())
-	// 	assert.NotNil(t, err)
-	// 	assert.Empty(t, resp.ID)
-	// })
-}
+// t.Run("Login error check bill issuer", func(t *testing.T) {
+// 	mockData.On("LoginBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(billissuer.BillIssuerCore{}, errors.New("error check data")).Once()
+// 	resp, err := billissuerBusiness.LoginBillIssuer(billissuerlogin)
+// 	assert.Equal(t, "invalid data", err.Error())
+// 	assert.NotNil(t, err)
+// 	assert.Empty(t, resp.ID)
+// })
+// }
 
 func TestGetBillIssuerById(t *testing.T) {
 	t.Run("validate get bill issuer by id", func(t *testing.T) {
@@ -158,5 +164,21 @@ func TestUpdateBIllIssuer(t *testing.T) {
 		mockData.On("UpdateBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(errors.New("error")).Once()
 		err := billissuerBusiness.UpdateBillIssuer(billissuerData)
 		assert.NotNil(t, err)
+	})
+}
+
+func TestGetAllBillIssuer(t *testing.T) {
+	t.Run("validate get bill issuers", func(t *testing.T) {
+		mockData.On("GetAllBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(billissuerDatas, nil).Once()
+		resp, err := billissuerBusiness.GetAllBillIssuer(billissuer.BillIssuerCore{})
+		assert.Nil(t, err)
+		assert.Equal(t, len(resp), 2)
+	})
+
+	t.Run("error get bill issuers", func(t *testing.T) {
+		mockData.On("GetAllBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(nil, errors.New("error"))
+		resp, err := billissuerBusiness.GetAllBillIssuer(billissuer.BillIssuerCore{})
+		assert.NotNil(t, err)
+		assert.Nil(t, resp)
 	})
 }

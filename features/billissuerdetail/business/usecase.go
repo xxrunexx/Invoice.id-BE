@@ -25,7 +25,6 @@ func (bidBusiness *BillIssuerDetailBusiness) CreateBillIssuerDetail(data billiss
 	}
 
 	_, err := bidBusiness.billissuerBusiness.GetBillIssuerById(int(data.BillIssuerID))
-	// _, err := bidBusiness.billissuerData.GetBillIssuerById(int(data.BillIssuerID))
 	if err != nil {
 		return errors.New("user not found")
 	}
