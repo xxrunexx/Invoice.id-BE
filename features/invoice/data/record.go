@@ -15,21 +15,23 @@ type Invoice struct {
 	PaymentMethodID uint
 	PaymentDue      time.Time
 	PaymentStatus   string `gorm:"default:draft"`
+	PaymentTerms    int
 }
 
-func toInvoiceRecord(invoice invoice.InvoiceCore) Invoice {
+func toInvoiceRecord(in invoice.InvoiceCore) Invoice {
 	return Invoice{
 		Model: gorm.Model{
-			ID:        invoice.ID,
-			CreatedAt: invoice.CreatedAt,
-			UpdatedAt: invoice.UpdatedAt,
+			ID:        in.ID,
+			CreatedAt: in.CreatedAt,
+			UpdatedAt: in.UpdatedAt,
 		},
-		ClientID:        invoice.ClientID,
-		Total:           invoice.Total,
-		BillIssuerID:    invoice.BillIssuerID,
-		PaymentMethodID: invoice.PaymentMethodID,
-		PaymentDue:      invoice.PaymentDue,
-		PaymentStatus:   invoice.PaymentStatus,
+		ClientID:        in.ClientID,
+		Total:           in.Total,
+		BillIssuerID:    in.BillIssuerID,
+		PaymentMethodID: in.PaymentMethodID,
+		PaymentDue:      in.PaymentDue,
+		PaymentStatus:   in.PaymentStatus,
+		PaymentTerms:    in.PaymentTerms,
 	}
 }
 
@@ -42,6 +44,7 @@ func toInvoiceCore(in Invoice) invoice.InvoiceCore {
 		PaymentMethodID: in.PaymentMethodID,
 		PaymentDue:      in.PaymentDue,
 		PaymentStatus:   in.PaymentStatus,
+		PaymentTerms:    in.PaymentTerms,
 		CreatedAt:       in.CreatedAt,
 		UpdatedAt:       in.UpdatedAt,
 	}

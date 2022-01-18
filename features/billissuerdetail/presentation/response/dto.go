@@ -12,7 +12,6 @@ type RespBillIssuerDetail struct {
 	CompanyAddress string    `json:"company_address"`
 	CompanyPhone   string    `json:"company_phone"`
 	CompanySite    string    `json:"company_site"`
-	PaymentTerms   int       `json:"payment_terms"`
 	CreatedAt      time.Time `json:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at"`
 }
@@ -25,7 +24,6 @@ func ToBillIssuerDetailResponse(bid billissuerdetail.BillIssuerDetailCore) RespB
 		CompanyAddress: bid.CompanyAddress,
 		CompanyPhone:   bid.CompanyPhone,
 		CompanySite:    bid.CompanySite,
-		PaymentTerms:   bid.PaymentTerms,
 		CreatedAt:      bid.CreatedAt,
 		UpdatedAt:      bid.UpdatedAt,
 	}

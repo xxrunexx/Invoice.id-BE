@@ -13,7 +13,6 @@ type BillIssuerDetail struct {
 	CompanyAddress string
 	CompanyPhone   string
 	CompanySite    string
-	PaymentTerms   int
 }
 
 func toBillIssuerDetailRecord(bid billissuerdetail.BillIssuerDetailCore) BillIssuerDetail {
@@ -28,7 +27,6 @@ func toBillIssuerDetailRecord(bid billissuerdetail.BillIssuerDetailCore) BillIss
 		CompanyAddress: bid.CompanyAddress,
 		CompanyPhone:   bid.CompanyPhone,
 		CompanySite:    bid.CompanySite,
-		PaymentTerms:   bid.PaymentTerms,
 	}
 }
 
@@ -40,6 +38,5 @@ func toBillIssuerDetailCore(bid BillIssuerDetail) billissuerdetail.BillIssuerDet
 		CompanyAddress: bid.CompanyAddress,
 		CompanyPhone:   bid.CompanyPhone,
 		CompanySite:    bid.CompanySite,
-		PaymentTerms:   bid.PaymentTerms,
 	}
 }

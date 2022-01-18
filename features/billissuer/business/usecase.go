@@ -17,7 +17,7 @@ func NewBusinessBillIssuer(biData billissuer.Data) billissuer.Business {
 }
 
 func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssuerCore) error {
-	if !helper.ValidateEmail(data.Email) || !helper.ValidatePassword(data.Password) || helper.IsEmpty(data.Username) {
+	if !helper.ValidateEmail(data.Email) || !helper.ValidatePassword(data.Password) || helper.IsEmpty(data.Name) {
 		return errors.New("bad request")
 	}
 
@@ -43,7 +43,7 @@ func (biBussiness *BillIssuerBusiness) LoginBillIssuer(data billissuer.BillIssue
 	if err != nil {
 		return billissuer.BillIssuerCore{}, err
 	}
-	biData.Token, err = middleware.CreateToken(data.ID, data.Username)
+	biData.Token, err = middleware.CreateToken(biData.ID, biData.Name, biData.Email)
 	if err != nil {
 		return billissuer.BillIssuerCore{}, err
 	}
@@ -60,7 +60,7 @@ func (biBussiness *BillIssuerBusiness) GetBillIssuerById(id int) (billissuer.Bil
 }
 
 func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(data billissuer.BillIssuerCore) error {
-	if helper.IsEmpty(data.Username) || helper.IsEmpty(data.Password) || helper.IsEmpty(data.Email) {
+	if helper.IsEmpty(data.Name) || helper.IsEmpty(data.Password) || helper.IsEmpty(data.Email) {
 		return errors.New("invalid data")
 	}
 

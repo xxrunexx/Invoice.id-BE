@@ -35,8 +35,8 @@ func (clBusiness *ClientBusiness) CreateClient(data client.ClientCore) error {
 	return nil
 }
 
-func (clBussiness *ClientBusiness) GetAllCient(data client.ClientCore) ([]client.ClientCore, error) {
-	clients, err := clBussiness.clienData.GetAllCient(data)
+func (clBussiness *ClientBusiness) GetAllClient(data client.ClientCore) ([]client.ClientCore, error) {
+	clients, err := clBussiness.clienData.GetAllClient(data)
 
 	if err != nil {
 		return nil, err

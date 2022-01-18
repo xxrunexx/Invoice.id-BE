@@ -26,10 +26,10 @@ func (biData *BillIssuerData) CreateBillIssuer(data billissuer.BillIssuerCore) e
 
 func (biData *BillIssuerData) LoginBillIssuer(data billissuer.BillIssuerCore) (billissuer.BillIssuerCore, error) {
 	var billissuerData BillIssuer
-	err := biData.DB.Where("username = ? and password = ?", data.Username, data.Password).First(&billissuerData).Error
+	err := biData.DB.Where("email = ? and password = ?", data.Email, data.Password).First(&billissuerData).Error
 
 	// Eliminate null data
-	if billissuerData.Username == "" && billissuerData.ID == 0 {
+	if billissuerData.Email == "" && billissuerData.ID == 0 {
 		return billissuer.BillIssuerCore{}, errors.New("user not found")
 	}
 
@@ -46,7 +46,7 @@ func (biData *BillIssuerData) GetBillIssuerById(id int) (billissuer.BillIssuerCo
 
 	err := biData.DB.First(&singleData, id).Error
 
-	if singleData.Username == "" && singleData.ID == 0 {
+	if singleData.Name == "" && singleData.ID == 0 {
 		return billissuer.BillIssuerCore{}, errors.New("data not found")
 	}
 

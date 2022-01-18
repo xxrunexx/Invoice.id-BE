@@ -11,7 +11,6 @@ type BillIssuerDetailCore struct {
 	CompanyAddress string
 	CompanyPhone   string
 	CompanySite    string
-	PaymentTerms   int
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
 }

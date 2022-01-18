@@ -4,21 +4,22 @@ import "invoice-api/features/billissuer"
 
 type RespBillIssuer struct {
 	Id       uint   `json:"id"`
-	Username string `json:"username"`
+	Name     string `json:"name"`
 	Password string `json:"password"`
 	Email    string `json:"email"`
 }
 
 type RespBillIssuerLogin struct {
-	Id       uint   `json:"id"`
-	Username string `json:"username"`
-	Token    string `json:"token"`
+	Id    uint   `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Token string `json:"token"`
 }
 
 func ToBillIssuerResponse(bi billissuer.BillIssuerCore) RespBillIssuer {
 	return RespBillIssuer{
 		Id:       bi.ID,
-		Username: bi.Username,
+		Name:     bi.Name,
 		Password: bi.Password,
 		Email:    bi.Email,
 	}
@@ -26,8 +27,9 @@ func ToBillIssuerResponse(bi billissuer.BillIssuerCore) RespBillIssuer {
 
 func ToBillIssuerLoginResponse(bi billissuer.BillIssuerCore) RespBillIssuerLogin {
 	return RespBillIssuerLogin{
-		Id:       bi.ID,
-		Username: bi.Username,
-		Token:    bi.Token,
+		Id:    bi.ID,
+		Name:  bi.Name,
+		Email: bi.Email,
+		Token: bi.Token,
 	}
 }

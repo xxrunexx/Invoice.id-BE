@@ -24,7 +24,7 @@ func (clData *ClientData) CreateClient(data client.ClientCore) error {
 	return nil
 }
 
-func (clData *ClientData) GetAllCient(data client.ClientCore) ([]client.ClientCore, error) {
+func (clData *ClientData) GetAllClient(data client.ClientCore) ([]client.ClientCore, error) {
 	var clients []Client
 
 	err := clData.DB.Find(&clients).Error

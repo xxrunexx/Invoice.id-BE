@@ -45,6 +45,7 @@ func New() *echo.Echo {
 	e.GET("/invoice/:id", presenter.InvoicePresentation.GetInvoiceByIdHandler)
 	e.GET("/invoice/status/:status", presenter.InvoicePresentation.GetInvoiceByStatus)
 	e.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
+	e.PUT("/invoice/update", presenter.InvoicePresentation.UpdateInvoiceHandler)
 
 	// Bill Issuer Detail
 	e.POST("/billissuerdetail/add", presenter.BillissuerdetailPresentation.CreateBillIssuerDetailHandler)
@@ -52,5 +53,6 @@ func New() *echo.Echo {
 
 	// Payment Method
 	e.POST("/paymentmethod/add", presenter.PaymentmethodPresentation.CreatePaymentMethodHandler)
+
 	return e
 }

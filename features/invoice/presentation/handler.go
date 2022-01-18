@@ -82,3 +82,16 @@ func (inHandler *InvoiceHandler) GetInvoiceByStatus(e echo.Context) error {
 	}
 	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
 }
+
+func (inHandler *InvoiceHandler) UpdateInvoiceHandler(e echo.Context) error {
+	updateData := request.ReqInvoiceUpdate{}
+
+	if err := e.Bind(&updateData); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	if err := inHandler.invoiceBusiness.UpdateInvoice(updateData.ToInvoiceCore()); err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, updateData)
+}
