@@ -76,3 +76,14 @@ func (biData BillIssuerData) UpdateBillIssuer(data billissuer.BillIssuerCore) er
 	}
 	return nil
 }
+
+func (biData BillIssuerData) GetAllBillIssuer(data billissuer.BillIssuerCore) ([]billissuer.BillIssuerCore, error) {
+	var billissuers []BillIssuer
+
+	err := biData.DB.Find(&billissuers).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return toBillIssuerCoreList(billissuers), nil
+}

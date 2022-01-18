@@ -75,3 +75,12 @@ func (biHandler BillIssuerHandler) UpdateBillIssuerHandler(e echo.Context) error
 
 	return helper.SuccessResponse(e, updateData)
 }
+
+func (biHandler BillIssuerHandler) GetAllBillIssuerHandler(e echo.Context) error {
+	data, err := biHandler.billissuerBusiness.GetAllBillIssuer(billissuer.BillIssuerCore{})
+
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToBillIssuerResponseList(data))
+}

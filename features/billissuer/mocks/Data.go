@@ -27,6 +27,29 @@ func (_m *Data) CreateBillIssuer(data billissuer.BillIssuerCore) error {
 	return r0
 }
 
+// GetAllBillIssuer provides a mock function with given fields: _a0
+func (_m *Data) GetAllBillIssuer(_a0 billissuer.BillIssuerCore) ([]billissuer.BillIssuerCore, error) {
+	ret := _m.Called(_a0)
+
+	var r0 []billissuer.BillIssuerCore
+	if rf, ok := ret.Get(0).(func(billissuer.BillIssuerCore) []billissuer.BillIssuerCore); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]billissuer.BillIssuerCore)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(billissuer.BillIssuerCore) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // GetBillIssuerByEmail provides a mock function with given fields: email
 func (_m *Data) GetBillIssuerByEmail(email string) (bool, error) {
 	ret := _m.Called(email)
