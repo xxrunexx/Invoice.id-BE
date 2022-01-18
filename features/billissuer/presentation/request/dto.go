@@ -3,14 +3,14 @@ package request
 import "invoice-api/features/billissuer"
 
 type ReqBillIssuer struct {
-	Username string `json:"username"`
+	Name     string `json:"name"`
 	Password string `json:"password"`
 	Email    string `json:"email"`
 }
 
 type ReqBillIssuerUpdate struct {
 	ID       uint   `json:"id"`
-	Username string `json:"username"`
+	Name     string `json:"name"`
 	Password string `json:"password"`
 	Email    string `json:"email"`
 }
@@ -29,7 +29,7 @@ func (data *ReqBIllIssuerAuth) ToBillIssuerCore() billissuer.BillIssuerCore {
 
 func (reqData *ReqBillIssuer) ToBillIssuerCore() billissuer.BillIssuerCore {
 	return billissuer.BillIssuerCore{
-		Username: reqData.Username,
+		Name:     reqData.Name,
 		Password: reqData.Password,
 		Email:    reqData.Email,
 	}
@@ -37,7 +37,7 @@ func (reqData *ReqBillIssuer) ToBillIssuerCore() billissuer.BillIssuerCore {
 func (reqData *ReqBillIssuerUpdate) ToBillIssuerCore() billissuer.BillIssuerCore {
 	return billissuer.BillIssuerCore{
 		ID:       reqData.ID,
-		Username: reqData.Username,
+		Name:     reqData.Name,
 		Password: reqData.Password,
 		Email:    reqData.Email,
 	}

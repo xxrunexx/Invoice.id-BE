@@ -1,0 +1,24 @@
+mode: set
+invoice-api/features/invoice/business/usecase.go:13.63,15.2 1 1
+invoice-api/features/invoice/business/usecase.go:17.82,18.67 1 1
+invoice-api/features/invoice/business/usecase.go:21.2,21.12 1 1
+invoice-api/features/invoice/business/usecase.go:18.67,20.3 1 1
+invoice-api/features/invoice/business/usecase.go:24.107,27.16 2 0
+invoice-api/features/invoice/business/usecase.go:30.2,30.22 1 0
+invoice-api/features/invoice/business/usecase.go:27.16,29.3 1 0
+invoice-api/features/invoice/business/usecase.go:33.64,34.65 1 0
+invoice-api/features/invoice/business/usecase.go:37.2,37.12 1 0
+invoice-api/features/invoice/business/usecase.go:34.65,36.3 1 0
+invoice-api/features/invoice/business/usecase.go:40.88,43.16 2 1
+invoice-api/features/invoice/business/usecase.go:46.2,46.20 1 1
+invoice-api/features/invoice/business/usecase.go:43.16,45.3 1 1
+invoice-api/features/invoice/business/usecase.go:49.101,50.62 1 1
+invoice-api/features/invoice/business/usecase.go:53.2,55.16 2 1
+invoice-api/features/invoice/business/usecase.go:58.2,58.22 1 1
+invoice-api/features/invoice/business/usecase.go:50.62,52.3 1 1
+invoice-api/features/invoice/business/usecase.go:55.16,57.3 1 1
+invoice-api/features/invoice/business/usecase.go:61.82,62.40 1 0
+invoice-api/features/invoice/business/usecase.go:66.2,67.16 2 0
+invoice-api/features/invoice/business/usecase.go:70.2,70.12 1 0
+invoice-api/features/invoice/business/usecase.go:62.40,64.3 1 0
+invoice-api/features/invoice/business/usecase.go:67.16,69.3 1 0

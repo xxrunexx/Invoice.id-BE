@@ -2,7 +2,7 @@ package billissuer
 
 type BillIssuerCore struct {
 	ID       uint
-	Username string
+	Name     string
 	Password string
 	Email    string
 	Token    string

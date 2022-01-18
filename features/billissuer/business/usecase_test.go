@@ -25,14 +25,14 @@ func TestMain(m *testing.M) {
 	billissuerDatas = []billissuer.BillIssuerCore{
 		{
 			ID:       1,
-			Username: "Raviy Setiaji",
+			Name:     "Raviy Setiaji",
 			Password: "admonadmonadmon",
 			Email:    "rasyiajaja@gmail.com",
 		},
 	}
 
 	billissuerData = billissuer.BillIssuerCore{
-		Username: "Raviy Setiaji",
+		Name:     "Raviy Setiaji",
 		Password: "admonadmonadmon",
 		Email:    "rasyiajaja@gmail.com",
 	}
@@ -46,7 +46,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestCreateBillIssuer(t *testing.T) {
-	t.Run("create bill issuer - success", func(t *testing.T) {
+	t.Run("Create bill issuer - success", func(t *testing.T) {
 		mockData.On("GetBillIssuerByEmail", mock.AnythingOfType("string")).Return(false, nil).Once()
 		mockData.On("CreateBillIssuer", mock.AnythingOfType("billissuer.BillIssuerCore")).Return(nil).Once()
 		err := billissuerBusiness.CreateBillIssuer(billissuerData)

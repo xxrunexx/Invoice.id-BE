@@ -8,7 +8,7 @@ import (
 
 type BillIssuer struct {
 	gorm.Model
-	Username string
+	Name     string
 	Password string
 	Email    string
 }
@@ -18,7 +18,7 @@ func toBillIssuerRecord(bi billissuer.BillIssuerCore) BillIssuer {
 		Model: gorm.Model{
 			ID: bi.ID,
 		},
-		Username: bi.Username,
+		Name:     bi.Name,
 		Password: bi.Password,
 		Email:    bi.Email,
 	}
@@ -27,7 +27,7 @@ func toBillIssuerRecord(bi billissuer.BillIssuerCore) BillIssuer {
 func toBillIssuerCore(bi BillIssuer) billissuer.BillIssuerCore {
 	return billissuer.BillIssuerCore{
 		ID:       bi.ID,
-		Username: bi.Username,
+		Name:     bi.Name,
 		Password: bi.Password,
 		Email:    bi.Email,
 	}
