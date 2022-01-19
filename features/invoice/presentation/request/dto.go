@@ -6,12 +6,11 @@ import (
 )
 
 type ReqInvoice struct {
-	ClientID        uint      `json:"client_id"`
-	Total           int       `json:"total"`
-	BillIssuerID    uint      `json:"bill_issuer_id"`
-	PaymentMethodID uint      `json:"payment_method_id"`
-	PaymentDue      time.Time `json:"payment_due"`
-	PaymentTerms    int       `json:"payment_terms"`
+	ClientID        uint `json:"client_id"`
+	Total           int  `json:"total"`
+	BillIssuerID    uint `json:"bill_issuer_id"`
+	PaymentMethodID uint `json:"payment_method_id"`
+	PaymentTerms    int  `json:"payment_terms"`
 }
 
 type ReqInvoiceUpdate struct {
@@ -31,7 +30,6 @@ func (reqdata *ReqInvoice) ToInvoiceCore() invoice.InvoiceCore {
 		Total:           reqdata.Total,
 		BillIssuerID:    reqdata.BillIssuerID,
 		PaymentMethodID: reqdata.PaymentMethodID,
-		PaymentDue:      reqdata.PaymentDue,
 		PaymentTerms:    reqdata.PaymentTerms,
 	}
 }

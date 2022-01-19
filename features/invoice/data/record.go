@@ -1,6 +1,7 @@
 package data
 
 import (
+	"fmt"
 	"invoice-api/features/invoice"
 	"time"
 
@@ -54,6 +55,7 @@ type PaymentMethod struct {
 }
 
 func toInvoiceRecord(in invoice.InvoiceCore) Invoice {
+	fmt.Println("Isi payment due di record : ", in.PaymentDue)
 	return Invoice{
 		Model: gorm.Model{
 			ID:        in.ID,

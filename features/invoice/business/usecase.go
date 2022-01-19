@@ -2,8 +2,10 @@ package business
 
 import (
 	"errors"
+	"fmt"
 	"invoice-api/features/invoice"
 	"invoice-api/helper"
+	"time"
 )
 
 type InvoiceBusiness struct {
@@ -15,6 +17,18 @@ func NewBusinessInvoice(inData invoice.Data) invoice.Business {
 }
 
 func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error {
+	// var result invoice.InvoiceCore
+	// inBusiness.SetPaymentDue(result)
+	t := time.Now()
+	if data.PaymentTerms == 7 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 7)
+	} else if data.PaymentTerms == 10 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 10)
+	} else if data.PaymentTerms == 30 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 24)
+	}
+	fmt.Println("Isi payment due : ", data.PaymentDue)
+	// fmt.Println("Cek payment due : ", result.PaymentDue)
 	if err := inBusiness.invoiceData.CreateInvoice(data); err != nil {
 		return err
 	}

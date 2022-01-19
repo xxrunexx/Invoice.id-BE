@@ -22,7 +22,6 @@ func NewHandlerInvoice(invoiceBusiness invoice.Business) *InvoiceHandler {
 
 func (inHandler *InvoiceHandler) CreateInvoiceHandler(e echo.Context) error {
 	newInvoice := request.ReqInvoice{}
-	fmt.Println("isi new invoice", newInvoice)
 
 	if err := e.Bind(&newInvoice); err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
