@@ -9,13 +9,48 @@ import (
 
 type Invoice struct {
 	gorm.Model
-	ClientID        uint
-	Total           int
+	ClientID         uint
+	Client           Client `gorm:"foreignKey:ID;references:ClientID"`
+	ClientPhone      string
+	ClientAddress    string
+	ClientEmail      string
+	Total            int
+	BillIssuerID     uint
+	BillIssuerDetail BillIssuerDetail `gorm:"foreignKey:ID;references:BillIssuerID"`
+	PaymentMethodID  uint
+	PaymentMethod    PaymentMethod `gorm:"foreignKey:ID;references:PaymentMethodID"`
+	PaymentDue       time.Time
+	PaymentStatus    string `gorm:"default:draft"`
+	PaymentTerms     int
+}
+
+type BillIssuerDetail struct {
+	ID              uint
 	BillIssuerID    uint
-	PaymentMethodID uint
-	PaymentDue      time.Time
-	PaymentStatus   string `gorm:"default:draft"`
-	PaymentTerms    int
+	BillIssuer      BillIssuer `gorm:"foreignKey:ID;references:BillIssuerID"`
+	BillIssuerEmail string
+	CompanyName     string
+	CompanyAddress  string
+	CompanyPhone    string
+	CompanySite     string
+}
+
+type BillIssuer struct {
+	ID   uint
+	Name string
+}
+type Client struct {
+	ID      uint
+	NIK     int
+	Name    string
+	Phone   string
+	Address string
+	Email   string
+}
+
+type PaymentMethod struct {
+	ID   uint
+	Name string
 }
 
 func toInvoiceRecord(in invoice.InvoiceCore) Invoice {
@@ -37,16 +72,22 @@ func toInvoiceRecord(in invoice.InvoiceCore) Invoice {
 
 func toInvoiceCore(in Invoice) invoice.InvoiceCore {
 	return invoice.InvoiceCore{
-		ID:              in.ID,
-		ClientID:        in.ClientID,
-		Total:           in.Total,
-		BillIssuerID:    in.BillIssuerID,
-		PaymentMethodID: in.PaymentMethodID,
-		PaymentDue:      in.PaymentDue,
-		PaymentStatus:   in.PaymentStatus,
-		PaymentTerms:    in.PaymentTerms,
-		CreatedAt:       in.CreatedAt,
-		UpdatedAt:       in.UpdatedAt,
+		ID:                in.ID,
+		ClientID:          in.ClientID,
+		ClientName:        in.Client.Name,
+		ClientPhone:       in.Client.Phone,
+		ClientAddress:     in.Client.Address,
+		ClientEmail:       in.Client.Email,
+		Total:             in.Total,
+		BillIssuerID:      in.BillIssuerID,
+		BillIssuerName:    in.BillIssuerDetail.BillIssuer.Name,
+		PaymentMethodID:   in.PaymentMethodID,
+		PaymentMethodName: in.PaymentMethod.Name,
+		PaymentDue:        in.PaymentDue,
+		PaymentStatus:     in.PaymentStatus,
+		PaymentTerms:      in.PaymentTerms,
+		CreatedAt:         in.CreatedAt,
+		UpdatedAt:         in.UpdatedAt,
 	}
 }
 

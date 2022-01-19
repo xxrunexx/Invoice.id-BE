@@ -6,30 +6,42 @@ import (
 )
 
 type RespInvoice struct {
-	ID              uint      `json:"id"`
-	ClientID        uint      `json:"client_id"`
-	Total           int       `json:"total"`
-	BillIssuerID    uint      `json:"bill_issuer_id"`
-	PaymentMethodID uint      `json:"payment_method_id"`
-	PaymentDue      time.Time `json:"payment_due"`
-	PaymentStatus   string    `json:"payment_status"`
-	PaymentTerms    int       `json:"payment_terms"`
-	CreatedAt       time.Time `json:"created_at"`
-	UpdatedAt       time.Time `json:"updated_at"`
+	ID                uint      `json:"id"`
+	ClientID          uint      `json:"client_id"`
+	ClientName        string    `json:"client_name"`
+	ClientPhone       string    `json:"client_phone"`
+	ClientAddress     string    `json:"client_address"`
+	ClientEmail       string    `json:"clien_email"`
+	Total             int       `json:"total"`
+	BillIssuerID      uint      `json:"bill_issuer_id"`
+	BillIssuerName    string    `json:"bill_issuer_name"`
+	PaymentMethodID   uint      `json:"payment_method_id"`
+	PaymentMethodName string    `json:"payment_method_name"`
+	PaymentDue        time.Time `json:"payment_due"`
+	PaymentStatus     string    `json:"payment_status"`
+	PaymentTerms      int       `json:"payment_terms"`
+	CreatedAt         time.Time `json:"created_at"`
+	UpdatedAt         time.Time `json:"updated_at"`
 }
 
-func ToInvoiceResponse(invoice invoice.InvoiceCore) RespInvoice {
+func ToInvoiceResponse(in invoice.InvoiceCore) RespInvoice {
 	return RespInvoice{
-		ID:              invoice.ID,
-		ClientID:        invoice.ClientID,
-		Total:           invoice.Total,
-		BillIssuerID:    invoice.BillIssuerID,
-		PaymentMethodID: invoice.PaymentMethodID,
-		PaymentDue:      invoice.PaymentDue,
-		PaymentStatus:   invoice.PaymentStatus,
-		PaymentTerms:    invoice.PaymentTerms,
-		CreatedAt:       invoice.CreatedAt,
-		UpdatedAt:       invoice.UpdatedAt,
+		ID:                in.ID,
+		ClientID:          in.ClientID,
+		ClientName:        in.ClientName,
+		ClientPhone:       in.ClientPhone,
+		ClientAddress:     in.ClientAddress,
+		ClientEmail:       in.ClientEmail,
+		Total:             in.Total,
+		BillIssuerID:      in.BillIssuerID,
+		BillIssuerName:    in.BillIssuerName,
+		PaymentMethodID:   in.PaymentMethodID,
+		PaymentMethodName: in.PaymentMethodName,
+		PaymentDue:        in.PaymentDue,
+		PaymentStatus:     in.PaymentStatus,
+		PaymentTerms:      in.PaymentTerms,
+		CreatedAt:         in.CreatedAt,
+		UpdatedAt:         in.UpdatedAt,
 	}
 }
 

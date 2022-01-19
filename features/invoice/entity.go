@@ -3,16 +3,22 @@ package invoice
 import "time"
 
 type InvoiceCore struct {
-	ID              uint
-	ClientID        uint
-	Total           int
-	BillIssuerID    uint
-	PaymentMethodID uint
-	PaymentDue      time.Time
-	PaymentStatus   string
-	PaymentTerms    int
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
+	ID                uint
+	ClientID          uint
+	ClientName        string
+	ClientPhone       string
+	ClientAddress     string
+	ClientEmail       string
+	Total             int
+	BillIssuerID      uint
+	BillIssuerName    string
+	PaymentMethodID   uint
+	PaymentMethodName string
+	PaymentDue        time.Time
+	PaymentStatus     string
+	PaymentTerms      int
+	CreatedAt         time.Time
+	UpdatedAt         time.Time
 }
 
 type Business interface {

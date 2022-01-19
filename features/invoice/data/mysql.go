@@ -49,8 +49,8 @@ func (inData *InvoiceData) DeleteInvoice(id int) error {
 func (inData *InvoiceData) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 	var singleData Invoice
 
-	err := inData.DB.First(&singleData, id).Error
-
+	// err := inData.DB.First(&singleData, id).Error
+	err := inData.DB.Where("invoices.id = ?", id).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&singleData).Error
 	if singleData.ID == 0 {
 		return invoice.InvoiceCore{}, errors.New("data not found")
 	}
