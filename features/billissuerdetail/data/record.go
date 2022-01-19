@@ -8,11 +8,20 @@ import (
 
 type BillIssuerDetail struct {
 	gorm.Model
-	BillIssuerID   uint
-	CompanyName    string
-	CompanyAddress string
-	CompanyPhone   string
-	CompanySite    string
+	BillIssuerID    uint
+	BillIssuer      BillIssuer `gorm:"foreignKey:ID;references:BillIssuerID"`
+	BillIssuerEmail string
+	CompanyName     string
+	CompanyAddress  string
+	CompanyPhone    string
+	CompanySite     string
+}
+
+type BillIssuer struct {
+	ID       uint
+	Name     string
+	Password string
+	Email    string
 }
 
 func toBillIssuerDetailRecord(bid billissuerdetail.BillIssuerDetailCore) BillIssuerDetail {
@@ -32,11 +41,13 @@ func toBillIssuerDetailRecord(bid billissuerdetail.BillIssuerDetailCore) BillIss
 
 func toBillIssuerDetailCore(bid BillIssuerDetail) billissuerdetail.BillIssuerDetailCore {
 	return billissuerdetail.BillIssuerDetailCore{
-		ID:             bid.ID,
-		BillIssuerID:   bid.BillIssuerID,
-		CompanyName:    bid.CompanyName,
-		CompanyAddress: bid.CompanyAddress,
-		CompanyPhone:   bid.CompanyPhone,
-		CompanySite:    bid.CompanySite,
+		ID:              bid.ID,
+		BillIssuerID:    bid.BillIssuerID,
+		BillIssuerName:  bid.BillIssuer.Name,
+		BillIssuerEmail: bid.BillIssuer.Email,
+		CompanyName:     bid.CompanyName,
+		CompanyAddress:  bid.CompanyAddress,
+		CompanyPhone:    bid.CompanyPhone,
+		CompanySite:     bid.CompanySite,
 	}
 }

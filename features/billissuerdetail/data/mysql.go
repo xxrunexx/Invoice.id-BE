@@ -27,7 +27,11 @@ func (bidData *BillIssuerDetailData) CreateBillIssuerDetail(data billissuerdetai
 func (bidData *BillIssuerDetailData) GetBillIssuerDetailById(id int) (billissuerdetail.BillIssuerDetailCore, error) {
 	var singleData BillIssuerDetail
 
-	err := bidData.DB.First(&singleData, id).Error
+	// err := bidData.DB.First(&singleData, id).Joins("left join bill_issuers on bill_issuers.id = bill_issuer_details.bill_issuer_id").Error
+	err := bidData.DB.Where("bill_issuer_details.bill_issuer_id = ?", id).Joins("BillIssuerName").Find(&singleData).Error
+	// err := bidData.DB.Model(&singleData).Where("id = ?", id).Joins("left join bill_issuers on bill_issuers.id = bill_issuer_details.bill_issuer_id").Error
+	// err := bidData.DB.Joins("BillIssuers").First(&singleData, id).Error
+	// err := bidData.DB.Model(&singleData).Where("id = ?", id).Joins("left join bill_issuers on bill_issuer_details.bill_issuer_id = bill_issuers.id").Error
 
 	if singleData.BillIssuerID == 0 {
 		return billissuerdetail.BillIssuerDetailCore{}, errors.New("data not found")

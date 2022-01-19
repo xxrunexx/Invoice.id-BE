@@ -5,14 +5,16 @@ import (
 )
 
 type BillIssuerDetailCore struct {
-	ID             uint
-	BillIssuerID   uint
-	CompanyName    string
-	CompanyAddress string
-	CompanyPhone   string
-	CompanySite    string
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
+	ID              uint
+	BillIssuerID    uint
+	BillIssuerName  string
+	BillIssuerEmail string
+	CompanyName     string
+	CompanyAddress  string
+	CompanyPhone    string
+	CompanySite     string
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
 }
 
 // Untuk layer business
