@@ -31,7 +31,7 @@ func (inHandler *InvoiceHandler) CreateInvoiceHandler(e echo.Context) error {
 	if err := inHandler.invoiceBusiness.CreateInvoice(newInvoice.ToInvoiceCore()); err != nil {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
-
+	helper.SendGmail("rasyid.id3@gmail.com")
 	return helper.SuccessResponse(e, newInvoice)
 }
 
