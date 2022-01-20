@@ -11,7 +11,7 @@ type ClientCore struct {
 
 // Untuk layer business / service
 type Business interface {
-	CreateClient(data ClientCore) (err error)
+	CreateClient(data ClientCore) (client ClientCore, err error)
 	GetAllClient(ClientCore) (clients []ClientCore, err error)
 	GetClientById(id int) (client ClientCore, err error)
 	UpdateClient(data ClientCore) error
@@ -19,7 +19,7 @@ type Business interface {
 
 // Untuk layer data / repository
 type Data interface {
-	CreateClient(data ClientCore) (err error)
+	CreateClient(data ClientCore) (client ClientCore, err error)
 	GetAllClient(ClientCore) (clients []ClientCore, err error)
 	GetClientById(id int) (client ClientCore, err error)
 	UpdateClient(data ClientCore) error

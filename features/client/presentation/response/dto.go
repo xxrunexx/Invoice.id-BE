@@ -3,6 +3,7 @@ package response
 import "invoice-api/features/client"
 
 type RespClient struct {
+	ID      uint   `json:"id"`
 	NIK     int    `json:"nik"`
 	Name    string `json:"name"`
 	Phone   string `json:"phone"`
@@ -12,6 +13,7 @@ type RespClient struct {
 
 func ToClientResponse(client client.ClientCore) RespClient {
 	return RespClient{
+		ID:      client.ID,
 		NIK:     client.NIK,
 		Name:    client.Name,
 		Phone:   client.Phone,

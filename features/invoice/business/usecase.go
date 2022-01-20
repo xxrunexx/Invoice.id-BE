@@ -2,8 +2,10 @@ package business
 
 import (
 	"errors"
+	"fmt"
 	"invoice-api/features/invoice"
 	"invoice-api/helper"
+	"time"
 )
 
 type InvoiceBusiness struct {
@@ -15,10 +17,37 @@ func NewBusinessInvoice(inData invoice.Data) invoice.Business {
 }
 
 func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error {
+	t := time.Now()
+	if data.PaymentTerms == 7 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 7)
+	} else if data.PaymentTerms == 10 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 10)
+	} else if data.PaymentTerms == 30 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 30)
+	}
+	fmt.Println("Isi payment due : ", data.PaymentDue)
 	if err := inBusiness.invoiceData.CreateInvoice(data); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (inBusiness *InvoiceBusiness) SendInvoice(id int) (invoice.InvoiceCore, error) {
+	inData, err := inBusiness.invoiceData.GetInvoiceById(id)
+
+	if err != nil {
+		return invoice.InvoiceCore{}, err
+	}
+
+	fmt.Println("Isi Client name : ", inData.ClientName)
+	fmt.Println("Isi Total : ", inData.Total)
+	fmt.Println("Isi CreatedAt : ", inData.CreatedAt)
+	fmt.Println("Isi Payment terms: ", inData.PaymentTerms)
+	fmt.Println("Isi Payment due: ", inData.PaymentDue)
+
+	helper.SendGmail(inData)
+
+	return inData, nil
 }
 
 func (inBusiness *InvoiceBusiness) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
@@ -66,6 +95,9 @@ func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error
 	err := inBusiness.invoiceData.UpdateInvoice(data)
 	if err != nil {
 		return err
+	}
+	if data.PaymentStatus == "unpaid" {
+		inBusiness.SendInvoice(int(data.ID))
 	}
 	return nil
 }

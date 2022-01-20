@@ -15,13 +15,18 @@ func NewMySqlBillIssuer(DB *gorm.DB) billissuer.Data {
 	return &BillIssuerData{DB}
 }
 
-func (biData *BillIssuerData) CreateBillIssuer(data billissuer.BillIssuerCore) error {
+func (biData *BillIssuerData) CreateBillIssuer(data billissuer.BillIssuerCore) (billissuer.BillIssuerCore, error) {
 	convData := toBillIssuerRecord(data)
 
 	if err := biData.DB.Create(&convData).Error; err != nil {
-		return err
+		return billissuer.BillIssuerCore{}, err
 	}
-	return nil
+
+	record, err := biData.GetBillIssuerById(int(convData.ID))
+	if err != nil {
+		return billissuer.BillIssuerCore{}, err
+	}
+	return record, nil
 }
 
 func (biData *BillIssuerData) LoginBillIssuer(data billissuer.BillIssuerCore) (billissuer.BillIssuerCore, error) {

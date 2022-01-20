@@ -26,11 +26,12 @@ func (biHandler *BillIssuerHandler) CreateBillIssuerHandler(e echo.Context) erro
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 
-	if err := biHandler.billissuerBusiness.CreateBillIssuer(newBillIssuer.ToBillIssuerCore()); err != nil {
+	resp, err := biHandler.billissuerBusiness.CreateBillIssuer(newBillIssuer.ToBillIssuerCore())
+	if err != nil {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 
-	return helper.SuccessResponse(e, newBillIssuer)
+	return helper.SuccessResponse(e, response.ToBillIssuerResponse(resp))
 }
 
 func (biHandler *BillIssuerHandler) LoginBillIssuerHandler(e echo.Context) error {

@@ -22,7 +22,6 @@ func NewHandlerInvoice(invoiceBusiness invoice.Business) *InvoiceHandler {
 
 func (inHandler *InvoiceHandler) CreateInvoiceHandler(e echo.Context) error {
 	newInvoice := request.ReqInvoice{}
-	fmt.Println("isi new invoice", newInvoice)
 
 	if err := e.Bind(&newInvoice); err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
@@ -44,10 +43,33 @@ func (inHandler *InvoiceHandler) GetAllInvoiceHandler(e echo.Context) error {
 	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
 }
 
+func (inHandler *InvoiceHandler) SendInvoiceHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	_, err = inHandler.invoiceBusiness.GetInvoiceById(id)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+
+	_, err = inHandler.invoiceBusiness.SendInvoice(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": "failed send data",
+		})
+	}
+
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "successfully sending email",
+	})
+}
+
 func (inHandler *InvoiceHandler) GetInvoiceByIdHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
 	if err != nil {
-		return helper.ErrorResponse(e, http.StatusBadRequest, "bad requst", err)
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 
 	data, err := inHandler.invoiceBusiness.GetInvoiceById(id)

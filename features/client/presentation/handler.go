@@ -26,10 +26,11 @@ func (clHandler *ClientHandler) CreateClientHandler(e echo.Context) error {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 
-	if err := clHandler.clientBusiness.CreateClient(newClient.ToClientCore()); err != nil {
+	resp, err := clHandler.clientBusiness.CreateClient(newClient.ToClientCore())
+	if err != nil {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
-	return helper.SuccessResponse(e, newClient)
+	return helper.SuccessResponse(e, response.ToClientResponse(resp))
 }
 
 func (clHandler *ClientHandler) GetAllClientHandler(e echo.Context) error {

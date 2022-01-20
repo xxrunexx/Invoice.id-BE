@@ -5,24 +5,26 @@ import (
 )
 
 type BillIssuerDetailCore struct {
-	ID             uint
-	BillIssuerID   uint
-	CompanyName    string
-	CompanyAddress string
-	CompanyPhone   string
-	CompanySite    string
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
+	ID              uint
+	BillIssuerID    uint
+	BillIssuerName  string
+	BillIssuerEmail string
+	CompanyName     string
+	CompanyAddress  string
+	CompanyPhone    string
+	CompanySite     string
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
 }
 
 // Untuk layer business
 type Business interface {
-	CreateBillIssuerDetail(data BillIssuerDetailCore) (err error)
+	CreateBillIssuerDetail(data BillIssuerDetailCore) (BillIssuerDetail BillIssuerDetailCore, err error)
 	GetBillIssuerDetailById(id int) (billissuerdetail BillIssuerDetailCore, err error)
 }
 
 // Untuk layer data / repository
 type Data interface {
-	CreateBillIssuerDetail(data BillIssuerDetailCore) (err error)
+	CreateBillIssuerDetail(data BillIssuerDetailCore) (BillIssuerDetail BillIssuerDetailCore, err error)
 	GetBillIssuerDetailById(id int) (billissuerdetail BillIssuerDetailCore, err error)
 }

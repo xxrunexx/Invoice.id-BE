@@ -26,11 +26,12 @@ func (bidHandler *BillIssuerDetailHandler) CreateBillIssuerDetailHandler(e echo.
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 
-	if err := bidHandler.billissuerdetailbusiness.CreateBillIssuerDetail(newBillIssuerDetail.ToBillIssuerDetailCore()); err != nil {
+	resp, err := bidHandler.billissuerdetailbusiness.CreateBillIssuerDetail(newBillIssuerDetail.ToBillIssuerDetailCore())
+	if err != nil {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 
-	return helper.SuccessResponse(e, newBillIssuerDetail)
+	return helper.SuccessResponse(e, response.ToBillIssuerDetailResponse(resp))
 }
 
 func (bidHandler *BillIssuerDetailHandler) GetBillIssuerDetailById(e echo.Context) error {

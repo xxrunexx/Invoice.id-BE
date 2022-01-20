@@ -19,21 +19,21 @@ func NewBusinessBillIssuerDetail(bidData billissuerdetail.Data, biBus billissuer
 	}
 }
 
-func (bidBusiness *BillIssuerDetailBusiness) CreateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) error {
+func (bidBusiness *BillIssuerDetailBusiness) CreateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) (billissuerdetail.BillIssuerDetailCore, error) {
 	if helper.IsEmpty(data.CompanyName) || helper.IsEmpty(data.CompanyAddress) || helper.IsEmpty(data.CompanyPhone) || helper.IsEmpty(data.CompanySite) {
-		return errors.New("bad request")
+		return billissuerdetail.BillIssuerDetailCore{}, errors.New("bad request")
 	}
 
 	_, err := bidBusiness.billissuerBusiness.GetBillIssuerById(int(data.BillIssuerID))
 	if err != nil {
-		return errors.New("user not found")
+		return billissuerdetail.BillIssuerDetailCore{}, errors.New("user not found")
 	}
 
-	err = bidBusiness.billissuerdetailData.CreateBillIssuerDetail(data)
+	result, err := bidBusiness.billissuerdetailData.CreateBillIssuerDetail(data)
 	if err != nil {
-		return err
+		return billissuerdetail.BillIssuerDetailCore{}, err
 	}
-	return nil
+	return result, nil
 }
 
 func (bidBusiness *BillIssuerDetailBusiness) GetBillIssuerDetailById(id int) (billissuerdetail.BillIssuerDetailCore, error) {
