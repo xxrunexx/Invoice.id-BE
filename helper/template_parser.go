@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"invoice-api/features/invoice"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -24,7 +25,13 @@ func parseTemplate(templateFileName string, data interface{}, inData invoice.Inv
 		return "", err
 	}
 	body := buf.String()
-	bodyReplace := strings.Replace(body, "#Name#", inData.ClientName, -1)
+	r := strings.NewReplacer("#ClientName#", inData.ClientName, "#ClientAddress#", inData.ClientAddress, "#CreatedAt#", inData.CreatedAt.String(), "#Total#", strconv.Itoa(inData.Total), "#PaymentDue#", inData.PaymentDue.String())
+	bodyReplace := r.Replace(body)
+	// bodyReplace := strings.Replace(body, "#ClientName#", inData.ClientName, -1)
+	// bodyReplace = strings.Replace(body, "#ClientAddress#", inData.ClientAddress, -1)
+	// bodyReplace = strings.Replace(body, "#CreatedAt#", inData.CreatedAt.String(), -1)
+	// bodyReplace = strings.Replace(body, "#Total#", string(rune(inData.Total)), -1)
+	// bodyReplace = strings.Replace(body, "#PaymentDue#", inData.PaymentDue.String(), -1)
 
 	return bodyReplace, nil
 }
