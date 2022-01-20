@@ -16,25 +16,25 @@ func NewBusinessBillIssuer(biData billissuer.Data) billissuer.Business {
 	return &BillIssuerBusiness{biData}
 }
 
-func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssuerCore) error {
+func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssuerCore) (billissuer.BillIssuerCore, error) {
 	if !helper.ValidateEmail(data.Email) || !helper.ValidatePassword(data.Password) || helper.IsEmpty(data.Name) {
-		return errors.New("bad request")
+		return billissuer.BillIssuerCore{}, errors.New("bad request")
 	}
 
 	isExist, err := biBusiness.billissuerData.GetBillIssuerByEmail(data.Email)
 	if err != nil {
-		return err
+		return billissuer.BillIssuerCore{}, err
 	}
 	if isExist {
 		setMessage := fmt.Sprintf("email %v already in use!", data.Email)
-		return errors.New(setMessage)
+		return billissuer.BillIssuerCore{}, errors.New(setMessage)
 	}
 
-	err = biBusiness.billissuerData.CreateBillIssuer(data)
+	result, err := biBusiness.billissuerData.CreateBillIssuer(data)
 	if err != nil {
-		return err
+		return billissuer.BillIssuerCore{}, err
 	}
-	return nil
+	return result, nil
 }
 
 func (biBussiness *BillIssuerBusiness) LoginBillIssuer(data billissuer.BillIssuerCore) (billissuer.BillIssuerCore, error) {

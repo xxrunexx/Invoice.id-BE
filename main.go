@@ -12,7 +12,6 @@ func main() {
 
 	// Log Middleware
 	_middleware.LogMiddlewareInit(e)
-	// _middleware.LogMiddlewareInit(e)
 
 	// Starting The Server
 	e.Start(":8000")
