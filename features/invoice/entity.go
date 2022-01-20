@@ -28,6 +28,7 @@ type Business interface {
 	DeleteInvoice(id int) error
 	GetInvoiceByStatus(status string) (invoices []InvoiceCore, err error)
 	UpdateInvoice(data InvoiceCore) error
+	SendInvoice(id int) (invoice InvoiceCore, err error)
 }
 
 type Data interface {

@@ -5,11 +5,12 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"invoice-api/features/invoice"
 	"path/filepath"
 	"strings"
 )
 
-func parseTemplate(templateFileName string, data interface{}) (string, error) {
+func parseTemplate(templateFileName string, data interface{}, inData invoice.InvoiceCore) (string, error) {
 	templatePath, err := filepath.Abs(fmt.Sprintf("helper/email_templates/%s", templateFileName))
 	if err != nil {
 		return "", errors.New("invalid template name")
@@ -23,7 +24,7 @@ func parseTemplate(templateFileName string, data interface{}) (string, error) {
 		return "", err
 	}
 	body := buf.String()
-	bodyReplace := strings.Replace(body, "#Name#", "Harun", -1)
+	bodyReplace := strings.Replace(body, "#Name#", inData.ClientName, -1)
 
 	return bodyReplace, nil
 }

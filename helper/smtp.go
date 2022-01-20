@@ -3,13 +3,14 @@ package helper
 import (
 	"errors"
 	"fmt"
+	"invoice-api/features/invoice"
 	"net/smtp"
 	"os"
 )
 
 var emailAuth smtp.Auth
 
-func SendEmailSMTP(to []string, data interface{}, template string) (bool, error) {
+func SendEmailSMTP(to []string, data interface{}, template string, inData invoice.InvoiceCore) (bool, error) {
 	emailHost := os.Getenv("EMAIL_HOST")
 	emailFrom := os.Getenv("EMAIL_FROM")
 	emailPassword := os.Getenv("EMAIL_PASSWORD")
@@ -17,7 +18,7 @@ func SendEmailSMTP(to []string, data interface{}, template string) (bool, error)
 
 	emailAuth = smtp.PlainAuth("", emailFrom, emailPassword, emailHost)
 
-	emailBody, err := parseTemplate(template, data)
+	emailBody, err := parseTemplate(template, data, inData)
 	if err != nil {
 		return false, errors.New("unable to parse email template")
 	}

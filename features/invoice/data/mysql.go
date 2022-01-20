@@ -29,7 +29,6 @@ func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) error {
 func (inData *InvoiceData) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
 
-	// err := inData.DB.Find(&invoices).Error
 	err := inData.DB.Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
 
 	if err != nil {
@@ -67,7 +66,6 @@ func (inData *InvoiceData) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 func (inData *InvoiceData) GetInvoiceByStatus(status string) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
 
-	// err := inData.DB.Where("payment_status = ?", status).Find(&invoices).Error
 	err := inData.DB.Where("invoices.payment_status = ?", status).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
 	if err != nil {
 		return nil, err

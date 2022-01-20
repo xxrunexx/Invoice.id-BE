@@ -30,7 +30,7 @@ func (inHandler *InvoiceHandler) CreateInvoiceHandler(e echo.Context) error {
 	if err := inHandler.invoiceBusiness.CreateInvoice(newInvoice.ToInvoiceCore()); err != nil {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
-	helper.SendGmail("rasyid.id3@gmail.com")
+
 	return helper.SuccessResponse(e, newInvoice)
 }
 
@@ -43,10 +43,33 @@ func (inHandler *InvoiceHandler) GetAllInvoiceHandler(e echo.Context) error {
 	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
 }
 
+func (inHandler *InvoiceHandler) SendInvoiceHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	_, err = inHandler.invoiceBusiness.GetInvoiceById(id)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+
+	_, err = inHandler.invoiceBusiness.SendInvoice(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": "failed send data",
+		})
+	}
+
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "successfully sending email",
+	})
+}
+
 func (inHandler *InvoiceHandler) GetInvoiceByIdHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
 	if err != nil {
-		return helper.ErrorResponse(e, http.StatusBadRequest, "bad requst", err)
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 
 	data, err := inHandler.invoiceBusiness.GetInvoiceById(id)

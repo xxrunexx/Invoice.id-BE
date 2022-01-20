@@ -11,7 +11,7 @@ type RespInvoice struct {
 	ClientName        string    `json:"client_name"`
 	ClientPhone       string    `json:"client_phone"`
 	ClientAddress     string    `json:"client_address"`
-	ClientEmail       string    `json:"clien_email"`
+	ClientEmail       string    `json:"client_email"`
 	Total             int       `json:"total"`
 	BillIssuerID      uint      `json:"bill_issuer_id"`
 	BillIssuerName    string    `json:"bill_issuer_name"`

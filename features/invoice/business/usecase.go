@@ -17,8 +17,6 @@ func NewBusinessInvoice(inData invoice.Data) invoice.Business {
 }
 
 func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error {
-	// var result invoice.InvoiceCore
-	// inBusiness.SetPaymentDue(result)
 	t := time.Now()
 	if data.PaymentTerms == 7 {
 		data.PaymentDue = t.Add(time.Hour * 24 * 7)
@@ -28,11 +26,28 @@ func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error
 		data.PaymentDue = t.Add(time.Hour * 24 * 24)
 	}
 	fmt.Println("Isi payment due : ", data.PaymentDue)
-	// fmt.Println("Cek payment due : ", result.PaymentDue)
 	if err := inBusiness.invoiceData.CreateInvoice(data); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (inBusiness *InvoiceBusiness) SendInvoice(id int) (invoice.InvoiceCore, error) {
+	inData, err := inBusiness.invoiceData.GetInvoiceById(id)
+
+	if err != nil {
+		return invoice.InvoiceCore{}, err
+	}
+
+	fmt.Println("Isi Client name : ", inData.ClientName)
+	fmt.Println("Isi Total : ", inData.Total)
+	fmt.Println("Isi CreatedAt : ", inData.CreatedAt)
+	fmt.Println("Isi Payment terms: ", inData.PaymentTerms)
+	fmt.Println("Isi Payment due: ", inData.PaymentDue)
+
+	helper.SendGmail(inData)
+
+	return inData, nil
 }
 
 func (inBusiness *InvoiceBusiness) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
@@ -53,6 +68,11 @@ func (inBusiness *InvoiceBusiness) DeleteInvoice(id int) error {
 
 func (inBusiness *InvoiceBusiness) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 	inData, err := inBusiness.invoiceData.GetInvoiceById(id)
+	// fmt.Println("Isi Client name : ", inData.ClientName)
+	// fmt.Println("Isi Total : ", inData.Total)
+	// fmt.Println("Isi CreatedAt : ", inData.CreatedAt)
+	// fmt.Println("Isi Payment terms: ", inData.PaymentTerms)
+	// fmt.Println("Isi Payment due: ", inData.PaymentDue)
 
 	if err != nil {
 		return invoice.InvoiceCore{}, err
