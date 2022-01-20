@@ -3,7 +3,6 @@ package request
 import "invoice-api/features/billissuer"
 
 type ReqBillIssuer struct {
-	ID       string `json:"id"`
 	Name     string `json:"name"`
 	Password string `json:"password"`
 	Email    string `json:"email"`

@@ -15,13 +15,19 @@ func NewMySqlClient(DB *gorm.DB) client.Data {
 	return &ClientData{DB}
 }
 
-func (clData *ClientData) CreateClient(data client.ClientCore) error {
+func (clData *ClientData) CreateClient(data client.ClientCore) (client.ClientCore, error) {
 	convData := toClientRecord(data)
 
 	if err := clData.DB.Create(&convData).Error; err != nil {
-		return err
+		return client.ClientCore{}, err
 	}
-	return nil
+
+	record, err := clData.GetClientById(int(convData.ID))
+	if err != nil {
+		return client.ClientCore{}, err
+	}
+
+	return record, nil
 }
 
 func (clData *ClientData) GetAllClient(data client.ClientCore) ([]client.ClientCore, error) {

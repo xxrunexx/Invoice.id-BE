@@ -23,7 +23,7 @@ func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error
 	} else if data.PaymentTerms == 10 {
 		data.PaymentDue = t.Add(time.Hour * 24 * 10)
 	} else if data.PaymentTerms == 30 {
-		data.PaymentDue = t.Add(time.Hour * 24 * 24)
+		data.PaymentDue = t.Add(time.Hour * 24 * 30)
 	}
 	fmt.Println("Isi payment due : ", data.PaymentDue)
 	if err := inBusiness.invoiceData.CreateInvoice(data); err != nil {
@@ -68,11 +68,6 @@ func (inBusiness *InvoiceBusiness) DeleteInvoice(id int) error {
 
 func (inBusiness *InvoiceBusiness) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 	inData, err := inBusiness.invoiceData.GetInvoiceById(id)
-	// fmt.Println("Isi Client name : ", inData.ClientName)
-	// fmt.Println("Isi Total : ", inData.Total)
-	// fmt.Println("Isi CreatedAt : ", inData.CreatedAt)
-	// fmt.Println("Isi Payment terms: ", inData.PaymentTerms)
-	// fmt.Println("Isi Payment due: ", inData.PaymentDue)
 
 	if err != nil {
 		return invoice.InvoiceCore{}, err
@@ -100,6 +95,9 @@ func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error
 	err := inBusiness.invoiceData.UpdateInvoice(data)
 	if err != nil {
 		return err
+	}
+	if data.PaymentStatus == "unpaid" {
+		inBusiness.SendInvoice(int(data.ID))
 	}
 	return nil
 }

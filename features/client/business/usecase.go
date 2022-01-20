@@ -15,24 +15,25 @@ func NewBusinessClient(clData client.Data) client.Business {
 	return &ClientBusiness{clData}
 }
 
-func (clBusiness *ClientBusiness) CreateClient(data client.ClientCore) error {
+func (clBusiness *ClientBusiness) CreateClient(data client.ClientCore) (client.ClientCore, error) {
 	if data.NIK == 0 || helper.IsEmpty(data.Phone) || helper.IsEmpty(data.Address) || helper.IsEmpty(data.Email) {
-		return errors.New("invalid data")
+		return client.ClientCore{}, errors.New("invalid data")
 	}
 
 	isExist, err := clBusiness.clienData.GetClientByNik(data.NIK)
 	if err != nil {
-		return err
+		return client.ClientCore{}, err
 	}
 	if isExist {
 		setMessage := fmt.Sprintf("nik %v already in use!", data.NIK)
-		return errors.New(setMessage)
+		return client.ClientCore{}, errors.New(setMessage)
 	}
 
-	if err := clBusiness.clienData.CreateClient(data); err != nil {
-		return err
+	result, err := clBusiness.clienData.CreateClient(data)
+	if err != nil {
+		return client.ClientCore{}, err
 	}
-	return nil
+	return result, nil
 }
 
 func (clBussiness *ClientBusiness) GetAllClient(data client.ClientCore) ([]client.ClientCore, error) {

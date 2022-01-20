@@ -19,12 +19,12 @@ type BillIssuerDetailCore struct {
 
 // Untuk layer business
 type Business interface {
-	CreateBillIssuerDetail(data BillIssuerDetailCore) (err error)
+	CreateBillIssuerDetail(data BillIssuerDetailCore) (BillIssuerDetail BillIssuerDetailCore, err error)
 	GetBillIssuerDetailById(id int) (billissuerdetail BillIssuerDetailCore, err error)
 }
 
 // Untuk layer data / repository
 type Data interface {
-	CreateBillIssuerDetail(data BillIssuerDetailCore) (err error)
+	CreateBillIssuerDetail(data BillIssuerDetailCore) (BillIssuerDetail BillIssuerDetailCore, err error)
 	GetBillIssuerDetailById(id int) (billissuerdetail BillIssuerDetailCore, err error)
 }
