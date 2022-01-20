@@ -14,14 +14,23 @@ func NewBusinessPaymentMethod(pmData paymentmethod.Data) paymentmethod.Business 
 	return &PaymentMethodBusiness{pmData}
 }
 
-func (pmBusiness *PaymentMethodBusiness) CreatePaymentMethod(data paymentmethod.PaymentMethodCore) error {
+func (pmBusiness *PaymentMethodBusiness) CreatePaymentMethod(data paymentmethod.PaymentMethodCore) (paymentmethod.PaymentMethodCore, error) {
 	if helper.IsEmpty(data.Name) {
-		return errors.New("bad request")
+		return paymentmethod.PaymentMethodCore{}, errors.New("bad request")
 	}
 
-	err := pmBusiness.paymentmethodData.CreatePaymentMethod(data)
+	result, err := pmBusiness.paymentmethodData.CreatePaymentMethod(data)
 	if err != nil {
-		return err
+		return paymentmethod.PaymentMethodCore{}, err
 	}
-	return nil
+	return result, nil
+}
+
+func (pmBusiness *PaymentMethodBusiness) GetPaymentMethodById(id int) (paymentmethod.PaymentMethodCore, error) {
+	pmData, err := pmBusiness.paymentmethodData.GetPaymentMethodById(id)
+
+	if err != nil {
+		return paymentmethod.PaymentMethodCore{}, err
+	}
+	return pmData, nil
 }

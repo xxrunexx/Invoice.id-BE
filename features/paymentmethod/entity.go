@@ -12,10 +12,12 @@ type PaymentMethodCore struct {
 
 // Untuk layer business
 type Business interface {
-	CreatePaymentMethod(data PaymentMethodCore) (err error)
+	CreatePaymentMethod(data PaymentMethodCore) (paymentmethod PaymentMethodCore, err error)
+	GetPaymentMethodById(id int) (paymentmethod PaymentMethodCore, err error)
 }
 
 // Untuk layer data / repository
 type Data interface {
-	CreatePaymentMethod(data PaymentMethodCore) (err error)
+	CreatePaymentMethod(data PaymentMethodCore) (paymentmethod PaymentMethodCore, err error)
+	GetPaymentMethodById(id int) (paymentmethod PaymentMethodCore, err error)
 }
