@@ -1,6 +1,7 @@
 package business
 
 import (
+	"errors"
 	"invoice-api/features/paymentmethod"
 	"invoice-api/features/paymentmethod/mocks"
 	"os"
@@ -28,15 +29,17 @@ func TestMain(m *testing.M) {
 
 func TestCreatePaymentMethod(t *testing.T) {
 	t.Run("validate create payment method", func(t *testing.T) {
-		mockData.On("CreatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(nil).Once()
-		err := paymentmethodBusiness.CreatePaymentMethod(paymentmethod.PaymentMethodCore{})
+		mockData.On("CreatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(paymentmethod.PaymentMethodCore{}, nil).Once()
+		resp, err := paymentmethodBusiness.CreatePaymentMethod(paymentmethod.PaymentMethodCore{})
 		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
 	})
 
 	t.Run("create payment method - success", func(t *testing.T) {
-		mockData.On("CreatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(nil).Once()
-		err := paymentmethodBusiness.CreatePaymentMethod(paymentmethodData)
+		mockData.On("CreatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(paymentmethod.PaymentMethodCore{}, nil).Once()
+		resp, err := paymentmethodBusiness.CreatePaymentMethod(paymentmethodData)
 		assert.Nil(t, err)
+		assert.Nil(t, resp)
 	})
 	// t.Run("error create payment method", func(t *testing.T) {
 	// 	mockData.On("CreatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(errors.New("error")).Once()
@@ -44,10 +47,26 @@ func TestCreatePaymentMethod(t *testing.T) {
 	// 	assert.NotNil(t, err)
 	// })
 	t.Run("Create payment method invalid name", func(t *testing.T) {
-		err := paymentmethodBusiness.CreatePaymentMethod(paymentmethod.PaymentMethodCore{
+		resp, err := paymentmethodBusiness.CreatePaymentMethod(paymentmethod.PaymentMethodCore{
 			Name: "",
 		})
 		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
 		assert.Equal(t, err.Error(), "bad request")
+	})
+}
+
+func TestGetPaymentMethodById(t *testing.T) {
+	t.Run("validate get payment method by id", func(t *testing.T) {
+		mockData.On("GetPaymentMethodById", mock.AnythingOfType("int")).Return(paymentmethod.PaymentMethodCore{}, nil).Once()
+		resp, err := paymentmethodBusiness.GetPaymentMethodById(3)
+		assert.Nil(t, err)
+		assert.NotNil(t, resp)
+	})
+	t.Run("error get payment method by id", func(t *testing.T) {
+		mockData.On("GetPaymentMethodById", mock.AnythingOfType("int")).Return(paymentmethod.PaymentMethodCore{}, errors.New("error")).Once()
+		resp, err := paymentmethodBusiness.GetPaymentMethodById(3)
+		assert.NotNil(t, err)
+		assert.Equal(t, 0, int(resp.ID))
 	})
 }

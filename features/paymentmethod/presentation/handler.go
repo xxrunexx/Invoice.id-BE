@@ -3,8 +3,10 @@ package presentation
 import (
 	"invoice-api/features/paymentmethod"
 	"invoice-api/features/paymentmethod/presentation/request"
+	"invoice-api/features/paymentmethod/presentation/response"
 	"invoice-api/helper"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -24,9 +26,23 @@ func (pmHandler *PaymentMethodHandler) CreatePaymentMethodHandler(e echo.Context
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 
-	if err := pmHandler.paymentmethodBusiness.CreatePaymentMethod(newPaymentMethod.ToPaymentMethodCore()); err != nil {
+	resp, err := pmHandler.paymentmethodBusiness.CreatePaymentMethod(newPaymentMethod.ToPaymentMethodCore())
+	if err != nil {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 
-	return helper.SuccessResponse(e, newPaymentMethod)
+	return helper.SuccessResponse(e, response.ToPaymentMethodResponse(resp))
+}
+
+func (pmHandler *PaymentMethodHandler) GetPaymentMethodByIdHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	data, err := pmHandler.paymentmethodBusiness.GetPaymentMethodById(id)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToPaymentMethodResponse(data))
 }

@@ -46,30 +46,34 @@ func TestMain(m *testing.M) {
 func TestCreateClient(t *testing.T) {
 	t.Run("create client - success", func(t *testing.T) {
 		mockData.On("GetClientByNik", mock.AnythingOfType("int")).Return(false, nil).Once()
-		mockData.On("CreateClient", mock.AnythingOfType("client.ClientCore")).Return(nil).Once()
+		mockData.On("CreateClient", mock.AnythingOfType("client.ClientCore")).Return(client.ClientCore{}, nil).Once()
 		// mockData.On("CreateClient", mock.AnythingOfType("client.ClientCore")).Return(nil).Once()
-		err := clientBusiness.CreateClient(clientData)
+		resp, err := clientBusiness.CreateClient(clientData)
 		assert.Nil(t, err)
+		assert.NotNil(t, resp)
 	})
 
 	t.Run("Create client error - invalid NIK", func(t *testing.T) {
-		err := clientBusiness.CreateClient(client.ClientCore{
+		resp, err := clientBusiness.CreateClient(client.ClientCore{
 			NIK: 0,
 		})
 		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
 		assert.Equal(t, err.Error(), "invalid data")
 	})
 
 	t.Run("Create client error - GetBillIssuerByNik", func(t *testing.T) {
 		mockData.On("GetClientByNik", mock.AnythingOfType("int")).Return(false, errors.New("error")).Once()
-		err := clientBusiness.CreateClient(clientData)
+		resp, err := clientBusiness.CreateClient(clientData)
 		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
 	})
 
 	t.Run("Create client error - NIK exist", func(t *testing.T) {
 		mockData.On("GetClientByNik", mock.AnythingOfType("int")).Return(true, nil).Once()
-		err := clientBusiness.CreateClient(clientData)
+		resp, err := clientBusiness.CreateClient(clientData)
 		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
 	})
 }
 

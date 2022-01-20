@@ -12,14 +12,22 @@ type PaymentMethod struct {
 	IsActive bool
 }
 
-func toPaymentMethodRecord(paymentmethod paymentmethod.PaymentMethodCore) PaymentMethod {
+func toPaymentMethodRecord(pm paymentmethod.PaymentMethodCore) PaymentMethod {
 	return PaymentMethod{
 		Model: gorm.Model{
-			ID:        paymentmethod.ID,
-			CreatedAt: paymentmethod.CreatedAt,
-			UpdatedAt: paymentmethod.UpdatedAt,
+			ID:        pm.ID,
+			CreatedAt: pm.CreatedAt,
+			UpdatedAt: pm.UpdatedAt,
 		},
-		Name:     paymentmethod.Name,
-		IsActive: paymentmethod.IsActive,
+		Name:     pm.Name,
+		IsActive: pm.IsActive,
+	}
+}
+
+func toPaymentMethodCore(pm PaymentMethod) paymentmethod.PaymentMethodCore {
+	return paymentmethod.PaymentMethodCore{
+		ID:       pm.ID,
+		Name:     pm.Name,
+		IsActive: pm.IsActive,
 	}
 }

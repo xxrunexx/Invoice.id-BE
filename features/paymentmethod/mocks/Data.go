@@ -14,15 +14,43 @@ type Data struct {
 }
 
 // CreatePaymentMethod provides a mock function with given fields: data
-func (_m *Data) CreatePaymentMethod(data paymentmethod.PaymentMethodCore) error {
+func (_m *Data) CreatePaymentMethod(data paymentmethod.PaymentMethodCore) (paymentmethod.PaymentMethodCore, error) {
 	ret := _m.Called(data)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(paymentmethod.PaymentMethodCore) error); ok {
+	var r0 paymentmethod.PaymentMethodCore
+	if rf, ok := ret.Get(0).(func(paymentmethod.PaymentMethodCore) paymentmethod.PaymentMethodCore); ok {
 		r0 = rf(data)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(paymentmethod.PaymentMethodCore)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(paymentmethod.PaymentMethodCore) error); ok {
+		r1 = rf(data)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GetPaymentMethodById provides a mock function with given fields: id
+func (_m *Data) GetPaymentMethodById(id int) (paymentmethod.PaymentMethodCore, error) {
+	ret := _m.Called(id)
+
+	var r0 paymentmethod.PaymentMethodCore
+	if rf, ok := ret.Get(0).(func(int) paymentmethod.PaymentMethodCore); ok {
+		r0 = rf(id)
+	} else {
+		r0 = ret.Get(0).(paymentmethod.PaymentMethodCore)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(int) error); ok {
+		r1 = rf(id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }

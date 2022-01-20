@@ -14,17 +14,24 @@ type Data struct {
 }
 
 // CreateClient provides a mock function with given fields: data
-func (_m *Data) CreateClient(data client.ClientCore) error {
+func (_m *Data) CreateClient(data client.ClientCore) (client.ClientCore, error) {
 	ret := _m.Called(data)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(client.ClientCore) error); ok {
+	var r0 client.ClientCore
+	if rf, ok := ret.Get(0).(func(client.ClientCore) client.ClientCore); ok {
 		r0 = rf(data)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(client.ClientCore)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(client.ClientCore) error); ok {
+		r1 = rf(data)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // GetAllClient provides a mock function with given fields: _a0
