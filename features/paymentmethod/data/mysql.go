@@ -43,3 +43,14 @@ func (pmData *PaymentMethodData) GetPaymentMethodById(id int) (paymentmethod.Pay
 	}
 	return toPaymentMethodCore(singleData), nil
 }
+
+func (pmData *PaymentMethodData) UpdatePaymentMethod(data paymentmethod.PaymentMethodCore) error {
+	var singleData PaymentMethod
+
+	convData := toPaymentMethodRecord(data)
+	err := pmData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
