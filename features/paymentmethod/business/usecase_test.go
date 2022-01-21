@@ -15,6 +15,7 @@ var (
 	mockData              mocks.Data
 	paymentmethodBusiness paymentmethod.Business
 	paymentmethodData     paymentmethod.PaymentMethodCore
+	paymentmethodDatas    []paymentmethod.PaymentMethodCore
 )
 
 func TestMain(m *testing.M) {
@@ -23,6 +24,19 @@ func TestMain(m *testing.M) {
 	paymentmethodData = paymentmethod.PaymentMethodCore{
 		Name:     "BRI",
 		IsActive: true,
+	}
+
+	paymentmethodDatas = []paymentmethod.PaymentMethodCore{
+		{
+			ID:       1,
+			Name:     "BRI",
+			IsActive: true,
+		},
+		{
+			ID:       2,
+			Name:     "BCA",
+			IsActive: false,
+		},
 	}
 	os.Exit(m.Run())
 }
@@ -68,6 +82,22 @@ func TestGetPaymentMethodById(t *testing.T) {
 		resp, err := paymentmethodBusiness.GetPaymentMethodById(3)
 		assert.NotNil(t, err)
 		assert.Equal(t, 0, int(resp.ID))
+	})
+}
+
+func TestGetAllPaymentMethod(t *testing.T) {
+	t.Run("validate get payment methods", func(t *testing.T) {
+		mockData.On("GetAllPaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(paymentmethodDatas, nil).Once()
+		resp, err := paymentmethodBusiness.GetAllPaymentMethod(paymentmethod.PaymentMethodCore{})
+		assert.Nil(t, err)
+		assert.Equal(t, len(resp), 2)
+	})
+
+	t.Run("error get payment methods", func(t *testing.T) {
+		mockData.On("GetAllPaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(nil, errors.New("error"))
+		resp, err := paymentmethodBusiness.GetAllPaymentMethod(paymentmethod.PaymentMethodCore{})
+		assert.NotNil(t, err)
+		assert.Nil(t, resp)
 	})
 }
 

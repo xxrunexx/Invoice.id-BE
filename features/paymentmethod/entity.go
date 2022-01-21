@@ -14,6 +14,7 @@ type PaymentMethodCore struct {
 type Business interface {
 	CreatePaymentMethod(data PaymentMethodCore) (paymentmethod PaymentMethodCore, err error)
 	GetPaymentMethodById(id int) (paymentmethod PaymentMethodCore, err error)
+	GetAllPaymentMethod(PaymentMethodCore) (paymentmethods []PaymentMethodCore, err error)
 	UpdatePaymentMethod(data PaymentMethodCore) error
 }
 
@@ -21,5 +22,6 @@ type Business interface {
 type Data interface {
 	CreatePaymentMethod(data PaymentMethodCore) (paymentmethod PaymentMethodCore, err error)
 	GetPaymentMethodById(id int) (paymentmethod PaymentMethodCore, err error)
+	GetAllPaymentMethod(PaymentMethodCore) (paymentmethods []PaymentMethodCore, err error)
 	UpdatePaymentMethod(data PaymentMethodCore) error
 }

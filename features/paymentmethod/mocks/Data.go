@@ -34,6 +34,29 @@ func (_m *Data) CreatePaymentMethod(data paymentmethod.PaymentMethodCore) (payme
 	return r0, r1
 }
 
+// GetAllPaymentMethod provides a mock function with given fields: _a0
+func (_m *Data) GetAllPaymentMethod(_a0 paymentmethod.PaymentMethodCore) ([]paymentmethod.PaymentMethodCore, error) {
+	ret := _m.Called(_a0)
+
+	var r0 []paymentmethod.PaymentMethodCore
+	if rf, ok := ret.Get(0).(func(paymentmethod.PaymentMethodCore) []paymentmethod.PaymentMethodCore); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]paymentmethod.PaymentMethodCore)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(paymentmethod.PaymentMethodCore) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // GetPaymentMethodById provides a mock function with given fields: id
 func (_m *Data) GetPaymentMethodById(id int) (paymentmethod.PaymentMethodCore, error) {
 	ret := _m.Called(id)
