@@ -44,3 +44,11 @@ func (bidBusiness *BillIssuerDetailBusiness) GetBillIssuerDetailById(id int) (bi
 	}
 	return bidData, nil
 }
+
+func (bidBusiness *BillIssuerDetailBusiness) UpdateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) error {
+
+	if err := bidBusiness.billissuerdetailData.UpdateBillIssuerDetail(data); err != nil {
+		return err
+	}
+	return nil
+}
