@@ -28,5 +28,6 @@ type Business interface {
 type Data interface {
 	CreateBillIssuerDetail(data BillIssuerDetailCore) (billissuerdetail BillIssuerDetailCore, err error)
 	GetBillIssuerDetailById(id int) (billissuerdetail BillIssuerDetailCore, err error)
+	GetBillIssuerDetailByBillIssuerId(id int) (billissuerdetail BillIssuerDetailCore, err error)
 	UpdateBillIssuerDetail(data BillIssuerDetailCore) error
 }

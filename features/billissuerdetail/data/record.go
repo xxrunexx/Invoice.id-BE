@@ -49,5 +49,7 @@ func toBillIssuerDetailCore(bid BillIssuerDetail) billissuerdetail.BillIssuerDet
 		CompanyAddress:  bid.CompanyAddress,
 		CompanyPhone:    bid.CompanyPhone,
 		CompanySite:     bid.CompanySite,
+		CreatedAt:       bid.CreatedAt,
+		UpdatedAt:       bid.UpdatedAt,
 	}
 }

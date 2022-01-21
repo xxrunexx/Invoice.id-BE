@@ -23,7 +23,7 @@ func (biBusiness *BillIssuerBusiness) CreateBillIssuer(data billissuer.BillIssue
 
 	isExist, err := biBusiness.billissuerData.GetBillIssuerByEmail(data.Email)
 	if err != nil {
-		return billissuer.BillIssuerCore{}, err
+		return billissuer.BillIssuerCore{}, errors.New("duplicate data")
 	}
 	if isExist {
 		setMessage := fmt.Sprintf("email %v already in use!", data.Email)

@@ -34,7 +34,7 @@ func (bidHandler *BillIssuerDetailHandler) CreateBillIssuerDetailHandler(e echo.
 	return helper.SuccessResponse(e, response.ToBillIssuerDetailResponse(resp))
 }
 
-func (bidHandler *BillIssuerDetailHandler) GetBillIssuerDetailById(e echo.Context) error {
+func (bidHandler *BillIssuerDetailHandler) GetBillIssuerDetailByIdHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)

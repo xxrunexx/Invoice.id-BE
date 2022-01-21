@@ -9,6 +9,7 @@ type InvoiceCore struct {
 	ClientPhone       string
 	ClientAddress     string
 	ClientEmail       string
+	Item              string
 	Total             int
 	BillIssuerID      uint
 	BillIssuerName    string
