@@ -54,3 +54,17 @@ func (_m *Data) GetPaymentMethodById(id int) (paymentmethod.PaymentMethodCore, e
 
 	return r0, r1
 }
+
+// UpdatePaymentMethod provides a mock function with given fields: data
+func (_m *Data) UpdatePaymentMethod(data paymentmethod.PaymentMethodCore) error {
+	ret := _m.Called(data)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(paymentmethod.PaymentMethodCore) error); ok {
+		r0 = rf(data)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}

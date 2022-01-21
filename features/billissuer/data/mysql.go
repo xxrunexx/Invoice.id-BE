@@ -73,9 +73,9 @@ func (biData BillIssuerData) GetBillIssuerByEmail(email string) (bool, error) {
 
 func (biData BillIssuerData) UpdateBillIssuer(data billissuer.BillIssuerCore) error {
 	var singleData BillIssuer
+
 	convData := toBillIssuerRecord(data)
 	err := biData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
-
 	if err != nil {
 		return err
 	}
