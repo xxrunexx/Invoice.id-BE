@@ -100,3 +100,17 @@ func TestGetAllPaymentMethod(t *testing.T) {
 		assert.Nil(t, resp)
 	})
 }
+
+func TestUpdatePaymentMethod(t *testing.T) {
+	t.Run("validate update payment method", func(t *testing.T) {
+		mockData.On("UpdatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(nil).Once()
+		err := paymentmethodBusiness.UpdatePaymentMethod(paymentmethod.PaymentMethodCore{})
+		assert.NotNil(t, err)
+	})
+
+	t.Run("Update payment method - error insert data", func(t *testing.T) {
+		mockData.On("UpdatePaymentMethod", mock.AnythingOfType("paymentmethod.PaymentMethodCore")).Return(errors.New("error")).Once()
+		err := paymentmethodBusiness.UpdatePaymentMethod(paymentmethodData)
+		assert.Nil(t, err)
+	})
+}

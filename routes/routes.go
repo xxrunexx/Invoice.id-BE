@@ -57,6 +57,7 @@ func New() *echo.Echo {
 	e.POST("/paymentmethod/add", presenter.PaymentmethodPresentation.CreatePaymentMethodHandler)
 	e.GET("/paymentmethod/:id", presenter.PaymentmethodPresentation.GetPaymentMethodByIdHandler)
 	e.GET("/paymentmethod", presenter.PaymentmethodPresentation.GetAllPaymentMethodHandler)
+	e.PUT("/paymentmethod/update", presenter.PaymentmethodPresentation.UpdatePaymentMethodHandler)
 
 	return e
 }

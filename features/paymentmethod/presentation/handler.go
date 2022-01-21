@@ -55,3 +55,16 @@ func (pmHandler *PaymentMethodHandler) GetAllPaymentMethodHandler(e echo.Context
 	}
 	return helper.SuccessResponse(e, response.ToPaymentMethodResponseList(data))
 }
+
+func (pmHandler *PaymentMethodHandler) UpdatePaymentMethodHandler(e echo.Context) error {
+	updateData := request.ReqPaymentMethod{}
+
+	if err := e.Bind(&updateData); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	if err := pmHandler.paymentmethodBusiness.UpdatePaymentMethod(updateData.ToPaymentMethodCore()); err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, updateData)
+}

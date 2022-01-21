@@ -43,3 +43,15 @@ func (pmBusiness *PaymentMethodBusiness) GetAllPaymentMethod(data paymentmethod.
 	}
 	return pmDatas, nil
 }
+
+func (pmBusiness *PaymentMethodBusiness) UpdatePaymentMethod(data paymentmethod.PaymentMethodCore) error {
+	if helper.IsEmpty(data.Name) {
+		return errors.New("invalid data")
+	}
+
+	err := pmBusiness.paymentmethodData.UpdatePaymentMethod(data)
+	if err != nil {
+		return err
+	}
+	return nil
+}
