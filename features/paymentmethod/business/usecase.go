@@ -55,3 +55,12 @@ func (pmBusiness *PaymentMethodBusiness) UpdatePaymentMethod(data paymentmethod.
 	}
 	return nil
 }
+
+func (pmBusiness *PaymentMethodBusiness) GetPaymentMethodByIsActive(isactive bool) ([]paymentmethod.PaymentMethodCore, error) {
+	pmDatas, err := pmBusiness.paymentmethodData.GetPaymentMethodByIsActive(isactive)
+
+	if err != nil {
+		return nil, err
+	}
+	return pmDatas, nil
+}

@@ -16,6 +16,7 @@ type Business interface {
 	GetPaymentMethodById(id int) (paymentmethod PaymentMethodCore, err error)
 	GetAllPaymentMethod(PaymentMethodCore) (paymentmethods []PaymentMethodCore, err error)
 	UpdatePaymentMethod(data PaymentMethodCore) error
+	GetPaymentMethodByIsActive(isactive bool) (paymentmethods []PaymentMethodCore, err error)
 }
 
 // Untuk layer data / repository
@@ -24,4 +25,5 @@ type Data interface {
 	GetPaymentMethodById(id int) (paymentmethod PaymentMethodCore, err error)
 	GetAllPaymentMethod(PaymentMethodCore) (paymentmethods []PaymentMethodCore, err error)
 	UpdatePaymentMethod(data PaymentMethodCore) error
+	GetPaymentMethodByIsActive(isactive bool) (paymentmethods []PaymentMethodCore, err error)
 }
