@@ -42,3 +42,14 @@ func (bidData *BillIssuerDetailData) GetBillIssuerDetailById(id int) (billissuer
 	}
 	return toBillIssuerDetailCore(singleData), nil
 }
+
+func (bidData *BillIssuerDetailData) UpdateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) error {
+	var singleData BillIssuerDetail
+
+	convData := toBillIssuerDetailRecord(data)
+	err := bidData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
