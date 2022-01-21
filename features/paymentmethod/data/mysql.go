@@ -65,3 +65,13 @@ func (pmData *PaymentMethodData) UpdatePaymentMethod(data paymentmethod.PaymentM
 	}
 	return nil
 }
+
+func (pmData *PaymentMethodData) GetPaymentMethodByIsActive(isactive bool) ([]paymentmethod.PaymentMethodCore, error) {
+	var paymentmethods []PaymentMethod
+
+	err := pmData.DB.Where("payment_methods.is_active = ?", isactive).Find(&paymentmethods).Error
+	if err != nil {
+		return nil, err
+	}
+	return toPaymentMethodCoreList(paymentmethods), nil
+}

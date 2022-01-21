@@ -1,7 +1,6 @@
 package presentation
 
 import (
-	"fmt"
 	"invoice-api/features/invoice"
 	"invoice-api/features/invoice/presentation/request"
 	"invoice-api/features/invoice/presentation/response"
@@ -82,7 +81,6 @@ func (inHandler *InvoiceHandler) GetInvoiceByIdHandler(e echo.Context) error {
 
 func (inHandler *InvoiceHandler) DeleteInvoiceHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
-	fmt.Println("Isi id : ", id)
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}

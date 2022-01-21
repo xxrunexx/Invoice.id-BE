@@ -1,6 +1,7 @@
 package presentation
 
 import (
+	"fmt"
 	"invoice-api/features/paymentmethod"
 	"invoice-api/features/paymentmethod/presentation/request"
 	"invoice-api/features/paymentmethod/presentation/response"
@@ -57,7 +58,7 @@ func (pmHandler *PaymentMethodHandler) GetAllPaymentMethodHandler(e echo.Context
 }
 
 func (pmHandler *PaymentMethodHandler) UpdatePaymentMethodHandler(e echo.Context) error {
-	updateData := request.ReqPaymentMethod{}
+	updateData := request.ReqPaymentMethodUpdate{}
 
 	if err := e.Bind(&updateData); err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
@@ -67,4 +68,18 @@ func (pmHandler *PaymentMethodHandler) UpdatePaymentMethodHandler(e echo.Context
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, updateData)
+}
+
+func (pmHandler *PaymentMethodHandler) GetPaymentMethodByIsActiveHandler(e echo.Context) error {
+	isActive, err := strconv.ParseBool(e.Param("status"))
+	fmt.Println("Isi Is Active : ", isActive)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	data, err := pmHandler.paymentmethodBusiness.GetPaymentMethodByIsActive(isActive)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToPaymentMethodResponseList(data))
 }
