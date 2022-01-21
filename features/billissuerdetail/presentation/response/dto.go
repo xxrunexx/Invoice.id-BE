@@ -7,7 +7,7 @@ import (
 
 type RespBillIssuerDetail struct {
 	ID              uint      `json:"id"`
-	BillIssuerID    uint      `json:"bill_issuer_id"`
+	BillIssuerID    uint      `json:"bill_issuer_id,omitempty"`
 	BillIssuerName  string    `json:"bill_issuer_name"`
 	BillIssuerEmail string    `json:"bill_issuer_email"`
 	CompanyName     string    `json:"company_name"`

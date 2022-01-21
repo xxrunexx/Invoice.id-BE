@@ -46,3 +46,16 @@ func (bidHandler *BillIssuerDetailHandler) GetBillIssuerDetailById(e echo.Contex
 	}
 	return helper.SuccessResponse(e, response.ToBillIssuerDetailResponse(data))
 }
+
+func (bidHandler *BillIssuerDetailHandler) UpdateBillIssuerDetailHandler(e echo.Context) error {
+	updateData := request.ReqBillIssuerDetailUpdate{}
+
+	if err := e.Bind(&updateData); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	if err := bidHandler.billissuerdetailbusiness.UpdateBillIssuerDetail(updateData.ToBillIssuerDetailCore()); err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, updateData)
+}
