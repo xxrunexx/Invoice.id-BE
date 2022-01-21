@@ -34,3 +34,12 @@ func (pmBusiness *PaymentMethodBusiness) GetPaymentMethodById(id int) (paymentme
 	}
 	return pmData, nil
 }
+
+func (pmBusiness *PaymentMethodBusiness) GetAllPaymentMethod(data paymentmethod.PaymentMethodCore) ([]paymentmethod.PaymentMethodCore, error) {
+	pmDatas, err := pmBusiness.paymentmethodData.GetAllPaymentMethod(data)
+
+	if err != nil {
+		return nil, err
+	}
+	return pmDatas, nil
+}
