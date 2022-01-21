@@ -12,6 +12,7 @@ type RespInvoice struct {
 	ClientPhone       string    `json:"client_phone"`
 	ClientAddress     string    `json:"client_address"`
 	ClientEmail       string    `json:"client_email"`
+	Item              string    `json:"item"`
 	Total             int       `json:"total"`
 	BillIssuerID      uint      `json:"bill_issuer_id"`
 	BillIssuerName    string    `json:"bill_issuer_name"`
@@ -32,6 +33,7 @@ func ToInvoiceResponse(in invoice.InvoiceCore) RespInvoice {
 		ClientPhone:       in.ClientPhone,
 		ClientAddress:     in.ClientAddress,
 		ClientEmail:       in.ClientEmail,
+		Item:              in.Item,
 		Total:             in.Total,
 		BillIssuerID:      in.BillIssuerID,
 		BillIssuerName:    in.BillIssuerName,

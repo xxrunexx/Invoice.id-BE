@@ -10,30 +10,20 @@ import (
 
 type Invoice struct {
 	gorm.Model
-	ClientID         uint
-	Client           Client `gorm:"foreignKey:ID;references:ClientID"`
-	ClientPhone      string
-	ClientAddress    string
-	ClientEmail      string
-	Total            int
-	BillIssuerID     uint
-	BillIssuerDetail BillIssuerDetail `gorm:"foreignKey:ID;references:BillIssuerID"`
-	PaymentMethodID  uint
-	PaymentMethod    PaymentMethod `gorm:"foreignKey:ID;references:PaymentMethodID"`
-	PaymentDue       time.Time
-	PaymentStatus    string `gorm:"default:draft"`
-	PaymentTerms     int
-}
-
-type BillIssuerDetail struct {
-	ID              uint
+	ClientID        uint
+	Client          Client `gorm:"foreignKey:ID;references:ClientID"`
+	ClientPhone     string
+	ClientAddress   string
+	ClientEmail     string
+	Item            string
+	Total           int
 	BillIssuerID    uint
 	BillIssuer      BillIssuer `gorm:"foreignKey:ID;references:BillIssuerID"`
-	BillIssuerEmail string
-	CompanyName     string
-	CompanyAddress  string
-	CompanyPhone    string
-	CompanySite     string
+	PaymentMethodID uint
+	PaymentMethod   PaymentMethod `gorm:"foreignKey:ID;references:PaymentMethodID"`
+	PaymentDue      time.Time
+	PaymentStatus   string `gorm:"default:draft"`
+	PaymentTerms    int
 }
 
 type BillIssuer struct {
@@ -63,6 +53,7 @@ func toInvoiceRecord(in invoice.InvoiceCore) Invoice {
 			UpdatedAt: in.UpdatedAt,
 		},
 		ClientID:        in.ClientID,
+		Item:            in.Item,
 		Total:           in.Total,
 		BillIssuerID:    in.BillIssuerID,
 		PaymentMethodID: in.PaymentMethodID,
@@ -80,9 +71,10 @@ func toInvoiceCore(in Invoice) invoice.InvoiceCore {
 		ClientPhone:       in.Client.Phone,
 		ClientAddress:     in.Client.Address,
 		ClientEmail:       in.Client.Email,
+		Item:              in.Item,
 		Total:             in.Total,
 		BillIssuerID:      in.BillIssuerID,
-		BillIssuerName:    in.BillIssuerDetail.BillIssuer.Name,
+		BillIssuerName:    in.BillIssuer.Name,
 		PaymentMethodID:   in.PaymentMethodID,
 		PaymentMethodName: in.PaymentMethod.Name,
 		PaymentDue:        in.PaymentDue,

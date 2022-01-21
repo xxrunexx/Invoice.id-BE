@@ -2,7 +2,6 @@ package data
 
 import (
 	"errors"
-	"fmt"
 	"invoice-api/features/invoice"
 
 	"gorm.io/gorm"
@@ -18,7 +17,6 @@ func NewMySqlInvoice(DB *gorm.DB) invoice.Data {
 
 func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) error {
 	convData := toInvoiceRecord(data)
-	fmt.Println("Isi payment due di data : ", convData.PaymentDue)
 
 	if err := inData.DB.Create(&convData).Error; err != nil {
 		return err
@@ -28,8 +26,7 @@ func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) error {
 
 func (inData *InvoiceData) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
-
-	err := inData.DB.Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&invoices).Error
 
 	if err != nil {
 		return nil, err
