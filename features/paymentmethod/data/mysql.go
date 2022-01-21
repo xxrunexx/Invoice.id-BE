@@ -43,3 +43,14 @@ func (pmData *PaymentMethodData) GetPaymentMethodById(id int) (paymentmethod.Pay
 	}
 	return toPaymentMethodCore(singleData), nil
 }
+
+func (pmData *PaymentMethodData) GetAllPaymentMethod(data paymentmethod.PaymentMethodCore) ([]paymentmethod.PaymentMethodCore, error) {
+	var paymentmethods []PaymentMethod
+
+	err := pmData.DB.Find(&paymentmethods).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return toPaymentMethodCoreList(paymentmethods), nil
+}

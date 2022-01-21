@@ -31,3 +31,12 @@ func toPaymentMethodCore(pm PaymentMethod) paymentmethod.PaymentMethodCore {
 		IsActive: pm.IsActive,
 	}
 }
+
+func toPaymentMethodCoreList(pmList []PaymentMethod) []paymentmethod.PaymentMethodCore {
+	convPm := []paymentmethod.PaymentMethodCore{}
+
+	for _, paymentmethod := range pmList {
+		convPm = append(convPm, toPaymentMethodCore(paymentmethod))
+	}
+	return convPm
+}

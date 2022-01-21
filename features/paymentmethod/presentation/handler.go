@@ -46,3 +46,12 @@ func (pmHandler *PaymentMethodHandler) GetPaymentMethodByIdHandler(e echo.Contex
 	}
 	return helper.SuccessResponse(e, response.ToPaymentMethodResponse(data))
 }
+
+func (pmHandler *PaymentMethodHandler) GetAllPaymentMethodHandler(e echo.Context) error {
+	data, err := pmHandler.paymentmethodBusiness.GetAllPaymentMethod(paymentmethod.PaymentMethodCore{})
+
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToPaymentMethodResponseList(data))
+}
