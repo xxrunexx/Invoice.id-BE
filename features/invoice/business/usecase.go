@@ -96,8 +96,8 @@ func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error
 	if err != nil {
 		return err
 	}
-	if data.PaymentStatus == "unpaid" {
-		inBusiness.SendInvoice(int(data.ID))
-	}
+	// if data.PaymentStatus == "unpaid" || data.PaymentStatus == "draft" || data.PaymentStatus == "processed" {
+	inBusiness.SendInvoice(int(data.ID))
+	// }
 	return nil
 }

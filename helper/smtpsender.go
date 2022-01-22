@@ -34,25 +34,21 @@ func SendGmail(inData invoice.InvoiceCore) {
 		PaymentDue:    inData.PaymentDue,
 		PaymentStatus: inData.PaymentStatus,
 	}
-
+	var htmlTemplate string
 	if data.PaymentStatus == "paid" {
-		status, err := SendEmailSMTP(emailTo, data, "success_invoice.html", inData)
+		htmlTemplate = "success_payment.html"
+	} else {
+		htmlTemplate = "send_payment.html"
+	}
+	fmt.Println("isi htmlTemplate :", htmlTemplate)
 
-		if err != nil {
-			log.Println(err)
-		}
-		if status {
-			log.Println("Email sent successfully using SMTP")
-		}
-	} else if data.PaymentStatus == "processed" {
-		status, err := SendEmailSMTP(emailTo, data, "new_invoice.html", inData)
+	status, err := SendEmailSMTP(emailTo, data, htmlTemplate, inData)
 
-		if err != nil {
-			log.Println(err)
-		}
-		if status {
-			log.Println("Email sent successfully using SMTP")
-		}
+	if err != nil {
+		log.Println(err)
+	}
+	if status {
+		log.Println("Email sent successfully using SMTP")
 	}
 
 }
