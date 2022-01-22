@@ -93,7 +93,7 @@ func (inHandler *InvoiceHandler) DeleteInvoiceHandler(e echo.Context) error {
 	})
 }
 
-func (inHandler *InvoiceHandler) GetInvoiceByStatus(e echo.Context) error {
+func (inHandler *InvoiceHandler) GetInvoiceByStatusHandler(e echo.Context) error {
 	status := e.Param("status")
 
 	data, err := inHandler.invoiceBusiness.GetInvoiceByStatus(status)
@@ -114,4 +114,16 @@ func (inHandler *InvoiceHandler) UpdateInvoiceHandler(e echo.Context) error {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, updateData)
+}
+
+func (inHandler *InvoiceHandler) GetInvoiceByNikHandler(e echo.Context) error {
+	nik, err := strconv.Atoi(e.Param("nik"))
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+	data, err := inHandler.invoiceBusiness.GetInvoiceByNik(nik)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
 }
