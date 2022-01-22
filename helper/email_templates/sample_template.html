@@ -2,17 +2,19 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>Responsive HTML invoice template</title>
+    <title>invoice</title>
     <style type="text/css">
       .invoice-box{
         max-width: 800px;
         margin: auto;
         padding: 30px;
-        border: 1px solid #eee;
+        border: 1px solid #E5E5E5;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         font-size: 16px;
         line-height: 24px;
         font-family: Arial, sans-serif;
+        background-color: #131522;
+        color: #E5E5E5;
       }
 
       .invoice-box table{
@@ -81,12 +83,22 @@
               <tr class="image">
                 <td >
                   <!-- <img src="logo.png" alt="logo" class="image"> -->
-                  <h4>invoice.in</h4>
+                  <h2>invoice.in</h2>
                 </td>
                 <td>
-                  #5F892S3 <br>
-                  Invoice Date : December 24, 2021 <br>
-                  Payment Date : December 31, 2021 <br>
+                  <a
+                  href="#"
+                  style="
+                    display: inline-block;
+                    padding: 11px 30px;
+                    margin: 20px 0px 30px;
+                    /* font-size: 15px; */
+                    color: #131522;
+                    background: #FFC700;
+                    border-radius: 60px;
+                    text-decoration: none;
+                  "
+                  >Bill's Detail</a
                 </td>
             </table>
             <tr class="information">
@@ -94,37 +106,25 @@
               <table>
                 <tr>
                   <td>
-                    Bill To : Harun Rasyid <br>
-                    Tiban Lama RT 02 RW 15, Sekupang, Batam, 45311 <br>
-                    rasyid.id3@gmail.com
-                  </td>
-                  <td>
-                    From : Biznet Branch Batam <br>
-                    Gedung Graha Pena, Jl. Ahmad Yani, Batam, 29444 <br>
-                    (0778) 4093781
-
+                    Dear, #ClientName#<br>
+                    Your invoice #InvoiceCode# at #PaymentDate# for #Total# is overdue by #PaymentDue#<br>
+                    Please make your payment as soon as possible<br>
+                    If you've already paid, just disregard this email <br>
+                    Thanks, <br>
+                    Invoicein Team
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
-          <tr class="heading">
-            <td>
-              Payment Method
-            </td>
-            <td>Transfer Bank</td>
-          </tr>
-          <tr class="detail">
-            <td>Transfer Bank BNI</td>
-            <td>Rp. 240000</td>
-          </tr>
-          <tr class="heading">
-            <td>Item</td>
-            <td>Price</td>
-          </tr>
-        <tr class="item">
-          <td>2P Internet + TV</td>
-          <td>Rp. 240.000</td>
+          <td
+            style="border-top: 1px solid #FFC700; padding-top: 20px; color: #777"
+          >
+            If the button is not working, you can copy the link below on your browser .<br />
+            <a href="#"><></a><br />
+            Contact us on
+            <a href="mailto:cs.invoicein@gmail.com">cs.invoicein@gmail.com</a>
+          </td>
         </tr>
       </table>
     </div>
