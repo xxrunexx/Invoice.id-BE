@@ -34,7 +34,7 @@ func (bidHandler *BillIssuerDetailHandler) CreateBillIssuerDetailHandler(e echo.
 	return helper.SuccessResponse(e, response.ToBillIssuerDetailResponse(resp))
 }
 
-func (bidHandler *BillIssuerDetailHandler) GetBillIssuerDetailById(e echo.Context) error {
+func (bidHandler *BillIssuerDetailHandler) GetBillIssuerDetailByIdHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
@@ -45,4 +45,17 @@ func (bidHandler *BillIssuerDetailHandler) GetBillIssuerDetailById(e echo.Contex
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, response.ToBillIssuerDetailResponse(data))
+}
+
+func (bidHandler *BillIssuerDetailHandler) UpdateBillIssuerDetailHandler(e echo.Context) error {
+	updateData := request.ReqBillIssuerDetailUpdate{}
+
+	if err := e.Bind(&updateData); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	if err := bidHandler.billissuerdetailbusiness.UpdateBillIssuerDetail(updateData.ToBillIssuerDetailCore()); err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, updateData)
 }

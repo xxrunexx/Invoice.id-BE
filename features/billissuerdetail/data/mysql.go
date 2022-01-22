@@ -32,6 +32,20 @@ func (bidData *BillIssuerDetailData) CreateBillIssuerDetail(data billissuerdetai
 func (bidData *BillIssuerDetailData) GetBillIssuerDetailById(id int) (billissuerdetail.BillIssuerDetailCore, error) {
 	var singleData BillIssuerDetail
 
+	err := bidData.DB.Where("bill_issuer_details.id = ?", id).Joins("BillIssuer").Find(&singleData).Error
+	if singleData.ID == 0 {
+		return billissuerdetail.BillIssuerDetailCore{}, errors.New("data not found")
+	}
+
+	if err != nil {
+		return billissuerdetail.BillIssuerDetailCore{}, err
+	}
+	return toBillIssuerDetailCore(singleData), nil
+}
+
+func (bidData *BillIssuerDetailData) GetBillIssuerDetailByBillIssuerId(id int) (billissuerdetail.BillIssuerDetailCore, error) {
+	var singleData BillIssuerDetail
+
 	err := bidData.DB.Where("bill_issuer_details.bill_issuer_id = ?", id).Joins("BillIssuer").Find(&singleData).Error
 	if singleData.BillIssuerID == 0 {
 		return billissuerdetail.BillIssuerDetailCore{}, errors.New("data not found")
@@ -41,4 +55,15 @@ func (bidData *BillIssuerDetailData) GetBillIssuerDetailById(id int) (billissuer
 		return billissuerdetail.BillIssuerDetailCore{}, err
 	}
 	return toBillIssuerDetailCore(singleData), nil
+}
+
+func (bidData *BillIssuerDetailData) UpdateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) error {
+	var singleData BillIssuerDetail
+
+	convData := toBillIssuerDetailRecord(data)
+	err := bidData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }

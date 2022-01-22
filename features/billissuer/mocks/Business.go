@@ -14,17 +14,24 @@ type Business struct {
 }
 
 // CreateBillIssuer provides a mock function with given fields: data
-func (_m *Business) CreateBillIssuer(data billissuer.BillIssuerCore) error {
+func (_m *Business) CreateBillIssuer(data billissuer.BillIssuerCore) (billissuer.BillIssuerCore, error) {
 	ret := _m.Called(data)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(billissuer.BillIssuerCore) error); ok {
+	var r0 billissuer.BillIssuerCore
+	if rf, ok := ret.Get(0).(func(billissuer.BillIssuerCore) billissuer.BillIssuerCore); ok {
 		r0 = rf(data)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(billissuer.BillIssuerCore)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(billissuer.BillIssuerCore) error); ok {
+		r1 = rf(data)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // GetAllBillIssuer provides a mock function with given fields: _a0
