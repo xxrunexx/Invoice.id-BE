@@ -113,3 +113,15 @@ func (inBusiness *InvoiceBusiness) GetInvoiceByNik(nik int) ([]invoice.InvoiceCo
 	}
 	return invoices, nil
 }
+
+func (inBusiness *InvoiceBusiness) GetInvoiceByName(name string) ([]invoice.InvoiceCore, error) {
+	if helper.IsEmpty(name) {
+		return []invoice.InvoiceCore{}, errors.New("bad request")
+	}
+	invoices, err := inBusiness.invoiceData.GetInvoiceByName(name)
+
+	if err != nil {
+		return []invoice.InvoiceCore{}, err
+	}
+	return invoices, nil
+}
