@@ -81,3 +81,14 @@ func (inData *InvoiceData) UpdateInvoice(data invoice.InvoiceCore) error {
 	}
 	return nil
 }
+
+func (inData *InvoiceData) GetInvoiceByNik(nik int) ([]invoice.InvoiceCore, error) {
+	var invoices []Invoice
+
+	err := inData.DB.Where("invoices.nik = ?", nik).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return toInvoiceCoreList(invoices), nil
+}
