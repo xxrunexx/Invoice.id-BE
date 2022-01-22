@@ -1,62 +1,132 @@
-<div style="padding: 40px; background: #fff">
-  <table border="0" cellpadding="0" cellspacing="0" style="width: 100%">
-    <tbody>
-      <tr>
-        <td style="border-bottom: 1px solid #f6f6f6">
-          <h1
-            style="
-              font-size: 14px;
-              font-family: arial;
-              margin: 0px;
-              font-weight: bold;
-            "
-          >
-            Kepada Yth, #ClientName#
-          </h1>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding: 10px 0 30px 0">
-          <!-- <p>
-              A request to reset your password has been made. If you did not make
-              this request, simply ignore this email. If you did make this
-              request, please reset your password:
-            </p> -->
-          <b>#ClientAddress#</b>
-          <p>
-            Mohon untuk segera bayar tagihan anda dengan tanggal tagihan
-            #CreatedAt# adalah sebesar #Total# dan jatuh tempo pada #PaymentDue#
-          </p>
-          <center>
-            <a
-              href="#"
-              style="
-                display: inline-block;
-                padding: 11px 30px;
-                margin: 20px 0px 30px;
-                font-size: 15px;
-                color: #fff;
-                background: #4fc3f7;
-                border-radius: 60px;
-                text-decoration: none;
-              "
-              >Lihat Detail Tagihan</a
-            >
-          </center>
-          <b>- Terima Kasih (Invoicein Team)</b>
-        </td>
-      </tr>
-      <tr>
-        <td
-          style="border-top: 1px solid #f6f6f6; padding-top: 20px; color: #777"
-        >
-          Jika tombol di atas tidak berfungsi anda dapat mencoba menyalin URL di
-          bawah ini ke dalam browser anda.<br />
-          <a href="#">https://itrepablik.com/activate/abcde12345</a><br />
-          Kontak kami melalui
-          <a href="mailto:cs.invoicein@gmail.com">cs.invoicein@gmail.com</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Responsive HTML invoice template</title>
+    <style type="text/css">
+      .invoice-box{
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        font-size: 16px;
+        line-height: 24px;
+        font-family: Arial, sans-serif;
+      }
+
+      .invoice-box table{
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+      }
+
+      .invoice-box table td{
+        padding: 5px;
+        vertical-align: top;
+      }
+
+      .invoice-box table tr td:nth-child(2){
+        text-align: right;
+      }
+
+      .invoice-box table tr.top table td{
+        padding-bottom: 20px;
+      }
+
+      .invoice-box table tr.information table td{
+        padding-bottom: 40px;
+      }
+
+      .invoice-box table tr.heading td{
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+      }
+
+      .invoice-box table tr.details td{
+        padding-bottom: 20px;
+      }
+
+      .invoice-box table tr.item td{
+        border-bottom: 1px solid #eee;
+      }
+
+      /* .invoice-box table img.image table td{
+        width: 70px;
+        height: 70px;
+      } */
+
+      @media only screen and (max-width: 600px){
+        .invoice-box table tr.top table td{
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+
+        .invoice-box table tr.information table td{
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class= "invoice-box">
+      <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+          <td colspan='2'>
+            <table>
+              <tr class="image">
+                <td >
+                  <!-- <img src="logo.png" alt="logo" class="image"> -->
+                  <h4>invoice.in</h4>
+                </td>
+                <td>
+                  #5F892S3 <br>
+                  Invoice Date : December 24, 2021 <br>
+                  Payment Date : December 31, 2021 <br>
+                </td>
+            </table>
+            <tr class="information">
+            <td colspan="2">
+              <table>
+                <tr>
+                  <td>
+                    Bill To : Harun Rasyid <br>
+                    Tiban Lama RT 02 RW 15, Sekupang, Batam, 45311 <br>
+                    rasyid.id3@gmail.com
+                  </td>
+                  <td>
+                    From : Biznet Branch Batam <br>
+                    Gedung Graha Pena, Jl. Ahmad Yani, Batam, 29444 <br>
+                    (0778) 4093781
+
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="heading">
+            <td>
+              Payment Method
+            </td>
+            <td>Transfer Bank</td>
+          </tr>
+          <tr class="detail">
+            <td>Transfer Bank BNI</td>
+            <td>Rp. 240000</td>
+          </tr>
+          <tr class="heading">
+            <td>Item</td>
+            <td>Price</td>
+          </tr>
+        <tr class="item">
+          <td>2P Internet + TV</td>
+          <td>Rp. 240.000</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
