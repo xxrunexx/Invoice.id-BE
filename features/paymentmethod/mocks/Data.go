@@ -78,6 +78,29 @@ func (_m *Data) GetPaymentMethodById(id int) (paymentmethod.PaymentMethodCore, e
 	return r0, r1
 }
 
+// GetPaymentMethodByIsActive provides a mock function with given fields: isactive
+func (_m *Data) GetPaymentMethodByIsActive(isactive bool) ([]paymentmethod.PaymentMethodCore, error) {
+	ret := _m.Called(isactive)
+
+	var r0 []paymentmethod.PaymentMethodCore
+	if rf, ok := ret.Get(0).(func(bool) []paymentmethod.PaymentMethodCore); ok {
+		r0 = rf(isactive)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]paymentmethod.PaymentMethodCore)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(bool) error); ok {
+		r1 = rf(isactive)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // UpdatePaymentMethod provides a mock function with given fields: data
 func (_m *Data) UpdatePaymentMethod(data paymentmethod.PaymentMethodCore) error {
 	ret := _m.Called(data)
