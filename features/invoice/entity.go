@@ -5,6 +5,7 @@ import "time"
 type InvoiceCore struct {
 	ID                uint
 	ClientID          uint
+	ClientNIK         int
 	ClientName        string
 	ClientPhone       string
 	ClientAddress     string

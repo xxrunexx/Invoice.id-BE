@@ -12,6 +12,7 @@ type Invoice struct {
 	gorm.Model
 	ClientID        uint
 	Client          Client `gorm:"foreignKey:ID;references:ClientID"`
+	ClientNIK       int
 	ClientPhone     string
 	ClientAddress   string
 	ClientEmail     string
@@ -67,6 +68,7 @@ func toInvoiceCore(in Invoice) invoice.InvoiceCore {
 	return invoice.InvoiceCore{
 		ID:                in.ID,
 		ClientID:          in.ClientID,
+		ClientNIK:         in.Client.NIK,
 		ClientName:        in.Client.Name,
 		ClientPhone:       in.Client.Phone,
 		ClientAddress:     in.Client.Address,

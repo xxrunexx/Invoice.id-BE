@@ -103,9 +103,9 @@ func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error
 }
 
 func (inBusiness *InvoiceBusiness) GetInvoiceByNik(nik int) ([]invoice.InvoiceCore, error) {
-	if nik == 0 {
-		return []invoice.InvoiceCore{}, errors.New("bad request")
-	}
+	// if nik == 0 {
+	// 	return []invoice.InvoiceCore{}, errors.New("bad request")
+	// }
 	invoices, err := inBusiness.invoiceData.GetInvoiceByNik(nik)
 
 	if err != nil {
