@@ -35,10 +35,11 @@ func TestMain(m *testing.M) {
 
 func TestCreateBillIssuerDetail(t *testing.T) {
 	// t.Run("create bill issuer detail - success", func(t *testing.T) {
-	// 	mockbiData.On("GetBillIssuerById", mock.AnythingOfType("int")).Return(false, nil).Once()
-	// 	mockbidData.On("CreateBillIssuerDetail", mock.AnythingOfType("billissuerdetail.BillIssuerDetailCore")).Return(nil).Once()
-	// 	err := billissuerdetailBusiness.CreateBillIssuerDetail(billissuerdetailData)
-	// 	assert.Nil(t, err)
+	// 	mockbiData.On("GetBillIssuerById", mock.AnythingOfType("int")).Return(billissuer.BillIssuerCore{}, nil).Once()
+	// 	mockbidData.On("CreateBillIssuerDetail", mock.AnythingOfType("billissuerdetail.BillIssuerDetailCore")).Return(billissuerdetail.BillIssuerDetailCore{}).Once()
+	// 	resp, err := billissuerdetailBusiness.CreateBillIssuerDetail(billissuerdetailData)
+	// 	assert.NotNil(t, err)
+	// 	assert.NotNil(t, resp)
 	// })
 
 	t.Run("Create bill issuer error - invalid email", func(t *testing.T) {
@@ -87,14 +88,15 @@ func TestGetBillIssuerDetailById(t *testing.T) {
 
 func TestUpdateBillIssuerDetail(t *testing.T) {
 	t.Run("validate update bill issuer detail", func(t *testing.T) {
-		mockbidData.On("UpdatePaymentMethod", mock.AnythingOfType("billissuerdetail.BillIssuerDetailCore")).Return(nil).Once()
+		mockbidData.On("UpdateBillIssuerDetail", mock.AnythingOfType("billissuerdetail.BillIssuerDetailCore")).Return(nil).Once()
 		err := billissuerdetailBusiness.UpdateBillIssuerDetail(billissuerdetail.BillIssuerDetailCore{})
-		assert.NotNil(t, err)
+		assert.Nil(t, err)
 	})
 
 	t.Run("Update bill issuer detail - error insert data", func(t *testing.T) {
-		mockbidData.On("UpdatePaymentMethod", mock.AnythingOfType("billissuerdetail.BillIssuerDetailCore")).Return(errors.New("error")).Once()
+		mockbidData.On("UpdateBillIssuerDetail", mock.AnythingOfType("billissuerdetail.BillIssuerDetailCore")).Return(errors.New("error")).Once()
 		err := billissuerdetailBusiness.UpdateBillIssuerDetail(billissuerdetailData)
-		assert.Nil(t, err)
+		assert.NotNil(t, err)
+		assert.Equal(t, err.Error(), "error")
 	})
 }
