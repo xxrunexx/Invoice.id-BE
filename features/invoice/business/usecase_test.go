@@ -185,3 +185,44 @@ func TestDeleteInvoice(t *testing.T) {
 		assert.NotNil(t, err)
 	})
 }
+
+func TestGetInvoiceByName(t *testing.T) {
+	t.Run("error create invoice", func(t *testing.T) {
+		mockData.On("GetInvoiceByName", mock.AnythingOfType("string")).Return(invoiceDatas, errors.New("bad request")).Once()
+		resp, err := invoiceBusiness.GetInvoiceByName("")
+		assert.NotNil(t, err)
+		assert.Equal(t, err.Error(), "bad request")
+		assert.NotNil(t, resp)
+	})
+
+	t.Run("Get invoice by name - success", func(t *testing.T) {
+		mockData.On("GetInvoiceByName", mock.AnythingOfType("string")).Return(invoiceDatas, nil).Once()
+		resp, err := invoiceBusiness.GetInvoiceByName("Harun")
+		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
+	})
+
+	t.Run("error get invoice by name", func(t *testing.T) {
+		mockData.On("GetInvoiceByName", mock.AnythingOfType("string")).Return(invoice.InvoiceCore{}, errors.New("error")).Once()
+		resp, err := invoiceBusiness.GetInvoiceByName("Harun")
+		assert.Nil(t, err)
+		assert.NotNil(t, resp)
+	})
+}
+
+func TestGetInvoiceByNik(t *testing.T) {
+	t.Run("Get invoice by name - success", func(t *testing.T) {
+		mockData.On("GetInvoiceByNik", mock.AnythingOfType("int")).Return(invoiceDatas, nil).Once()
+		resp, err := invoiceBusiness.GetInvoiceByNik(3174051805000009)
+		assert.Nil(t, err)
+		assert.NotNil(t, resp)
+	})
+
+	t.Run("error get invoice by name", func(t *testing.T) {
+		mockData.On("GetInvoiceByNik", mock.AnythingOfType("int")).Return([]invoice.InvoiceCore{}, errors.New("error")).Once()
+		resp, err := invoiceBusiness.GetInvoiceByNik(3174051805000009)
+		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
+		assert.Equal(t, err.Error(), "error")
+	})
+}
