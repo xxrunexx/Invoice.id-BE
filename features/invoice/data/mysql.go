@@ -2,7 +2,9 @@ package data
 
 import (
 	"errors"
+	"fmt"
 	"invoice-api/features/invoice"
+	"strings"
 
 	"gorm.io/gorm"
 )
@@ -98,8 +100,12 @@ func (inData *InvoiceData) GetInvoiceByNik(nik int) ([]invoice.InvoiceCore, erro
 func (inData *InvoiceData) GetInvoiceByName(name string) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
 
+	myslice := []string{"%", name, "%"}
+	result := strings.Join(myslice, "")
+	fmt.Println(result)
+
 	// err := inData.DB.Where("clients.name = ?", name).Joins("Invoice").Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
-	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.name LIKE ?", name).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.name LIKE ?", result).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&invoices).Error
 	if err != nil {
 		return nil, err
 	}

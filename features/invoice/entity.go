@@ -33,6 +33,7 @@ type Business interface {
 	SendInvoice(id int) (invoice InvoiceCore, err error)
 	GetInvoiceByNik(nik int) (invoices []InvoiceCore, err error)
 	GetInvoiceByName(nik string) (invoices []InvoiceCore, err error)
+	// CheckInvoice(data InvoiceCore) (invoices []InvoiceCore, err error)
 }
 
 type Data interface {
@@ -44,4 +45,5 @@ type Data interface {
 	UpdateInvoice(data InvoiceCore) error
 	GetInvoiceByNik(nik int) (invoices []InvoiceCore, err error)
 	GetInvoiceByName(name string) (invoices []InvoiceCore, err error)
+	// CheckInvoice(data InvoiceCore) (invoices []InvoiceCore, err error)
 }
