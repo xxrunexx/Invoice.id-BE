@@ -1,6 +1,7 @@
 package presentation
 
 import (
+	"fmt"
 	"invoice-api/features/invoice"
 	"invoice-api/features/invoice/presentation/request"
 	"invoice-api/features/invoice/presentation/response"
@@ -67,6 +68,7 @@ func (inHandler *InvoiceHandler) SendInvoiceHandler(e echo.Context) error {
 
 func (inHandler *InvoiceHandler) GetInvoiceByIdHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
+	fmt.Println("Isi id : ", id)
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
@@ -118,10 +120,21 @@ func (inHandler *InvoiceHandler) UpdateInvoiceHandler(e echo.Context) error {
 
 func (inHandler *InvoiceHandler) GetInvoiceByNikHandler(e echo.Context) error {
 	nik, err := strconv.Atoi(e.Param("nik"))
+	fmt.Println("Isi nik : ", nik)
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
 	data, err := inHandler.invoiceBusiness.GetInvoiceByNik(nik)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
+}
+
+func (inHandler *InvoiceHandler) GetInvoiceByNameHandler(e echo.Context) error {
+	name := e.Param("name")
+	fmt.Println("Isi name : ", name)
+	data, err := inHandler.invoiceBusiness.GetInvoiceByName(name)
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}

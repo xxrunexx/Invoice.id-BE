@@ -84,8 +84,22 @@ func (inData *InvoiceData) UpdateInvoice(data invoice.InvoiceCore) error {
 
 func (inData *InvoiceData) GetInvoiceByNik(nik int) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
+	// var clients []Client
 
-	err := inData.DB.Where("invoices.nik = ?", nik).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.nik = ?", nik).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&invoices).Error
+	// db.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.nik = ?", nik
+	if err != nil {
+		return nil, err
+	}
+
+	return toInvoiceCoreList(invoices), nil
+}
+
+func (inData *InvoiceData) GetInvoiceByName(name string) ([]invoice.InvoiceCore, error) {
+	var invoices []Invoice
+
+	// err := inData.DB.Where("clients.name = ?", name).Joins("Invoice").Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.name LIKE ?", name).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&invoices).Error
 	if err != nil {
 		return nil, err
 	}

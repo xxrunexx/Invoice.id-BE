@@ -5,6 +5,7 @@ import "time"
 type InvoiceCore struct {
 	ID                uint
 	ClientID          uint
+	ClientNIK         int
 	ClientName        string
 	ClientPhone       string
 	ClientAddress     string
@@ -31,6 +32,7 @@ type Business interface {
 	UpdateInvoice(data InvoiceCore) error
 	SendInvoice(id int) (invoice InvoiceCore, err error)
 	GetInvoiceByNik(nik int) (invoices []InvoiceCore, err error)
+	GetInvoiceByName(nik string) (invoices []InvoiceCore, err error)
 }
 
 type Data interface {
@@ -41,4 +43,5 @@ type Data interface {
 	GetInvoiceByStatus(status string) (invoices []InvoiceCore, err error)
 	UpdateInvoice(data InvoiceCore) error
 	GetInvoiceByNik(nik int) (invoices []InvoiceCore, err error)
+	GetInvoiceByName(name string) (invoices []InvoiceCore, err error)
 }

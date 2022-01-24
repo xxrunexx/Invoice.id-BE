@@ -8,6 +8,7 @@ import (
 type RespInvoice struct {
 	ID                uint      `json:"id"`
 	ClientID          uint      `json:"client_id"`
+	ClientNIK         int       `json:"client_nik"`
 	ClientName        string    `json:"client_name"`
 	ClientPhone       string    `json:"client_phone"`
 	ClientAddress     string    `json:"client_address"`
@@ -29,6 +30,7 @@ func ToInvoiceResponse(in invoice.InvoiceCore) RespInvoice {
 	return RespInvoice{
 		ID:                in.ID,
 		ClientID:          in.ClientID,
+		ClientNIK:         in.ClientNIK,
 		ClientName:        in.ClientName,
 		ClientPhone:       in.ClientPhone,
 		ClientAddress:     in.ClientAddress,
