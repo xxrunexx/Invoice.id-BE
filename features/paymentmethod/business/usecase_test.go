@@ -114,3 +114,18 @@ func TestUpdatePaymentMethod(t *testing.T) {
 		assert.Nil(t, err)
 	})
 }
+
+func TestGetPaymentMethodByIsActive(t *testing.T) {
+	t.Run("validate get payment method by IsActive", func(t *testing.T) {
+		mockData.On("GetPaymentMethodByIsActive", mock.AnythingOfType("bool")).Return(paymentmethodDatas, nil).Once()
+		resp, err := paymentmethodBusiness.GetPaymentMethodByIsActive(true)
+		assert.Nil(t, err)
+		assert.NotNil(t, resp)
+	})
+	t.Run("error get payment method by IsActive", func(t *testing.T) {
+		mockData.On("GetPaymentMethodByIsActive", mock.AnythingOfType("bool")).Return(nil, errors.New("error")).Once()
+		resp, err := paymentmethodBusiness.GetPaymentMethodByIsActive(true)
+		assert.Equal(t, err.Error(), "error")
+		assert.Nil(t, resp)
+	})
+}
