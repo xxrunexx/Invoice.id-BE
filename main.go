@@ -1,7 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"invoice-api/driver"
+	_middleware "invoice-api/middleware"
+	"invoice-api/routes"
+)
 
 func main() {
-	fmt.Println("Test")
+	driver.InitDB()
+	e := routes.New()
+
+	// Log Middleware
+	_middleware.LogMiddlewareInit(e)
+
+	// Starting The Server
+	e.Start(":8000")
 }

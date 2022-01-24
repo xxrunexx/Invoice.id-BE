@@ -1,0 +1,18 @@
+mode: set
+invoice-api/features/paymentmethod/business/usecase.go:13.81,15.2 1 1
+invoice-api/features/paymentmethod/business/usecase.go:17.141,18.31 1 1
+invoice-api/features/paymentmethod/business/usecase.go:22.2,23.16 2 1
+invoice-api/features/paymentmethod/business/usecase.go:26.2,26.20 1 1
+invoice-api/features/paymentmethod/business/usecase.go:18.31,20.3 1 1
+invoice-api/features/paymentmethod/business/usecase.go:23.16,25.3 1 0
+invoice-api/features/paymentmethod/business/usecase.go:29.112,32.16 2 1
+invoice-api/features/paymentmethod/business/usecase.go:35.2,35.20 1 1
+invoice-api/features/paymentmethod/business/usecase.go:32.16,34.3 1 1
+invoice-api/features/paymentmethod/business/usecase.go:38.143,41.16 2 1
+invoice-api/features/paymentmethod/business/usecase.go:44.2,44.21 1 1
+invoice-api/features/paymentmethod/business/usecase.go:41.16,43.3 1 1
+invoice-api/features/paymentmethod/business/usecase.go:38.106,39.31 1 1
+invoice-api/features/paymentmethod/business/usecase.go:43.2,44.16 2 1
+invoice-api/features/paymentmethod/business/usecase.go:47.2,47.12 1 1
+invoice-api/features/paymentmethod/business/usecase.go:39.31,41.3 1 1
+invoice-api/features/paymentmethod/business/usecase.go:44.16,46.3 1 0
