@@ -65,7 +65,8 @@ func (inData *InvoiceData) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 func (inData *InvoiceData) GetInvoiceByStatus(status string) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
 
-	err := inData.DB.Where("invoices.payment_status = ?", status).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
+	// err := inData.DB.Where("invoices.payment_status = ?", status).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Where("payment_status = ?", status).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
 	if err != nil {
 		return nil, err
 	}
@@ -111,4 +112,16 @@ func (inData *InvoiceData) GetInvoiceByName(name string) ([]invoice.InvoiceCore,
 	}
 
 	return toInvoiceCoreList(invoices), nil
+}
+
+func (inData *InvoiceData) InsertCSV(datas []invoice.InvoiceCore) error {
+	// convData := toInvoiceRecordList(datas)
+	var invoices []Invoice
+	if err := inData.DB.Create(&invoices).Error; err != nil {
+		return err
+	}
+	// for _, invoice := range invoices {
+	// 	invoice.ID // 1,2,3
+	//   }
+	return nil
 }
