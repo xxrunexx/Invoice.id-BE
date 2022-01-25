@@ -11,7 +11,7 @@ RUN go build -o main
 FROM alpine:3.14
 WORKDIR /invoice-api
 COPY --from=builder /invoice-api/main .
-COPY .env /invoice-api
+COPY .env .
 COPY --from=builder /invoice-api/helper/email_templates/ ./helper/email_templates/
 
 EXPOSE 8000
