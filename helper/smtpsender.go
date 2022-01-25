@@ -10,7 +10,7 @@ import (
 )
 
 func SendGmail(inData invoice.InvoiceCore) {
-	err := godotenv.Load(".env")
+	err := godotenv.Load("app.env")
 	if err != nil {
 		log.Fatalf("Error getting env, %v", err)
 	}
