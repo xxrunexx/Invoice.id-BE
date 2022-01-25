@@ -38,13 +38,6 @@ func (inBusiness *InvoiceBusiness) SendInvoice(id int) (invoice.InvoiceCore, err
 	if err != nil {
 		return invoice.InvoiceCore{}, err
 	}
-
-	fmt.Println("Isi Client name : ", inData.ClientName)
-	fmt.Println("Isi Total : ", inData.Total)
-	fmt.Println("Isi CreatedAt : ", inData.CreatedAt)
-	fmt.Println("Isi Payment terms: ", inData.PaymentTerms)
-	fmt.Println("Isi Payment due: ", inData.PaymentDue)
-
 	helper.SendGmail(inData)
 
 	return inData, nil
@@ -123,9 +116,9 @@ func (inBusiness *InvoiceBusiness) GetInvoiceByName(name string) ([]invoice.Invo
 	return invoices, nil
 }
 
-func (inBusiness *InvoiceBusiness) CheckCSV(datas []invoice.InvoiceCore) error {
-	if err := inBusiness.invoiceData.InsertCSV(datas); err != nil {
-		return err
-	}
-	return nil
-}
+// func (inBusiness *InvoiceBusiness) CheckCSV(datas []invoice.InvoiceCore) error {
+// 	if err := inBusiness.invoiceData.InsertCSV(datas); err != nil {
+// 		return err
+// 	}
+// 	return nil
+// }
