@@ -15,7 +15,7 @@ WORKDIR /app
 
 COPY --from=builder /app/main .
 
-COPY .env /app
+COPY app.env /app
 
 COPY --from=builder /app/helper/email_templates ./helpers/email_templates
 
