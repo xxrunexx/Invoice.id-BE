@@ -15,7 +15,7 @@ WORKDIR /invoice-api
 
 COPY --from=builder /invoice-api/main .
 
-COPY .env /invoice-api
+COPY app.env /invoice-api
 
 COPY --from=builder /invoice-api/helper/email_templates ./helper/email_templates
 
