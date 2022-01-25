@@ -11,7 +11,7 @@ RUN go build -o main
 FROM alpine:3.14
 WORKDIR /app
 COPY --from=builder /app/main .
-COPY --from=builder app.env .
+COPY --from=builder .env .
 COPY --from=builder /app/helper/email_templates/ ./helper/email_templates/
 
 EXPOSE 8000
