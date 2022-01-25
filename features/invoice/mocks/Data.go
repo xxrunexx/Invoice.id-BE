@@ -85,6 +85,52 @@ func (_m *Data) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 	return r0, r1
 }
 
+// GetInvoiceByName provides a mock function with given fields: nik
+func (_m *Data) GetInvoiceByName(nik string) ([]invoice.InvoiceCore, error) {
+	ret := _m.Called(nik)
+
+	var r0 []invoice.InvoiceCore
+	if rf, ok := ret.Get(0).(func(string) []invoice.InvoiceCore); ok {
+		r0 = rf(nik)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]invoice.InvoiceCore)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(nik)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GetInvoiceByNik provides a mock function with given fields: nik
+func (_m *Data) GetInvoiceByNik(nik int) ([]invoice.InvoiceCore, error) {
+	ret := _m.Called(nik)
+
+	var r0 []invoice.InvoiceCore
+	if rf, ok := ret.Get(0).(func(int) []invoice.InvoiceCore); ok {
+		r0 = rf(nik)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]invoice.InvoiceCore)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(int) error); ok {
+		r1 = rf(nik)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // GetInvoiceByStatus provides a mock function with given fields: status
 func (_m *Data) GetInvoiceByStatus(status string) ([]invoice.InvoiceCore, error) {
 	ret := _m.Called(status)

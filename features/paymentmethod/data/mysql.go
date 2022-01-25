@@ -56,12 +56,22 @@ func (pmData *PaymentMethodData) GetAllPaymentMethod(data paymentmethod.PaymentM
 }
 
 func (pmData *PaymentMethodData) UpdatePaymentMethod(data paymentmethod.PaymentMethodCore) error {
-	var singleData PaymentMethod
+	// var singleData PaymentMethod
 
 	convData := toPaymentMethodRecord(data)
-	err := pmData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
+	err := pmData.DB.Where("id = ?", data.ID).Save(&convData).Error
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func (pmData *PaymentMethodData) GetPaymentMethodByIsActive(isactive bool) ([]paymentmethod.PaymentMethodCore, error) {
+	var paymentmethods []PaymentMethod
+
+	err := pmData.DB.Where("payment_methods.is_active = ?", isactive).Find(&paymentmethods).Error
+	if err != nil {
+		return nil, err
+	}
+	return toPaymentMethodCoreList(paymentmethods), nil
 }

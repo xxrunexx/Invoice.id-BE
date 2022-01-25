@@ -18,26 +18,37 @@ func SendGmail(inData invoice.InvoiceCore) {
 	emailTo := []string{inData.ClientEmail}
 	fmt.Println("isi emailto :", emailTo)
 	data := struct {
-		ReceiverName string
-		SenderName   string
-		Total        int
-		CreatedAt    time.Time
-		PaymentTerms int
-		PaymentDue   time.Time
+		ReceiverName  string
+		SenderName    string
+		Total         int
+		CreatedAt     time.Time
+		PaymentTerms  int
+		PaymentDue    time.Time
+		PaymentStatus string
 	}{
-		ReceiverName: inData.ClientName,
-		SenderName:   "Invoicein",
-		Total:        inData.Total,
-		CreatedAt:    inData.CreatedAt,
-		PaymentTerms: inData.PaymentTerms,
-		PaymentDue:   inData.PaymentDue,
+		ReceiverName:  inData.ClientName,
+		SenderName:    "Invoicein",
+		Total:         inData.Total,
+		CreatedAt:     inData.CreatedAt,
+		PaymentTerms:  inData.PaymentTerms,
+		PaymentDue:    inData.PaymentDue,
+		PaymentStatus: inData.PaymentStatus,
 	}
+	var htmlTemplate string
+	if data.PaymentStatus == "paid" {
+		htmlTemplate = "success_payment.html"
+	} else {
+		htmlTemplate = "send_payment.html"
+	}
+	fmt.Println("isi htmlTemplate :", htmlTemplate)
 
-	status, err := SendEmailSMTP(emailTo, data, "sample_template.html", inData)
+	status, err := SendEmailSMTP(emailTo, data, htmlTemplate, inData)
+
 	if err != nil {
 		log.Println(err)
 	}
 	if status {
 		log.Println("Email sent successfully using SMTP")
 	}
+
 }

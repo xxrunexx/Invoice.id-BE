@@ -44,7 +44,9 @@ func New() *echo.Echo {
 	e.POST("/invoice/add", presenter.InvoicePresentation.CreateInvoiceHandler)
 	e.GET("/invoice", presenter.InvoicePresentation.GetAllInvoiceHandler)
 	e.GET("/invoice/:id", presenter.InvoicePresentation.GetInvoiceByIdHandler)
-	e.GET("/invoice/status/:status", presenter.InvoicePresentation.GetInvoiceByStatus)
+	e.GET("/invoice/status/:status", presenter.InvoicePresentation.GetInvoiceByStatusHandler)
+	e.GET("/invoice/nik/:nik", presenter.InvoicePresentation.GetInvoiceByNikHandler)
+	e.GET("/invoice/name/:name", presenter.InvoicePresentation.GetInvoiceByNameHandler)
 	e.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
 	e.PUT("/invoice/update", presenter.InvoicePresentation.UpdateInvoiceHandler)
 	e.POST("/invoice/send/:id", presenter.InvoicePresentation.SendInvoiceHandler)
@@ -58,7 +60,7 @@ func New() *echo.Echo {
 	e.POST("/paymentmethod/add", presenter.PaymentmethodPresentation.CreatePaymentMethodHandler)
 	e.GET("/paymentmethod/:id", presenter.PaymentmethodPresentation.GetPaymentMethodByIdHandler)
 	e.GET("/paymentmethod", presenter.PaymentmethodPresentation.GetAllPaymentMethodHandler)
+	e.GET("/paymentmethod/status/:status", presenter.PaymentmethodPresentation.GetPaymentMethodByIsActiveHandler)
 	e.PUT("/paymentmethod/update", presenter.PaymentmethodPresentation.UpdatePaymentMethodHandler)
-
 	return e
 }

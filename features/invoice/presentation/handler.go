@@ -6,9 +6,12 @@ import (
 	"invoice-api/features/invoice/presentation/request"
 	"invoice-api/features/invoice/presentation/response"
 	"invoice-api/helper"
+	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"strconv"
 
+	"github.com/gocarina/gocsv"
 	"github.com/labstack/echo/v4"
 )
 
@@ -68,6 +71,7 @@ func (inHandler *InvoiceHandler) SendInvoiceHandler(e echo.Context) error {
 
 func (inHandler *InvoiceHandler) GetInvoiceByIdHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
+	fmt.Println("Isi id : ", id)
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
@@ -82,7 +86,6 @@ func (inHandler *InvoiceHandler) GetInvoiceByIdHandler(e echo.Context) error {
 
 func (inHandler *InvoiceHandler) DeleteInvoiceHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
-	fmt.Println("Isi id : ", id)
 	if err != nil {
 		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
 	}
@@ -95,7 +98,7 @@ func (inHandler *InvoiceHandler) DeleteInvoiceHandler(e echo.Context) error {
 	})
 }
 
-func (inHandler *InvoiceHandler) GetInvoiceByStatus(e echo.Context) error {
+func (inHandler *InvoiceHandler) GetInvoiceByStatusHandler(e echo.Context) error {
 	status := e.Param("status")
 
 	data, err := inHandler.invoiceBusiness.GetInvoiceByStatus(status)
@@ -116,4 +119,54 @@ func (inHandler *InvoiceHandler) UpdateInvoiceHandler(e echo.Context) error {
 		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
 	}
 	return helper.SuccessResponse(e, updateData)
+}
+
+func (inHandler *InvoiceHandler) GetInvoiceByNikHandler(e echo.Context) error {
+	nik, err := strconv.Atoi(e.Param("nik"))
+	fmt.Println("Isi nik : ", nik)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+	data, err := inHandler.invoiceBusiness.GetInvoiceByNik(nik)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
+}
+
+func (inHandler *InvoiceHandler) GetInvoiceByNameHandler(e echo.Context) error {
+	name := e.Param("name")
+	fmt.Println("Isi name : ", name)
+	data, err := inHandler.invoiceBusiness.GetInvoiceByName(name)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
+}
+
+func (inHandler *InvoiceHandler) CheckCSVHandler(e echo.Context) error {
+	// example to read uploaded CSV file
+	type csvUploadInput struct {
+		CsvFile *multipart.FileHeader `form:"file" binding:"required"`
+	}
+	var input csvUploadInput
+	if err := e.Bind(&input); err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+	f, err := input.CsvFile.Open()
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	defer f.Close()
+	fileBytes, err := ioutil.ReadAll(f)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	var invoice []request.ReqInvoice
+	// UnmarshalBytes parses the CSV from the bytes in the interface.
+	err = gocsv.UnmarshalBytes(fileBytes, &invoice)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+	}
+	return helper.SuccessResponse(e, "successfully read data")
 }
