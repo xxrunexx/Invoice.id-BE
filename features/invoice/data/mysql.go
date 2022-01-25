@@ -120,8 +120,5 @@ func (inData *InvoiceData) InsertCSV(datas []invoice.InvoiceCore) error {
 	if err := inData.DB.Create(&invoices).Error; err != nil {
 		return err
 	}
-	// for _, invoice := range invoices {
-	// 	invoice.ID // 1,2,3
-	//   }
 	return nil
 }
