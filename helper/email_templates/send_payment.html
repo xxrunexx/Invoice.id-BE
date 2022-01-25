@@ -54,10 +54,15 @@
         border-bottom: 1px solid #eee;
       }
 
-      /* .invoice-box table img.image table td{
+      .logo{
         width: 70px;
         height: 70px;
-      } */
+      }
+
+      .flex-container {
+        display: flex;
+        font-size: 30px;
+      }
 
       @media only screen and (max-width: 600px){
         .invoice-box table tr.top table td{
@@ -81,10 +86,12 @@
           <td colspan='2'>
             <table>
               <tr class="image">
-                <td >
-                  <!-- <img src="logo.png" alt="logo" class="image"> -->
-                  <h2>invoice.in</h2>
-                </td>
+                <td>
+                  <div class="flex-container">
+                      <div><img src="logo.png" class="logo"></div>
+                      <div><h2>invoice.in</h2></div>   
+                  </div>
+              </td>
                 <td>
                   <a
                   href="#"
@@ -121,9 +128,6 @@
             <td>
               <table>
                 <tr>
-                  <td>
-                    Elite
-                  </td>
                 </tr>
 
               </table>
