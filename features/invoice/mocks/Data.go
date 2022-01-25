@@ -85,13 +85,13 @@ func (_m *Data) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 	return r0, r1
 }
 
-// GetInvoiceByName provides a mock function with given fields: nik
-func (_m *Data) GetInvoiceByName(nik string) ([]invoice.InvoiceCore, error) {
-	ret := _m.Called(nik)
+// GetInvoiceByName provides a mock function with given fields: name
+func (_m *Data) GetInvoiceByName(name string) ([]invoice.InvoiceCore, error) {
+	ret := _m.Called(name)
 
 	var r0 []invoice.InvoiceCore
 	if rf, ok := ret.Get(0).(func(string) []invoice.InvoiceCore); ok {
-		r0 = rf(nik)
+		r0 = rf(name)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]invoice.InvoiceCore)
@@ -100,7 +100,7 @@ func (_m *Data) GetInvoiceByName(nik string) ([]invoice.InvoiceCore, error) {
 
 	var r1 error
 	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(nik)
+		r1 = rf(name)
 	} else {
 		r1 = ret.Error(1)
 	}

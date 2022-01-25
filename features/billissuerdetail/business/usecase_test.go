@@ -2,6 +2,7 @@ package business
 
 import (
 	"errors"
+	"invoice-api/features/billissuer"
 	bi_m "invoice-api/features/billissuer/mocks"
 	"invoice-api/features/billissuerdetail"
 	bid_m "invoice-api/features/billissuerdetail/mocks"
@@ -14,7 +15,7 @@ import (
 
 var (
 	mockbidData              bid_m.Data
-	mockbiData               bi_m.Business
+	mockbiData               bi_m.Data
 	billissuerdetailBusiness billissuerdetail.Business
 	billissuerdetailData     billissuerdetail.BillIssuerDetailCore
 )
@@ -42,7 +43,7 @@ func TestCreateBillIssuerDetail(t *testing.T) {
 	// 	assert.NotNil(t, resp)
 	// })
 
-	t.Run("Create bill issuer error - invalid email", func(t *testing.T) {
+	t.Run("Create bill issuer error - invalid company name", func(t *testing.T) {
 		resp, err := billissuerdetailBusiness.CreateBillIssuerDetail(billissuerdetail.BillIssuerDetailCore{
 			CompanyName: "",
 		})
@@ -51,11 +52,29 @@ func TestCreateBillIssuerDetail(t *testing.T) {
 		assert.Equal(t, err.Error(), "bad request")
 	})
 
-	// t.Run("Create bill issuer error - GetBillIssuerByEmail", func(t *testing.T) {
-	// 	mockData.On("GetBillIssuerByEmail", mock.AnythingOfType("string")).Return(false, errors.New("error")).Once()
-	// 	err := billissuerBusiness.CreateBillIssuer(billissuerData)
-	// 	assert.NotNil(t, err)
-	// })
+	t.Run("Create bill issuer detail error - GetBillIssuerById", func(t *testing.T) {
+		mockbiData.On("GetBillIssuerById", mock.AnythingOfType("int")).Return(billissuer.BillIssuerCore{}, errors.New("error")).Once()
+		resp, err := billissuerdetailBusiness.CreateBillIssuerDetail(billissuerdetailData)
+		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
+	})
+
+	t.Run("Create bill issuer detail error - GetBillIssuerById", func(t *testing.T) {
+		mockbiData.On("GetBillIssuerById", mock.AnythingOfType("int")).Return(billissuer.BillIssuerCore{}, nil).Once()
+		mockbidData.On("CreateBillIssuerDetail", mock.AnythingOfType("billissuerdetail.BillIssuerDetailCore")).Return(billissuerdetail.BillIssuerDetailCore{}, errors.New("error")).Once()
+		resp, err := billissuerdetailBusiness.CreateBillIssuerDetail(billissuerdetailData)
+		assert.NotNil(t, err)
+		assert.NotNil(t, resp)
+		assert.Equal(t, "error", err.Error())
+	})
+
+	t.Run("Create bill issuer detail error - GetBillIssuerById", func(t *testing.T) {
+		mockbiData.On("GetBillIssuerById", mock.AnythingOfType("int")).Return(billissuer.BillIssuerCore{}, nil).Once()
+		mockbidData.On("CreateBillIssuerDetail", mock.AnythingOfType("billissuerdetail.BillIssuerDetailCore")).Return(billissuerdetail.BillIssuerDetailCore{}, nil).Once()
+		resp, err := billissuerdetailBusiness.CreateBillIssuerDetail(billissuerdetailData)
+		assert.Nil(t, err)
+		assert.NotNil(t, resp)
+	})
 
 	// t.Run("Create bill issuer error - email exist", func(t *testing.T) {
 	// 	mockData.On("GetBillIssuerByEmail", mock.AnythingOfType("string")).Return(true, nil).Once()
