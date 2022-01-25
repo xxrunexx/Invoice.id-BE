@@ -122,3 +122,10 @@ func (inBusiness *InvoiceBusiness) GetInvoiceByName(name string) ([]invoice.Invo
 	}
 	return invoices, nil
 }
+
+func (inBusiness *InvoiceBusiness) CheckCSV(datas []invoice.InvoiceCore) error {
+	if err := inBusiness.invoiceData.InsertCSV(datas); err != nil {
+		return err
+	}
+	return nil
+}
