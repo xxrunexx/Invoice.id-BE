@@ -1,14 +1,40 @@
-FROM golang:1.17-alpine3.14
+# FROM golang:1.17-alpine3.14
+
+# WORKDIR /invoice-api
+
+# COPY ./ ./
+
+# RUN go mod download
+
+
+# RUN go build -o main
+
+# #2
+
+
+# EXPOSE 8000
+
+# CMD ["./mainfile"]
+
+FROM golang:1.17.3-alpine3.14 AS builder
 
 WORKDIR /invoice-api
 
-COPY . .
+COPY ./ ./
 
 RUN go mod download
 
+RUN go build -o main
 
-RUN go build -o mainfile
+#2
+FROM alpine:3.14
+
+WORKDIR /app
+
+COPY --from=builder /app/main .
+
+COPY .env /app
+
+COPY --from=builder /app/helper/email_templates ./helpers/email_templates
 
 EXPOSE 8000
-
-CMD ["./mainfile"]

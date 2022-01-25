@@ -34,6 +34,7 @@ type Business interface {
 	GetInvoiceByNik(nik int) (invoices []InvoiceCore, err error)
 	GetInvoiceByName(nik string) (invoices []InvoiceCore, err error)
 	// CheckInvoice(data InvoiceCore) (invoices []InvoiceCore, err error)
+	CheckCSV(datas []InvoiceCore) (err error)
 }
 
 type Data interface {
@@ -46,4 +47,5 @@ type Data interface {
 	GetInvoiceByNik(nik int) (invoices []InvoiceCore, err error)
 	GetInvoiceByName(name string) (invoices []InvoiceCore, err error)
 	// CheckInvoice(data InvoiceCore) (invoices []InvoiceCore, err error)
+	InsertCSV(datas []InvoiceCore) (err error)
 }
