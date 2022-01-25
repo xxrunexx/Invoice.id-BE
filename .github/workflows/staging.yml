@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "master"
+      - "update_docker"
 
 jobs:
   # "unit-test":
