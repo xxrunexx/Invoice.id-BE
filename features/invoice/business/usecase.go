@@ -38,6 +38,11 @@ func (inBusiness *InvoiceBusiness) SendInvoice(id int) (invoice.InvoiceCore, err
 	if err != nil {
 		return invoice.InvoiceCore{}, err
 	}
+	fmt.Println("Isi Client name : ", inData.ClientName)
+	fmt.Println("Isi Total : ", inData.Total)
+	fmt.Println("Isi CreatedAt : ", inData.CreatedAt)
+	fmt.Println("Isi Payment terms: ", inData.PaymentTerms)
+	fmt.Println("Isi Payment due: ", inData.PaymentDue)
 	helper.SendGmail(inData)
 
 	return inData, nil
@@ -123,14 +128,32 @@ func (inBusiness *InvoiceBusiness) GetInvoiceByName(name string) ([]invoice.Invo
 // 	return nil
 // }
 
-// func (inBusiness *InvoiceBusiness) CheckInvoice(data []invoice.InvoiceCore) (invoice.InvoiceCore, error) {
-// 	datas := []invoice.InvoiceCore{}
+func (inBusiness *InvoiceBusiness) CheckInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
+	invoices, err := inBusiness.invoiceData.GetAllInvoice(data)
+	if err != nil {
+		return nil, err
+	}
+	list := []invoice.InvoiceCore{}
+	today := time.Now()
+	// due := data.PaymentDue
 
-// 	for _, invoice := range data {
-// 		if
-// 	}
+	for _, invoice := range invoices {
+		// Check if due < today
+		if invoice.PaymentStatus == "processed" && invoice.PaymentDue.After(today) {
+			fmt.Println("Isi list : ", list)
+			list = append(list, invoice)
+		}
+	}
+	for _, send := range list {
+		inData, err := inBusiness.invoiceData.GetInvoiceById(int(send.ID))
+		if err != nil {
+			return []invoice.InvoiceCore{}, nil
+		}
+		helper.SendGmail(inData)
+	}
+	return list, nil
 
-// 	for _, invoice := range datas {
-
-// 	}
-// }
+	// for _, invoice := range list {
+	// 	helper.SendEmailSMTP(datas)
+	// }
+}

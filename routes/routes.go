@@ -47,6 +47,7 @@ func New() *echo.Echo {
 	e.GET("/invoice/status/:status", presenter.InvoicePresentation.GetInvoiceByStatusHandler)
 	e.GET("/invoice/nik/:nik", presenter.InvoicePresentation.GetInvoiceByNikHandler)
 	e.GET("/invoice/name/:name", presenter.InvoicePresentation.GetInvoiceByNameHandler)
+	e.GET("/invoice/due", presenter.InvoicePresentation.CheckInvoiceHandler)
 	e.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
 	e.PUT("/invoice/update", presenter.InvoicePresentation.UpdateInvoiceHandler)
 	e.POST("/invoice/send/:id", presenter.InvoicePresentation.SendInvoiceHandler)

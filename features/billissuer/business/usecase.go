@@ -64,16 +64,16 @@ func (biBussiness *BillIssuerBusiness) UpdateBillIssuer(data billissuer.BillIssu
 		return errors.New("invalid data")
 	}
 
-	isExist, err := biBussiness.billissuerData.GetBillIssuerByEmail(data.Email)
-	if err != nil {
-		return err
-	}
-	if isExist {
-		setMessage := fmt.Sprintf("email %v already in use!", data.Email)
-		return errors.New(setMessage)
-	}
+	// isExist, err := biBussiness.billissuerData.GetBillIssuerByEmail(data.Email)
+	// if err != nil {
+	// 	return err
+	// }
+	// if isExist {
+	// 	setMessage := fmt.Sprintf("email %v already in use!", data.Email)
+	// 	return errors.New(setMessage)
+	// }
 
-	err = biBussiness.billissuerData.UpdateBillIssuer(data)
+	err := biBussiness.billissuerData.UpdateBillIssuer(data)
 	if err != nil {
 		return err
 	}
