@@ -170,3 +170,12 @@ func (inHandler *InvoiceHandler) CheckCSVHandler(e echo.Context) error {
 	}
 	return helper.SuccessResponse(e, "successfully read data")
 }
+
+func (inHandler *InvoiceHandler) CheckInvoiceHandler() {
+	_, err := inHandler.invoiceBusiness.CheckInvoice(invoice.InvoiceCore{})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Success")
+}

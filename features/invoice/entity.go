@@ -33,7 +33,7 @@ type Business interface {
 	SendInvoice(id int) (invoice InvoiceCore, err error)
 	GetInvoiceByNik(nik int) (invoices []InvoiceCore, err error)
 	GetInvoiceByName(nik string) (invoices []InvoiceCore, err error)
-	// CheckInvoice(data InvoiceCore) (invoices []InvoiceCore, err error)
+	CheckInvoice(data InvoiceCore) (invoices []InvoiceCore, err error)
 	// CheckCSV(datas []InvoiceCore) (err error)
 }
 

@@ -20,6 +20,7 @@ func SendGmail(inData invoice.InvoiceCore) {
 	data := struct {
 		ReceiverName  string
 		SenderName    string
+		Item          string
 		Total         int
 		CreatedAt     time.Time
 		PaymentTerms  int
@@ -28,6 +29,7 @@ func SendGmail(inData invoice.InvoiceCore) {
 	}{
 		ReceiverName:  inData.ClientName,
 		SenderName:    "Invoicein",
+		Item:          inData.Item,
 		Total:         inData.Total,
 		CreatedAt:     inData.CreatedAt,
 		PaymentTerms:  inData.PaymentTerms,
