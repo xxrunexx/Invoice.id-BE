@@ -151,16 +151,10 @@ func TestUpdateBIllIssuer(t *testing.T) {
 		assert.Equal(t, err.Error(), "invalid data")
 	})
 
-	t.Run("Update bill issuer error - GetBillIssuerByEmail", func(t *testing.T) {
-		mockData.On("GetBillIssuerByEmail", mock.AnythingOfType("string")).Return(false, errors.New("error")).Once()
-		err := billissuerBusiness.UpdateBillIssuer(billissuerData)
-		assert.Nil(t, err)
-	})
-
 	t.Run("Update bill issuer error - email exist", func(t *testing.T) {
 		mockData.On("GetBillIssuerByEmail", mock.AnythingOfType("string")).Return(true, nil).Once()
 		err := billissuerBusiness.UpdateBillIssuer(billissuerData)
-		assert.NotNil(t, err)
+		assert.Nil(t, err)
 	})
 
 	t.Run("Update bill issuer - error insert data", func(t *testing.T) {

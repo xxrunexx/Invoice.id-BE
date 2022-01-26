@@ -19,13 +19,9 @@ invoice-api/features/billissuer/business/usecase.go:59.2,59.20 1 1
 invoice-api/features/billissuer/business/usecase.go:56.16,58.3 1 1
 invoice-api/features/billissuer/business/usecase.go:62.95,63.94 1 1
 invoice-api/features/billissuer/business/usecase.go:67.2,68.16 2 1
-invoice-api/features/billissuer/business/usecase.go:71.2,71.13 1 1
-invoice-api/features/billissuer/business/usecase.go:76.2,77.16 2 1
-invoice-api/features/billissuer/business/usecase.go:81.2,81.12 1 1
+invoice-api/features/billissuer/business/usecase.go:72.2,72.12 1 1
 invoice-api/features/billissuer/business/usecase.go:63.94,65.3 1 1
 invoice-api/features/billissuer/business/usecase.go:68.16,70.3 1 1
-invoice-api/features/billissuer/business/usecase.go:71.13,74.3 2 1
-invoice-api/features/billissuer/business/usecase.go:77.16,79.3 1 0
-invoice-api/features/billissuer/business/usecase.go:84.126,87.16 2 1
-invoice-api/features/billissuer/business/usecase.go:90.2,90.25 1 1
-invoice-api/features/billissuer/business/usecase.go:87.16,89.3 1 1
+invoice-api/features/billissuer/business/usecase.go:75.126,78.16 2 1
+invoice-api/features/billissuer/business/usecase.go:81.2,81.25 1 1
+invoice-api/features/billissuer/business/usecase.go:78.16,80.3 1 1
