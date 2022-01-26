@@ -140,6 +140,7 @@ func (inBusiness *InvoiceBusiness) CheckInvoice(data invoice.InvoiceCore) ([]inv
 	for _, invoice := range invoices {
 		// Check if due < today
 		if invoice.PaymentStatus == "processed" && invoice.PaymentDue.After(today) {
+			// Change to .Before!
 			fmt.Println("Isi list : ", list)
 			list = append(list, invoice)
 		}
@@ -152,8 +153,4 @@ func (inBusiness *InvoiceBusiness) CheckInvoice(data invoice.InvoiceCore) ([]inv
 		helper.SendGmail(inData)
 	}
 	return list, nil
-
-	// for _, invoice := range list {
-	// 	helper.SendEmailSMTP(datas)
-	// }
 }

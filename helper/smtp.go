@@ -1,7 +1,6 @@
 package helper
 
 import (
-	"errors"
 	"fmt"
 	"invoice-api/features/invoice"
 	"net/smtp"
@@ -26,11 +25,11 @@ func SendEmailSMTP(to []string, data interface{}, template string, inData invoic
 	emailAuth = smtp.PlainAuth("", emailFrom, emailPassword, emailHost)
 
 	emailBody, err := parseTemplate(template, data, inData)
-	// fmt.Println("isi template", template)
-	// fmt.Println("isi data", data)
-	// fmt.Println("isi intData", inData)
+	fmt.Println("isi template", template)
+	fmt.Println("isi data", data)
+	fmt.Println("isi inData", inData)
 	if err != nil {
-		return false, errors.New("unable to parse email template")
+		return false, err
 	}
 
 	mime := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"

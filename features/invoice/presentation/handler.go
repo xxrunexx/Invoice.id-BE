@@ -171,11 +171,11 @@ func (inHandler *InvoiceHandler) CheckCSVHandler(e echo.Context) error {
 	return helper.SuccessResponse(e, "successfully read data")
 }
 
-func (inHandler *InvoiceHandler) CheckInvoiceHandler(e echo.Context) error {
-	data, err := inHandler.invoiceBusiness.CheckInvoice(invoice.InvoiceCore{})
+func (inHandler *InvoiceHandler) CheckInvoiceHandler() {
+	_, err := inHandler.invoiceBusiness.CheckInvoice(invoice.InvoiceCore{})
 
 	if err != nil {
-		return helper.ErrorResponse(e, http.StatusInternalServerError, "internal server error", err)
+		fmt.Println(err)
 	}
-	return helper.SuccessResponse(e, response.ToInvoiceResponseList(data))
+	fmt.Println("Success")
 }

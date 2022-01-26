@@ -2,20 +2,16 @@ package helper
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"html/template"
 	"invoice-api/features/invoice"
-	"path/filepath"
 	"strconv"
 	"strings"
 )
 
 func parseTemplate(templateFileName string, data interface{}, inData invoice.InvoiceCore) (string, error) {
-	templatePath, err := filepath.Abs(fmt.Sprintf("helper/email_templates/%s", templateFileName))
-	if err != nil {
-		return "", errors.New("invalid template name")
-	}
+	templatePath := fmt.Sprintf("helper/email_templates/%s", templateFileName)
+
 	t, err := template.ParseFiles(templatePath)
 	if err != nil {
 		return "", err

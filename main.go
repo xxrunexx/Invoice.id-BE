@@ -1,10 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"invoice-api/driver"
+	"invoice-api/factory"
 	_middleware "invoice-api/middleware"
 	"invoice-api/routes"
+	"os"
+	"time"
 
+	"github.com/robfig/cron"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -14,39 +19,51 @@ func init() {
 }
 
 func main() {
+	params := os.Args
+	paramsLength := len(params)
+	if paramsLength < 2 {
+		log.Println("Please add SERVER or CRONJOB along with go run main.go command")
+		log.Println("Eg: go run main.go SERVER or go run main.go CRONJOB")
+		os.Exit(1)
+	}
+
+	inputMethod := os.Args[1]
+	valid := IsValidInputMethod(inputMethod)
+
 	driver.InitDB()
 	e := routes.New()
 
 	// Log Middleware
 	_middleware.LogMiddlewareInit(e)
+	if valid {
+		if inputMethod == "SERVER" {
+			// Starting The Server
+			e.Start(":8000")
+		}
 
-	// Starting The Server
-	// e.Start(":8000")
+		if inputMethod == "CRONJOB" {
+			presenter := factory.Init()
+			// Cron Job
+			log.Info("Create new cron")
+			c := cron.New()
+			c.AddFunc("@every 3s", func() {
+				fmt.Println("Every minute")
+				presenter.InvoicePresentation.CheckInvoiceHandler()
+			})
 
-	// // Cron Job
-	// log.Info("Create new cron")
-	// c := cron.New()
-	// c.AddFunc("*/1 * * * *", func() { log.Info("[Job 1]Every minute job\n") })
-
-	// // Start cron with one scheduled job
-	// log.Info("Start cron")
-	// c.Start()
-	// printCronEntries(c.Entries())
-	// time.Sleep(2 * time.Minute)
-
-	// // Funcs may also be added to a running Cron
-	// log.Info("Add new job to a running cron")
-	// entryID2, _ := c.AddFunc("*/2 * * * *", func() { log.Info("[Job 2]Every two minutes job\n") })
-	// printCronEntries(c.Entries())
-	// time.Sleep(5 * time.Minute)
-
-	// //Remove Job2 and add new Job2 that run every 1 minute
-	// log.Info("Remove Job2 and add new Job2 with schedule run every minute")
-	// c.Remove(entryID2)
-	// c.AddFunc("*/1 * * * *", func() { log.Info("[Job 2]Every one minute job\n") })
-	// time.Sleep(5 * time.Minute)
+			log.Info("Start cron")
+			c.Start()
+			time.Sleep(10080 * time.Hour)
+		}
+	}
 }
 
-// func printCronEntries(cronEntries []cron.Entry) {
-// 	log.Infof("Cron Info: %+v\n", cronEntries)
-// }
+func IsValidInputMethod(method string) bool {
+	switch method {
+	case
+		"SERVER",
+		"CRONJOB":
+		return true
+	}
+	return false
+}
