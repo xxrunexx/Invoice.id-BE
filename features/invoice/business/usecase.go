@@ -122,3 +122,15 @@ func (inBusiness *InvoiceBusiness) GetInvoiceByName(name string) ([]invoice.Invo
 // 	}
 // 	return nil
 // }
+
+// func (inBusiness *InvoiceBusiness) CheckInvoice(data []invoice.InvoiceCore) (invoice.InvoiceCore, error) {
+// 	datas := []invoice.InvoiceCore{}
+
+// 	for _, invoice := range data {
+// 		if
+// 	}
+
+// 	for _, invoice := range datas {
+
+// 	}
+// }
