@@ -106,7 +106,7 @@ func (inData *InvoiceData) GetInvoiceByName(name string) ([]invoice.InvoiceCore,
 	fmt.Println(result)
 
 	// err := inData.DB.Where("clients.name = ?", name).Joins("Invoice").Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
-	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.name LIKE ?", result).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.name LIKE ?", result).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").First(&invoices).Error
 	if err != nil {
 		return nil, err
 	}

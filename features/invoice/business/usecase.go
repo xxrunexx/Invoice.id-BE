@@ -90,6 +90,14 @@ func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error
 		return errors.New("invalid data")
 	}
 
+	t := time.Now()
+	if data.PaymentTerms == 7 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 7)
+	} else if data.PaymentTerms == 10 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 10)
+	} else if data.PaymentTerms == 30 {
+		data.PaymentDue = t.Add(time.Hour * 24 * 30)
+	}
 	err := inBusiness.invoiceData.UpdateInvoice(data)
 	if err != nil {
 		return err

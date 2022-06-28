@@ -2,7 +2,6 @@ package request
 
 import (
 	"invoice-api/features/invoice"
-	"time"
 )
 
 type ReqInvoice struct {
@@ -15,14 +14,14 @@ type ReqInvoice struct {
 }
 
 type ReqInvoiceUpdate struct {
-	ID              uint      `json:"id"`
-	ClientID        uint      `json:"client_id"`
-	Item            string    `json:"item"`
-	Total           int       `json:"total"`
-	BillIssuerID    uint      `json:"bill_issuer_id"`
-	PaymentMethodID uint      `json:"payment_method_id"`
-	PaymentDue      time.Time `json:"payment_due"`
-	PaymentStatus   string    `json:"payment_status"`
+	ID              uint   `json:"id"`
+	ClientID        uint   `json:"client_id"`
+	Item            string `json:"item"`
+	Total           int    `json:"total"`
+	BillIssuerID    uint   `json:"bill_issuer_id"`
+	PaymentMethodID uint   `json:"payment_method_id"`
+	PaymentTerms    int    `json:"payment_terms"`
+	PaymentStatus   string `json:"payment_status"`
 }
 
 func (reqdata *ReqInvoice) ToInvoiceCore() invoice.InvoiceCore {
@@ -44,7 +43,7 @@ func (reqdata *ReqInvoiceUpdate) ToInvoiceCore() invoice.InvoiceCore {
 		Total:           reqdata.Total,
 		BillIssuerID:    reqdata.BillIssuerID,
 		PaymentMethodID: reqdata.PaymentMethodID,
-		PaymentDue:      reqdata.PaymentDue,
+		PaymentTerms:    reqdata.PaymentTerms,
 		PaymentStatus:   reqdata.PaymentStatus,
 	}
 }
