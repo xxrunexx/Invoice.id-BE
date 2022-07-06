@@ -25,6 +25,7 @@ type Invoice struct {
 	PaymentDue      time.Time
 	PaymentStatus   string `gorm:"default:draft"`
 	PaymentTerms    int
+	PaymentLink     string
 }
 
 type BillIssuer struct {
@@ -61,6 +62,7 @@ func toInvoiceRecord(in invoice.InvoiceCore) Invoice {
 		PaymentDue:      in.PaymentDue,
 		PaymentStatus:   in.PaymentStatus,
 		PaymentTerms:    in.PaymentTerms,
+		PaymentLink:     in.PaymentLink,
 	}
 }
 
@@ -84,6 +86,7 @@ func toInvoiceCore(in Invoice) invoice.InvoiceCore {
 		PaymentTerms:      in.PaymentTerms,
 		CreatedAt:         in.CreatedAt,
 		UpdatedAt:         in.UpdatedAt,
+		PaymentLink:       in.PaymentLink,
 	}
 }
 

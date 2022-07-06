@@ -17,13 +17,13 @@ func NewMySqlInvoice(DB *gorm.DB) invoice.Data {
 	return &InvoiceData{DB}
 }
 
-func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) error {
+func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) (uint, error) {
 	convData := toInvoiceRecord(data)
 
 	if err := inData.DB.Create(&convData).Error; err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return convData.ID, nil
 }
 
 func (inData *InvoiceData) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
@@ -75,10 +75,23 @@ func (inData *InvoiceData) GetInvoiceByStatus(status string) ([]invoice.InvoiceC
 }
 
 func (inData *InvoiceData) UpdateInvoice(data invoice.InvoiceCore) error {
-	var singleData Invoice
+	fmt.Println("Isi data di data : ", data)
+	// var singleData Invoice
 	convData := toInvoiceRecord(data)
-	err := inData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
+	fmt.Println("Isi convData di data : ", convData)
+	err := inData.DB.Debug().Model(&Invoice{}).Where("id = ?", data.ID).Updates(&convData).Error
+	if err != nil {
+		return err
+	}
+	err = inData.UpdatePaymentLink(convData.PaymentLink, convData.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
+func (inData *InvoiceData) UpdatePaymentLink(url string, id uint) error {
+	err := inData.DB.Debug().Model(&Invoice{}).Where("id = ?", id).Update("payment_link", url).Error
 	if err != nil {
 		return err
 	}

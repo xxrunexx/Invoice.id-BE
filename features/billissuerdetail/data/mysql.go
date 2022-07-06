@@ -57,9 +57,9 @@ func (bidData *BillIssuerDetailData) GetBillIssuerDetailByBillIssuerId(id int) (
 	return toBillIssuerDetailCore(singleData), nil
 }
 
-func (bidData *BillIssuerDetailData) UpdateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) error {
+func (bidData BillIssuerDetailData) UpdateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) error {
 	var singleData BillIssuerDetail
-
+	// FIXME: edit pointer
 	convData := toBillIssuerDetailRecord(data)
 	err := bidData.DB.Model(&singleData).Where("id = ?", data.ID).Updates(&convData).Error
 	if err != nil {

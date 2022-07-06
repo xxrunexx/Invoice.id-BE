@@ -19,6 +19,7 @@ type InvoiceCore struct {
 	PaymentDue        time.Time
 	PaymentStatus     string
 	PaymentTerms      int
+	PaymentLink       string
 	CreatedAt         time.Time
 	UpdatedAt         time.Time
 }
@@ -38,7 +39,7 @@ type Business interface {
 }
 
 type Data interface {
-	CreateInvoice(data InvoiceCore) (err error)
+	CreateInvoice(data InvoiceCore) (id uint, err error)
 	GetAllInvoice(InvoiceCore) (invoices []InvoiceCore, err error)
 	GetInvoiceById(id int) (invoice InvoiceCore, err error)
 	DeleteInvoice(id int) error

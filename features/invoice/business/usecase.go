@@ -6,14 +6,18 @@ import (
 	"invoice-api/features/invoice"
 	"invoice-api/helper"
 	"time"
+
+	"github.com/midtrans/midtrans-go"
+	"github.com/midtrans/midtrans-go/snap"
 )
 
 type InvoiceBusiness struct {
-	invoiceData invoice.Data
+	invoiceData    invoice.Data
+	midtransClient snap.Client
 }
 
-func NewBusinessInvoice(inData invoice.Data) invoice.Business {
-	return &InvoiceBusiness{inData}
+func NewBusinessInvoice(inData invoice.Data, midtransClient snap.Client) invoice.Business {
+	return &InvoiceBusiness{inData, midtransClient}
 }
 
 func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error {
@@ -26,9 +30,32 @@ func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error
 		data.PaymentDue = t.Add(time.Hour * 24 * 30)
 	}
 	fmt.Println("Isi payment due : ", data.PaymentDue)
-	if err := inBusiness.invoiceData.CreateInvoice(data); err != nil {
+	id, err := inBusiness.invoiceData.CreateInvoice(data)
+	if err != nil {
 		return err
 	}
+	fmt.Println("idnya : ", id)
+	resp, errMidtrans := inBusiness.midtransClient.CreateTransaction(&snap.Request{
+		TransactionDetails: midtrans.TransactionDetails{
+			OrderID:  fmt.Sprintf("%d", id),
+			GrossAmt: int64(data.Total),
+		},
+		CreditCard: &snap.CreditCardDetails{
+			Secure: true,
+		},
+	})
+	if errMidtrans != nil {
+		fmt.Println("Isi error : ", errMidtrans)
+		return err
+	}
+	fmt.Println("Isi response : ", resp)
+	data.PaymentLink = resp.RedirectURL
+	data.ID = id
+	err1 := inBusiness.invoiceData.UpdateInvoice(data)
+	if err1 != nil {
+		return err1
+	}
+	fmt.Println("Setelah update : ")
 	return nil
 }
 

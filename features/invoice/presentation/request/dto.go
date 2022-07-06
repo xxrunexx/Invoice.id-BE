@@ -11,6 +11,7 @@ type ReqInvoice struct {
 	BillIssuerID    uint   `json:"bill_issuer_id"`
 	PaymentMethodID uint   `json:"payment_method_id"`
 	PaymentTerms    int    `json:"payment_terms"`
+	PaymentLink     string `json:"payment_link"`
 }
 
 type ReqInvoiceUpdate struct {
@@ -22,6 +23,7 @@ type ReqInvoiceUpdate struct {
 	PaymentMethodID uint   `json:"payment_method_id"`
 	PaymentTerms    int    `json:"payment_terms"`
 	PaymentStatus   string `json:"payment_status"`
+	PaymentLink     string `json:"payment_link"`
 }
 
 func (reqdata *ReqInvoice) ToInvoiceCore() invoice.InvoiceCore {
@@ -32,6 +34,7 @@ func (reqdata *ReqInvoice) ToInvoiceCore() invoice.InvoiceCore {
 		BillIssuerID:    reqdata.BillIssuerID,
 		PaymentMethodID: reqdata.PaymentMethodID,
 		PaymentTerms:    reqdata.PaymentTerms,
+		PaymentLink:     reqdata.PaymentLink,
 	}
 }
 
@@ -45,5 +48,6 @@ func (reqdata *ReqInvoiceUpdate) ToInvoiceCore() invoice.InvoiceCore {
 		PaymentMethodID: reqdata.PaymentMethodID,
 		PaymentTerms:    reqdata.PaymentTerms,
 		PaymentStatus:   reqdata.PaymentStatus,
+		PaymentLink:     reqdata.PaymentLink,
 	}
 }

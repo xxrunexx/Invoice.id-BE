@@ -26,6 +26,7 @@ func SendGmail(inData invoice.InvoiceCore) {
 		PaymentTerms  int
 		PaymentDue    time.Time
 		PaymentStatus string
+		PaymentLink   string
 	}{
 		ReceiverName:  inData.ClientName,
 		SenderName:    "Invoicein",
@@ -35,6 +36,7 @@ func SendGmail(inData invoice.InvoiceCore) {
 		PaymentTerms:  inData.PaymentTerms,
 		PaymentDue:    inData.PaymentDue,
 		PaymentStatus: inData.PaymentStatus,
+		PaymentLink:   inData.PaymentLink,
 	}
 	var htmlTemplate string
 	if data.PaymentStatus == "paid" {
