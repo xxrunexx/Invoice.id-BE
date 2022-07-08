@@ -31,31 +31,10 @@ func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error
 	} else if data.PaymentTerms == 30 {
 		data.PaymentDue = t.Add(time.Hour * 24 * 30)
 	}
-	fmt.Println("Isi payment due : ", data.PaymentDue)
-	id, err := inBusiness.invoiceData.CreateInvoice(data)
+
+	err := inBusiness.invoiceData.CreateInvoice(data)
 	if err != nil {
 		return err
-	}
-	fmt.Println("idnya : ", id)
-	resp, errMidtrans := inBusiness.midtransClient.CreateTransaction(&snap.Request{
-		TransactionDetails: midtrans.TransactionDetails{
-			OrderID:  fmt.Sprintf("%d", id),
-			GrossAmt: int64(data.Total),
-		},
-		CreditCard: &snap.CreditCardDetails{
-			Secure: true,
-		},
-	})
-	if errMidtrans != nil {
-		fmt.Println("Isi error : ", errMidtrans)
-		return err
-	}
-	fmt.Println("Isi response : ", resp)
-	data.PaymentLink = resp.RedirectURL
-	data.ID = id
-	err1 := inBusiness.invoiceData.UpdateInvoice(data)
-	if err1 != nil {
-		return err1
 	}
 	return nil
 }

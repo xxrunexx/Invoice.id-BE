@@ -17,13 +17,13 @@ func NewMySqlInvoice(DB *gorm.DB) invoice.Data {
 	return &InvoiceData{DB}
 }
 
-func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) (uint, error) {
+func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) error {
 	convData := toInvoiceRecord(data)
 
 	if err := inData.DB.Create(&convData).Error; err != nil {
-		return 0, err
+		return err
 	}
-	return convData.ID, nil
+	return nil
 }
 
 func (inData *InvoiceData) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
