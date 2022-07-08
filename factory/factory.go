@@ -29,6 +29,7 @@ import (
 	pmpres "invoice-api/features/paymentmethod/presentation"
 
 	"github.com/midtrans/midtrans-go"
+	"github.com/midtrans/midtrans-go/coreapi"
 	"github.com/midtrans/midtrans-go/snap"
 )
 
@@ -45,6 +46,9 @@ func Init() presenter {
 	var s snap.Client
 	s.New("SB-Mid-server-T_VarAohJ1utYrSWFdLgC_LH", midtrans.Sandbox)
 
+	var c coreapi.Client
+	c.New("SB-Mid-server-T_VarAohJ1utYrSWFdLgC_LH", midtrans.Sandbox)
+
 	// Bill Issuer
 	billissuerData := bidata.NewMySqlBillIssuer(driver.DB)
 	billissuerBusiness := bibus.NewBusinessBillIssuer(billissuerData)
@@ -55,7 +59,7 @@ func Init() presenter {
 
 	// Invoice
 	invoiceData := indata.NewMySqlInvoice(driver.DB)
-	invoiceBusiness := inbus.NewBusinessInvoice(invoiceData, s)
+	invoiceBusiness := inbus.NewBusinessInvoice(invoiceData, s, c)
 
 	// Bill Issuer Detail
 	billissuerdetailData := biddata.NewMySqlBillIssuerDetail(driver.DB)

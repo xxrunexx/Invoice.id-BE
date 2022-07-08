@@ -8,16 +8,18 @@ import (
 	"time"
 
 	"github.com/midtrans/midtrans-go"
+	"github.com/midtrans/midtrans-go/coreapi"
 	"github.com/midtrans/midtrans-go/snap"
 )
 
 type InvoiceBusiness struct {
-	invoiceData    invoice.Data
-	midtransClient snap.Client
+	invoiceData        invoice.Data
+	midtransClient     snap.Client
+	midtransCoreClient coreapi.Client
 }
 
-func NewBusinessInvoice(inData invoice.Data, midtransClient snap.Client) invoice.Business {
-	return &InvoiceBusiness{inData, midtransClient}
+func NewBusinessInvoice(inData invoice.Data, midtransClient snap.Client, midtransCoreClient coreapi.Client) invoice.Business {
+	return &InvoiceBusiness{inData, midtransClient, midtransCoreClient}
 }
 
 func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error {
@@ -55,7 +57,6 @@ func (inBusiness *InvoiceBusiness) CreateInvoice(data invoice.InvoiceCore) error
 	if err1 != nil {
 		return err1
 	}
-	fmt.Println("Setelah update : ")
 	return nil
 }
 
@@ -125,13 +126,50 @@ func (inBusiness *InvoiceBusiness) UpdateInvoice(data invoice.InvoiceCore) error
 	} else if data.PaymentTerms == 30 {
 		data.PaymentDue = t.Add(time.Hour * 24 * 30)
 	}
+
+	if data.PaymentStatus == "unpaid" {
+		resp, errMidtrans := inBusiness.midtransClient.CreateTransaction(&snap.Request{
+			TransactionDetails: midtrans.TransactionDetails{
+				OrderID:  fmt.Sprintf("%d", data.ID),
+				GrossAmt: int64(data.Total),
+			},
+			Expiry: &snap.ExpiryDetails{
+				Unit:     "day",
+				Duration: int64(data.PaymentTerms),
+			},
+			CreditCard: &snap.CreditCardDetails{
+				Secure: true,
+			},
+		})
+
+		if errMidtrans != nil {
+			return errMidtrans
+		}
+		data.PaymentLink = resp.RedirectURL
+	}
+
 	err := inBusiness.invoiceData.UpdateInvoice(data)
 	if err != nil {
 		return err
 	}
-	// if data.PaymentStatus == "unpaid" || data.PaymentStatus == "draft" || data.PaymentStatus == "processed" {
 	inBusiness.SendInvoice(int(data.ID))
-	// }
+	return nil
+}
+
+func (inBusiness *InvoiceBusiness) UpdateTransactionStatus(transactionID int64) error {
+	trans, err := inBusiness.midtransCoreClient.CheckTransaction(fmt.Sprintf("%d", transactionID))
+	if err != nil {
+		return err
+	}
+
+	if trans.TransactionStatus == "capture" || trans.TransactionStatus == "settlement" {
+		PaymentStatus := "paid"
+		errUpd := inBusiness.invoiceData.UpdateTransactionStatus(transactionID, PaymentStatus)
+		if errUpd != nil {
+			return errUpd
+		}
+	}
+
 	return nil
 }
 
@@ -156,13 +194,6 @@ func (inBusiness *InvoiceBusiness) GetInvoiceByName(name string) ([]invoice.Invo
 	return invoices, nil
 }
 
-// func (inBusiness *InvoiceBusiness) CheckCSV(datas []invoice.InvoiceCore) error {
-// 	if err := inBusiness.invoiceData.InsertCSV(datas); err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
-
 func (inBusiness *InvoiceBusiness) CheckInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
 	invoices, err := inBusiness.invoiceData.GetAllInvoice(data)
 	if err != nil {
@@ -170,14 +201,17 @@ func (inBusiness *InvoiceBusiness) CheckInvoice(data invoice.InvoiceCore) ([]inv
 	}
 	list := []invoice.InvoiceCore{}
 	today := time.Now()
-	// due := data.PaymentDue
 
 	for _, invoice := range invoices {
+		resetPaymentStatus := invoice.PaymentDue.Add(time.Duration(-24) * time.Hour)
 		// Check if due < today
-		if invoice.PaymentStatus == "processed" && invoice.PaymentDue.After(today) {
+		if invoice.PaymentStatus == "unpaid" && invoice.PaymentDue.After(today) {
 			// Change to .Before!
 			fmt.Println("Isi list : ", list)
 			list = append(list, invoice)
+		} else if invoice.PaymentStatus == "paid" && resetPaymentStatus.After(today) {
+			invoice.PaymentStatus = "unpaid"
+			inBusiness.UpdateInvoice(invoice)
 		}
 	}
 	for _, send := range list {

@@ -90,6 +90,14 @@ func (inData *InvoiceData) UpdateInvoice(data invoice.InvoiceCore) error {
 	return nil
 }
 
+func (inData *InvoiceData) UpdateTransactionStatus(transactionID int64, PaymentStatus string) error {
+	err := inData.DB.Model(&Invoice{}).Where("id = ?", transactionID).Update("payment_status", PaymentStatus).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (inData *InvoiceData) UpdatePaymentLink(url string, id uint) error {
 	err := inData.DB.Debug().Model(&Invoice{}).Where("id = ?", id).Update("payment_link", url).Error
 	if err != nil {
