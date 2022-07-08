@@ -56,12 +56,5 @@ func New() *echo.Echo {
 	e.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
 	e.PUT("/invoice/update", presenter.InvoicePresentation.UpdateInvoiceHandler)
 	e.POST("/invoice/send/:id", presenter.InvoicePresentation.SendInvoiceHandler)
-
-	// Payment Method
-	e.POST("/paymentmethod/add", presenter.PaymentmethodPresentation.CreatePaymentMethodHandler)
-	e.GET("/paymentmethod/:id", presenter.PaymentmethodPresentation.GetPaymentMethodByIdHandler)
-	e.GET("/paymentmethod", presenter.PaymentmethodPresentation.GetAllPaymentMethodHandler)
-	e.GET("/paymentmethod/status/:status", presenter.PaymentmethodPresentation.GetPaymentMethodByIsActiveHandler)
-	e.PUT("/paymentmethod/update", presenter.PaymentmethodPresentation.UpdatePaymentMethodHandler)
 	return e
 }

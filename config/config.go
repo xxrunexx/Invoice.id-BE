@@ -5,12 +5,13 @@ import (
 )
 
 type Config struct {
-	DBHost    string `mapstructure:"DB_HOST"`
-	DBPort    string `mapstructure:"DB_PORT"`
-	DBUser    string `mapstructure:"DB_USER"`
-	DBPass    string `mapstructure:"DB_PASS"`
-	DBName    string `mapstructure:"DB_NAME"`
-	JWTsecret string `mapstructure:"JWT_SECRET"`
+	DBHost      string `mapstructure:"DB_HOST"`
+	DBPort      string `mapstructure:"DB_PORT"`
+	DBUser      string `mapstructure:"DB_USER"`
+	DBPass      string `mapstructure:"DB_PASS"`
+	DBName      string `mapstructure:"DB_NAME"`
+	JWTsecret   string `mapstructure:"JWT_SECRET"`
+	MidtransApi string `mapstructure:"MIDTRANS_API_KEY"`
 	// Save for later
 	// ServerPort string `mapstructure:"SERVER_PORT"`
 	// ServerHost string `mapstructure:"SERVER_HOST"`

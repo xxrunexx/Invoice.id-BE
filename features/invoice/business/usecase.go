@@ -147,6 +147,7 @@ func (inBusiness *InvoiceBusiness) UpdateTransactionStatus(transactionID int64) 
 		if errUpd != nil {
 			return errUpd
 		}
+		inBusiness.SendInvoice(int(transactionID))
 	}
 
 	return nil
