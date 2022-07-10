@@ -28,7 +28,7 @@ func (inData *InvoiceData) CreateInvoice(data invoice.InvoiceCore) error {
 
 func (inData *InvoiceData) GetAllInvoice(data invoice.InvoiceCore) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
-	err := inData.DB.Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Joins("Client").Joins("BillIssuer").Find(&invoices).Error
 
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (inData *InvoiceData) DeleteInvoice(id int) error {
 func (inData *InvoiceData) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 	var singleData Invoice
 
-	err := inData.DB.Where("invoices.id = ?", id).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&singleData).Error
+	err := inData.DB.Where("invoices.id = ?", id).Joins("Client").Joins("BillIssuer").Find(&singleData).Error
 	if singleData.ID == 0 {
 		return invoice.InvoiceCore{}, errors.New("data not found")
 	}
@@ -65,8 +65,7 @@ func (inData *InvoiceData) GetInvoiceById(id int) (invoice.InvoiceCore, error) {
 func (inData *InvoiceData) GetInvoiceByStatus(status string) ([]invoice.InvoiceCore, error) {
 	var invoices []Invoice
 
-	// err := inData.DB.Where("invoices.payment_status = ?", status).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
-	err := inData.DB.Where("payment_status = ?", status).Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Where("payment_status = ?", status).Joins("Client").Joins("BillIssuerDetail").Find(&invoices).Error
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +109,7 @@ func (inData *InvoiceData) GetInvoiceByNik(nik int) ([]invoice.InvoiceCore, erro
 	var invoices []Invoice
 	// var clients []Client
 
-	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.nik = ?", nik).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").Find(&invoices).Error
+	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.nik = ?", nik).Joins("Client").Joins("BillIssuer").Find(&invoices).Error
 	// db.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.nik = ?", nik
 	if err != nil {
 		return nil, err
@@ -126,8 +125,7 @@ func (inData *InvoiceData) GetInvoiceByName(name string) ([]invoice.InvoiceCore,
 	result := strings.Join(myslice, "")
 	fmt.Println(result)
 
-	// err := inData.DB.Where("clients.name = ?", name).Joins("Invoice").Joins("Client").Joins("BillIssuerDetail").Joins("PaymentMethod").Find(&invoices).Error
-	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.name LIKE ?", result).Joins("Client").Joins("BillIssuer").Joins("PaymentMethod").First(&invoices).Error
+	err := inData.DB.Joins("JOIN clients ON clients.id = invoices.client_id AND clients.name LIKE ?", result).Joins("Client").Joins("BillIssuer").First(&invoices).Error
 	if err != nil {
 		return nil, err
 	}
