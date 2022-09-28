@@ -7,7 +7,6 @@ import (
 	bidData "invoice-api/features/billissuerdetail/data"
 	clData "invoice-api/features/client/data"
 	inData "invoice-api/features/invoice/data"
-	pmData "invoice-api/features/paymentmethod/data"
 	"log"
 
 	"gorm.io/driver/mysql"
@@ -38,5 +37,5 @@ func InitDB() {
 
 	DB = db
 
-	DB.AutoMigrate(&biData.BillIssuer{}, &clData.Client{}, &inData.Invoice{}, &bidData.BillIssuerDetail{}, &pmData.PaymentMethod{})
+	DB.AutoMigrate(&biData.BillIssuer{}, &clData.Client{}, &inData.Invoice{}, &bidData.BillIssuerDetail{})
 }

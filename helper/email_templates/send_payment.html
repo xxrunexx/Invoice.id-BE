@@ -97,22 +97,6 @@
                     <div><h2>invoice.in</h2></div>
                   </div>
                 </td>
-                <td>
-                  <a
-                    href="#"
-                    style="
-                      display: inline-block;
-                      padding: 11px 30px;
-                      margin: 20px 0px 30px;
-                      /* font-size: 15px; */
-                      color: #131522;
-                      background: #ffc700;
-                      border-radius: 60px;
-                      text-decoration: none;
-                    "
-                    >Bill's Detail</a
-                  >
-                </td>
               </tr>
             </table>
 
@@ -124,6 +108,21 @@
                       Dear, #ClientName#<br />
                       Your invoice #InvoiceCode# at #PaymentDate# for #Total# is
                       overdue by #PaymentDue#<br />
+                      Click here to make a payment : <br />
+                        <center><a
+                          href="#PaymentLink#"
+                          style="
+                            display: inline-block;
+                            padding: 11px 30px;
+                            margin: 20px 0px 30px;
+                            /* font-size: 15px; */
+                            color: #131522;
+                            background: #ffc700;
+                            border-radius: 60px;
+                            text-decoration: none;
+                          "
+                          >Bill's Detail</a
+                        ></center><br />
                       Please make your payment as soon as possible<br />
                       If you've already paid, just disregard this email <br />
                       Thanks, <br />
@@ -151,7 +150,7 @@
           >
             If the button is not working, you can copy the link below on your
             browser .<br />
-            <a href="#"><></a><br />
+            <a href="#PaymentLink#">#PaymentLink#</a><br />
             Contact us on
             <a href="mailto:cs.invoicein@gmail.com">cs.invoicein@gmail.com</a>
           </td>

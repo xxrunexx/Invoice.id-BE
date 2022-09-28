@@ -121,6 +121,30 @@ func (inHandler *InvoiceHandler) UpdateInvoiceHandler(e echo.Context) error {
 	return helper.SuccessResponse(e, updateData)
 }
 
+func (inHandler *InvoiceHandler) CallbackHandler(e echo.Context) error {
+	var body = map[string]interface{}{}
+	err := e.Bind(&body)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "bad request", err)
+	}
+
+	orderID, exist := body["order_id"].(string)
+	if !exist {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "id does not exist", err)
+	}
+
+	transactionID, err := strconv.Atoi(orderID)
+	if err != nil {
+		return helper.ErrorResponse(e, http.StatusBadRequest, "id not valid", err)
+	}
+
+	err = inHandler.invoiceBusiness.UpdateTransactionStatus(int64(transactionID))
+	if err != nil {
+		return err
+	}
+	return helper.SuccessResponse(e, nil)
+}
+
 func (inHandler *InvoiceHandler) GetInvoiceByNikHandler(e echo.Context) error {
 	nik, err := strconv.Atoi(e.Param("nik"))
 	fmt.Println("Isi nik : ", nik)

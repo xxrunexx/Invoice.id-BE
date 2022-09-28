@@ -29,8 +29,10 @@ func parseTemplate(templateFileName string, data interface{}, inData invoice.Inv
 		"#ClientEmail#", inData.ClientEmail,
 		"#ClientPhone#", inData.ClientPhone,
 		"#InvoiceDate#", inData.CreatedAt.Format("2006-01-02 15:04:05"),
-		"#PaymentMethod#", inData.PaymentMethodName,
-		"#Item#", inData.Item, "#InvoiceCode#", strconv.Itoa(int(inData.ID)),
+		"#InvoiceUpdate#", inData.UpdatedAt.Format("2006-01-02 15:04:05"),
+		"#PaymentLink#", inData.PaymentLink,
+		"#Item#", inData.Item,
+		"#InvoiceCode#", strconv.Itoa(int(inData.ID)),
 		"#BillIssuerCompany#", inData.BillIssuerName)
 	bodyReplace := r.Replace(body)
 

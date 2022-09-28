@@ -40,27 +40,21 @@ func New() *echo.Echo {
 	e.PUT("/billissuerdetail", presenter.BillissuerdetailPresentation.UpdateBillIssuerDetailHandler)
 
 	// Client
-	jwt.POST("/client/add", presenter.ClientPresentation.CreateClientHandler)
-	jwt.GET("/client", presenter.ClientPresentation.GetAllClientHandler)
-	jwt.GET("/client/:id", presenter.ClientPresentation.GetClientById)
-	jwt.PUT("/client", presenter.ClientPresentation.UpdateClient)
+	e.POST("/client/add", presenter.ClientPresentation.CreateClientHandler)
+	e.GET("/client", presenter.ClientPresentation.GetAllClientHandler)
+	e.GET("/client/:id", presenter.ClientPresentation.GetClientById)
+	e.PUT("/client", presenter.ClientPresentation.UpdateClient)
 
 	// Invoice
-	jwt.POST("/invoice/add", presenter.InvoicePresentation.CreateInvoiceHandler)
-	jwt.GET("/invoice", presenter.InvoicePresentation.GetAllInvoiceHandler)
-	jwt.GET("/invoice/:id", presenter.InvoicePresentation.GetInvoiceByIdHandler)
-	jwt.GET("/invoice/status/:status", presenter.InvoicePresentation.GetInvoiceByStatusHandler)
-	jwt.GET("/invoice/nik/:nik", presenter.InvoicePresentation.GetInvoiceByNikHandler)
-	jwt.GET("/invoice/name/:name", presenter.InvoicePresentation.GetInvoiceByNameHandler)
-	jwt.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
-	jwt.PUT("/invoice/update", presenter.InvoicePresentation.UpdateInvoiceHandler)
-	jwt.POST("/invoice/send/:id", presenter.InvoicePresentation.SendInvoiceHandler)
-
-	// Payment Method
-	jwt.POST("/paymentmethod/add", presenter.PaymentmethodPresentation.CreatePaymentMethodHandler)
-	jwt.GET("/paymentmethod/:id", presenter.PaymentmethodPresentation.GetPaymentMethodByIdHandler)
-	jwt.GET("/paymentmethod", presenter.PaymentmethodPresentation.GetAllPaymentMethodHandler)
-	jwt.GET("/paymentmethod/status/:status", presenter.PaymentmethodPresentation.GetPaymentMethodByIsActiveHandler)
-	jwt.PUT("/paymentmethod/update", presenter.PaymentmethodPresentation.UpdatePaymentMethodHandler)
+	e.POST("/invoice/add", presenter.InvoicePresentation.CreateInvoiceHandler)
+	e.GET("/invoice", presenter.InvoicePresentation.GetAllInvoiceHandler)
+	e.GET("/invoice/:id", presenter.InvoicePresentation.GetInvoiceByIdHandler)
+	e.GET("/invoice/status/:status", presenter.InvoicePresentation.GetInvoiceByStatusHandler)
+	e.GET("/invoice/nik/:nik", presenter.InvoicePresentation.GetInvoiceByNikHandler)
+	e.GET("/invoice/name/:name", presenter.InvoicePresentation.GetInvoiceByNameHandler)
+	e.POST("/transactions/callback", presenter.InvoicePresentation.CallbackHandler)
+	e.DELETE("/invoice/:id", presenter.InvoicePresentation.DeleteInvoiceHandler)
+	e.PUT("/invoice/update", presenter.InvoicePresentation.UpdateInvoiceHandler)
+	e.POST("/invoice/send/:id", presenter.InvoicePresentation.SendInvoiceHandler)
 	return e
 }

@@ -37,7 +37,7 @@ func (bidBusiness *BillIssuerDetailBusiness) CreateBillIssuerDetail(data billiss
 }
 
 func (bidBusiness *BillIssuerDetailBusiness) GetBillIssuerDetailById(id int) (billissuerdetail.BillIssuerDetailCore, error) {
-	bidData, err := bidBusiness.billissuerdetailData.GetBillIssuerDetailById(id)
+	bidData, err := bidBusiness.billissuerdetailData.GetBillIssuerDetailByBillIssuerId(id)
 
 	if err != nil {
 		return billissuerdetail.BillIssuerDetailCore{}, err
@@ -46,8 +46,9 @@ func (bidBusiness *BillIssuerDetailBusiness) GetBillIssuerDetailById(id int) (bi
 }
 
 func (bidBusiness *BillIssuerDetailBusiness) UpdateBillIssuerDetail(data billissuerdetail.BillIssuerDetailCore) error {
+	err := bidBusiness.billissuerdetailData.UpdateBillIssuerDetail(data)
 
-	if err := bidBusiness.billissuerdetailData.UpdateBillIssuerDetail(data); err != nil {
+	if err != nil {
 		return err
 	}
 	return nil

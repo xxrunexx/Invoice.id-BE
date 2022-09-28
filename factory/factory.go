@@ -1,7 +1,10 @@
 package factory
 
 import (
+	"invoice-api/config"
 	"invoice-api/driver"
+	"log"
+
 	// Billissuer Domain
 
 	bibus "invoice-api/features/billissuer/business"
@@ -23,10 +26,9 @@ import (
 	biddata "invoice-api/features/billissuerdetail/data"
 	bidpres "invoice-api/features/billissuerdetail/presentation"
 
-	// PaymentMethod Domain
-	pmbus "invoice-api/features/paymentmethod/business"
-	pmdata "invoice-api/features/paymentmethod/data"
-	pmpres "invoice-api/features/paymentmethod/presentation"
+	"github.com/midtrans/midtrans-go"
+	"github.com/midtrans/midtrans-go/coreapi"
+	"github.com/midtrans/midtrans-go/snap"
 )
 
 type presenter struct {
@@ -34,10 +36,20 @@ type presenter struct {
 	ClientPresentation           clpres.ClientHandler
 	InvoicePresentation          inpres.InvoiceHandler
 	BillissuerdetailPresentation bidpres.BillIssuerDetailHandler
-	PaymentmethodPresentation    pmpres.PaymentMethodHandler
 }
 
 func Init() presenter {
+	//Initiate client for Midtrans Snap
+	var s snap.Client
+	config, err := config.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config", err)
+	}
+	s.New(config.MidtransApi, midtrans.Sandbox)
+
+	var c coreapi.Client
+	c.New(config.MidtransApi, midtrans.Sandbox)
+
 	// Bill Issuer
 	billissuerData := bidata.NewMySqlBillIssuer(driver.DB)
 	billissuerBusiness := bibus.NewBusinessBillIssuer(billissuerData)
@@ -48,21 +60,16 @@ func Init() presenter {
 
 	// Invoice
 	invoiceData := indata.NewMySqlInvoice(driver.DB)
-	invoiceBusiness := inbus.NewBusinessInvoice(invoiceData)
+	invoiceBusiness := inbus.NewBusinessInvoice(invoiceData, s, c)
 
 	// Bill Issuer Detail
 	billissuerdetailData := biddata.NewMySqlBillIssuerDetail(driver.DB)
 	billissuerdetailBusiness := bidbus.NewBusinessBillIssuerDetail(billissuerdetailData, billissuerData)
-
-	// Payment Method
-	paymentmethodData := pmdata.NewMySqlPaymentMethod(driver.DB)
-	paymentmethodBusiness := pmbus.NewBusinessPaymentMethod(paymentmethodData)
 
 	return presenter{
 		BillissuerPresentation:       *bipres.NewHandlerBillIssuer(billissuerBusiness),
 		ClientPresentation:           *clpres.NewHandlerClient(clientBusiness),
 		InvoicePresentation:          *inpres.NewHandlerInvoice(invoiceBusiness),
 		BillissuerdetailPresentation: *bidpres.NewHandlerBillIssuerDetail(billissuerdetailBusiness),
-		PaymentmethodPresentation:    *pmpres.NewHandlerPaymentMethod(paymentmethodBusiness),
 	}
 }

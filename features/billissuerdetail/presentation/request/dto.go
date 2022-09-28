@@ -11,6 +11,7 @@ type ReqBillIssuerDetail struct {
 }
 
 type ReqBillIssuerDetailUpdate struct {
+	ID             uint   `json:"id"`
 	CompanyName    string `json:"company_name"`
 	CompanyAddress string `json:"company_address"`
 	CompanyPhone   string `json:"company_phone"`
@@ -28,6 +29,7 @@ func (reqData *ReqBillIssuerDetail) ToBillIssuerDetailCore() billissuerdetail.Bi
 }
 func (reqData *ReqBillIssuerDetailUpdate) ToBillIssuerDetailCore() billissuerdetail.BillIssuerDetailCore {
 	return billissuerdetail.BillIssuerDetailCore{
+		ID:             reqData.ID,
 		CompanyName:    reqData.CompanyName,
 		CompanyAddress: reqData.CompanyAddress,
 		CompanyPhone:   reqData.CompanyPhone,
