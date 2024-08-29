@@ -1,19 +1,17 @@
-name: Zip Files
-on:
-  push:
-      branches:
-      - "master"
+stages:
+  - archieve
 
-jobs:
-  zip-files:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: vimtor/action-zip@v1.2
-        with:
-          files: /
-          dest: result.zip
-      - uses: actions/upload-artifact@v4.3.6
-        with:
-          name: my-artifact
-          path: ${{ github.workspace }}/result.zip
+archieve:
+  stage: archieve
+  only: 
+    - master
+  image: ubuntu:18.04
+  when:
+    on_success
+  before_script:
+    - apt-get update
+    - apt-get install zip -y
+  script:
+     - cd ~/
+     - rm $PROJECT_NAME.zip
+     - zip -r $PROJECT_NAME.zip $PROJECT_NAME -x ".git/*" ".github/*" 
