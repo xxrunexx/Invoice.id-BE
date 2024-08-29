@@ -13,7 +13,6 @@ jobs:
       - name: zipping file
         run: |
           cd ~/
-          rm $PROJECT_NAME.zip
           zip -r $PROJECT_NAME.zip $PROJECT_NAME -x ".git/*" ".github/*" 
       - uses: actions/upload-artifact@v4.3.6
         with:
