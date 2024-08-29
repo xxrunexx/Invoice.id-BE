@@ -15,3 +15,7 @@ jobs:
           cd ~/
           rm $PROJECT_NAME.zip
           zip -r $PROJECT_NAME.zip $PROJECT_NAME -x ".git/*" ".github/*" 
+      - uses: actions/upload-artifact@v4.3.6
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/result.zip 
