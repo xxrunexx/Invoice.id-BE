@@ -1,17 +1,17 @@
-stages:
-  - archieve
-
-archieve:
-  stage: archieve
-  only: 
-    - master
-  image: ubuntu:18.04
-  when:
-    on_success
-  before_script:
-    - apt-get update
-    - apt-get install zip -y
-  script:
-     - cd ~/
-     - rm $PROJECT_NAME.zip
-     - zip -r $PROJECT_NAME.zip $PROJECT_NAME -x ".git/*" ".github/*" 
+name: zip Repository
+on: 
+  push:
+    branches:
+      - "master"
+      - "update_docker"
+jobs:
+  zip-file:
+    name: "Zip file"
+    runs-on: "ubuntu-20.04"
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - name: zipping file
+        run: |
+          cd ~/
+          rm $PROJECT_NAME.zip
+          zip -r $PROJECT_NAME.zip $PROJECT_NAME -x ".git/*" ".github/*" 
