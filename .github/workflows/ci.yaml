@@ -16,6 +16,14 @@ jobs:
           cd ../../
           ls -la
           zip -r result.zip Invoice.id-BE -x ".git/*" ".github/*" 
+      - name: Validating files
+        run: |
+          pwd
+          printf("\n")
+          cd ../
+          pwd
+          printf("\n")
+          cd ../
       - uses: actions/upload-artifact@v4.3.6
         with:
           name: my-artifact
