@@ -13,12 +13,9 @@ jobs:
       - uses: actions/checkout@v4.1.7
       - name: zipping file
         run: |
-          ls -la
-          echo "===Before==="
           cd ../../
-          echo "===After==="
           ls -la
-          zip -r $PROJECT_NAME.zip $PROJECT_NAME -x ".git/*" ".github/*" 
+          zip -r Invoice.id-BE.zip Invoice.id-BE -x ".git/*" ".github/*" 
       - uses: actions/upload-artifact@v4.3.6
         with:
           name: my-artifact
